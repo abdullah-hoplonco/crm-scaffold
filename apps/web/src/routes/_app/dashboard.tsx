@@ -1,22 +1,24 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Hammer } from "lucide-react";
-import { PageHeader } from "@/components/app/PageHeader";
-import { EmptyState } from "@/components/app/States";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { DashboardPage } from "@/features/dashboard/DashboardPage";
+import { DEFAULT_PERIOD, dashboardSearch } from "@/features/dashboard/periods";
 
-/** Placeholder page. Owned by the owner-views workstream. */
 export const Route = createFileRoute("/_app/dashboard")({
-  component: Placeholder,
+  validateSearch: dashboardSearch,
+  beforeLoad: ({ context }) => {
+    if (context.session.user.role === "rep") throw redirect({ to: "/today" });
+  },
+  component: DashboardRoute,
 });
 
-function Placeholder() {
+function DashboardRoute() {
+  const { period } = Route.useSearch();
+  const navigate = Route.useNavigate();
   return (
-    <>
-      <PageHeader title="Dashboard" />
-      <EmptyState
-        icon={Hammer}
-        title="Dashboard is being built"
-        description="This screen arrives in the next build step."
-      />
-    </>
+    <DashboardPage
+      period={period ?? DEFAULT_PERIOD}
+      onPeriodChange={(next) =>
+        void navigate({ search: { period: next === DEFAULT_PERIOD ? undefined : next }, replace: true })
+      }
+    />
   );
 }
