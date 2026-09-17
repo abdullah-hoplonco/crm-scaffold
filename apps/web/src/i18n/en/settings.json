@@ -1,1 +1,469 @@
-{}
+{
+  "title": "Settings",
+  "description": "How {{workspace}} works in HCO CRM: business details, team, channels and who gets new leads.",
+  "navLabel": "Settings sections",
+  "nav": {
+    "workspace": "Workspace",
+    "team": "Team",
+    "channels": "Channels",
+    "assignment": "Lead assignment",
+    "pipeline": "Pipeline stages"
+  },
+  "readOnly": {
+    "owner": "Only the owner can change workspace settings. You can see them here.",
+    "ownerShort": "Only the owner can invite teammates",
+    "team": "Only the owner can invite teammates, change roles or deactivate people.",
+    "channels": "Only the owner can connect or disconnect channels. You can still connect your own Gmail.",
+    "assignment": "Only the owner or a manager can change how leads are assigned."
+  },
+  "unsaved": {
+    "label": "Unsaved changes",
+    "message": "You have unsaved changes",
+    "discard": "Discard",
+    "saving": "Saving…"
+  },
+  "workspace": {
+    "title": "Workspace",
+    "description": "Your business details appear on quotes and in messages to customers.",
+    "saved": "Workspace settings saved",
+    "business": {
+      "title": "Business details",
+      "description": "Printed on every quote you send."
+    },
+    "fields": {
+      "name": "Business name",
+      "trn": "TRN",
+      "trnHelp": "Your 15-digit UAE Tax Registration Number.",
+      "trnCount_one": "{{count}} of 15 digits",
+      "trnCount_other": "{{count}} of 15 digits",
+      "address": "Address",
+      "addressPlaceholder": "Building, street, area, city",
+      "emirate": "Emirate",
+      "emiratePlaceholder": "Choose an emirate"
+    },
+    "errors": {
+      "name": "Enter the business name.",
+      "trn": "A TRN has 15 digits. Check the number on your VAT certificate."
+    },
+    "tax": {
+      "title": "Tax, currency and time",
+      "description": "Set for the UAE so totals and times are always right.",
+      "vat": "VAT rate",
+      "vatNote": "UAE standard rate",
+      "currency": "Currency",
+      "currencyValue": "AED",
+      "currencyNote": "UAE dirham, used for every deal and quote",
+      "timezone": "Timezone",
+      "timezoneNote": "Due dates, reminders and reports use Dubai time",
+      "locked": "Fixed for UAE workspaces"
+    },
+    "followUp": {
+      "title": "Follow-up",
+      "description": "Catch deals before they slip away.",
+      "label": "Flag a deal as going cold after",
+      "help": "Open deals with no messages, notes or stage moves for this long get a flag on the pipeline and appear in the assignee's Today list.",
+      "days_one": "day without activity",
+      "days_other": "days without activity",
+      "fewer": "One day fewer",
+      "more": "One day more",
+      "preview_one": "No activity for {{count}} day",
+      "preview_other": "No activity for {{count}} days"
+    }
+  },
+  "team": {
+    "title": "Team",
+    "description": "Everyone who signs in to this workspace, and what they can do.",
+    "invite": "Invite teammate",
+    "activeCount_one": "{{count}} active person",
+    "activeCount_other": "{{count}} active people",
+    "roleCount": {
+      "owner_one": "{{count}} owner",
+      "owner_other": "{{count}} owners",
+      "manager_one": "{{count}} manager",
+      "manager_other": "{{count}} managers",
+      "rep_one": "{{count}} rep",
+      "rep_other": "{{count}} reps"
+    },
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "access": "Access"
+    },
+    "you": "You",
+    "noJobTitle": "No job title yet",
+    "active": "Active",
+    "deactivated": "Deactivated",
+    "roleFor": "Role for {{name}}",
+    "activeFor": "{{name}} can sign in",
+    "selfRole": "Ask another owner to change your role",
+    "selfDeactivate": "You can't deactivate yourself",
+    "empty": {
+      "title": "Invite your team",
+      "description": "Add the people who reply to leads and move deals. Each gets their own sign-in."
+    },
+    "roleHelp": {
+      "rep": "Works the leads, conversations and deals assigned to them.",
+      "manager": "Sees every record and the dashboard. Can set lead assignment.",
+      "owner": "Everything, including settings, channels and the team."
+    },
+    "toast": {
+      "roleChanged": "{{name}} is now a {{role}}",
+      "deactivated": "{{name}} deactivated",
+      "reactivated": "{{name}} reactivated"
+    },
+    "inviteDialog": {
+      "title": "Invite a teammate",
+      "description": "They get a link to sign in to this workspace.",
+      "name": "Full name",
+      "namePlaceholder": "Sara Al Mansoori",
+      "email": "Work email",
+      "emailPlaceholder": "sara@yourbusiness.ae",
+      "role": "Role",
+      "submit": "Create invite link",
+      "submitting": "Creating link…",
+      "created": "Invite link created for {{name}}"
+    },
+    "inviteResult": {
+      "title": "{{name}} can join now",
+      "description": "Send them this link on WhatsApp or email. It signs them in to this workspace.",
+      "linkLabel": "Invite link",
+      "copy": "Copy link",
+      "copiedShort": "Copied",
+      "copied": "Invite link copied",
+      "copyManually": "Select the link and copy it",
+      "demoNote": "In the demo, the link signs them in straight away. Open it in a new window to see the CRM as them.",
+      "openWindow": "Open in a new window",
+      "done": "Done"
+    }
+  },
+  "channels": {
+    "title": "Channels",
+    "description": "Where leads and messages come from. Everything a connected channel receives lands in Leads and the Inbox.",
+    "connect": "Connect",
+    "reconnect": "Reconnect",
+    "disconnect": "Disconnect",
+    "withdraw": "Withdraw request",
+    "disconnected": "{{name}} disconnected",
+    "disconnectTitle": "Disconnect {{name}}?",
+    "withdrawTitle": "Withdraw the {{name}} request?",
+    "lastSynced": "Last synced",
+    "neverSynced": "Not yet",
+    "demoConnection": "Demo connection",
+    "status": {
+      "connected": "Connected",
+      "pending": "Pending approval",
+      "error": "Needs attention",
+      "disconnected": "Disconnected",
+      "not_connected": "Not connected",
+      "always_on": "Always on"
+    },
+    "quality": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "whatsapp": {
+      "name": "WhatsApp Business",
+      "description": "Reply to customers from the Inbox on your business number. Messages to this number arrive live, with delivery and read ticks.",
+      "number": "Number",
+      "verifiedName": "Verified name",
+      "quality": "Quality rating",
+      "consequence": "New WhatsApp messages stop arriving in the Inbox and replies can't be sent. Past conversations stay on each timeline."
+    },
+    "meta": {
+      "name": "Facebook & Instagram lead ads",
+      "description": "Leads from your instant forms arrive in Leads within seconds, tagged Facebook or Instagram, with every form answer.",
+      "page": "Facebook page",
+      "instagram": "Instagram",
+      "linkedPage": "Linked to the page",
+      "notLinked": "Not linked",
+      "forms": "Lead forms",
+      "formsCount_one": "{{count}} form",
+      "formsCount_other": "{{count}} forms",
+      "consequence": "New leads from your Facebook and Instagram forms stop arriving. Existing leads stay where they are."
+    },
+    "tiktok": {
+      "name": "TikTok lead forms",
+      "description": "Leads from TikTok instant forms arrive in Leads, assigned like every other lead.",
+      "account": "Ad account",
+      "requested": "Requested",
+      "pendingNote": "Waiting for TikTok developer approval",
+      "pendingNext": "Leads start arriving automatically once TikTok approves.",
+      "consequence": "The access request is cancelled. You can connect TikTok again at any time."
+    },
+    "gmail": {
+      "name": "Gmail",
+      "description": "Each teammate connects their own mailbox, so quotes and replies go out from their address and answers land in the Inbox.",
+      "mailboxCount_one": "{{count}} mailbox connected",
+      "mailboxCount_other": "{{count}} mailboxes connected",
+      "yourMailbox": "Your mailbox",
+      "yourGmail": "your Gmail",
+      "notConnectedHint": "Connect it to send quotes and emails from your own address.",
+      "syncedAgo": "Synced {{when}}",
+      "connectMine": "Connect my Gmail",
+      "consequence": "Emails stop syncing to the Inbox and you can't send quotes by email from your address."
+    },
+    "simulator": {
+      "name": "Demo simulator",
+      "description": "Creates realistic leads and WhatsApp messages through the same path real channels use, so every screen behaves as it will live.",
+      "note": "Replies to simulated conversations never leave the CRM.",
+      "open": "Open the demo panel"
+    }
+  },
+  "connect": {
+    "progress": "Connection steps",
+    "stepOf": "Step {{current}} of {{total}}: {{label}}",
+    "continue": "Continue",
+    "done": "Done",
+    "continueWith": "Continue with {{provider}}",
+    "waitingFor": "Waiting for {{provider}}…",
+    "busyDetail": "Demo connection: this takes a moment, just like the real thing.",
+    "demoNote": "Demo connection. No sign-in window opens and nothing is shared.",
+    "steps": {
+      "signIn": "Sign in",
+      "done": "Connected"
+    },
+    "whatsapp": {
+      "title": "Connect WhatsApp Business",
+      "intro": "Sign in with the Facebook account that manages your WhatsApp Business account. HCO CRM will be able to:",
+      "permSend": "Send and receive WhatsApp messages",
+      "permReceipts": "See delivery and read receipts",
+      "permTemplates": "Use your approved message templates",
+      "stepNumber": "Choose a number",
+      "stepVerify": "Verify",
+      "chooseNumber": "Which number do customers message?",
+      "numberVerified": "Verified as {{name}}",
+      "numberNew": "New number, not yet registered",
+      "codeLabel": "Enter the 6-digit code sent by SMS to {{phone}}",
+      "codeDemo": "Demo connection: the code is filled in for you.",
+      "codeError": "Enter the 6 digits from the SMS.",
+      "verify": "Verify and connect",
+      "registering": "Registering your number with WhatsApp…",
+      "doneTitle": "WhatsApp Business is connected",
+      "doneBody": "Messages to {{phone}} now arrive in the Inbox, and replies go out from this number.",
+      "toast": "WhatsApp Business connected"
+    },
+    "meta": {
+      "title": "Connect Facebook & Instagram lead ads",
+      "intro": "Sign in with the Facebook account that runs your ads. HCO CRM will be able to:",
+      "permPages": "See the Facebook pages you manage",
+      "permLeads": "Receive leads from your instant forms",
+      "permInstagram": "Tell Instagram leads apart from Facebook leads",
+      "stepPage": "Choose a page",
+      "stepForms": "Choose forms",
+      "stepSubscribed": "Subscribed",
+      "choosePage": "Which page runs your lead ads?",
+      "careersPage": "{{name}} Careers",
+      "linkedInstagram": "Instagram {{handle}} linked",
+      "noInstagram": "No Instagram account linked",
+      "chooseForms": "Leads from these forms on {{page}} will arrive in Leads.",
+      "forms": {
+        "enquiry": "Enquiry form",
+        "consultation": "Book a consultation",
+        "callback": "Request a callback",
+        "priceList": "Get the price list"
+      },
+      "formsError": "Choose at least one form.",
+      "subscribe": "Subscribe to leads",
+      "subscribing": "Subscribing {{page}} to new leads…",
+      "doneTitle": "Subscribed",
+      "doneBody_one": "New leads from {{count}} form on {{page}} arrive in Leads within seconds.",
+      "doneBody_other": "New leads from {{count}} forms on {{page}} arrive in Leads within seconds.",
+      "toast": "Facebook & Instagram lead ads connected"
+    },
+    "tiktok": {
+      "title": "Connect TikTok lead forms",
+      "intro": "Sign in with your TikTok for Business account. HCO CRM will ask TikTok for permission to:",
+      "permForms": "See the instant forms on your ad account",
+      "permLeads": "Receive leads as soon as they are submitted",
+      "stepAccount": "Choose an ad account",
+      "stepRequest": "Request access",
+      "stepPending": "Pending approval",
+      "chooseAccount": "Which ad account collects your leads?",
+      "accountUae": "{{name}} (UAE)",
+      "accountKsa": "{{name}} (KSA)",
+      "advertiserId": "Advertiser ID {{id}}",
+      "reviewTitle": "TikTok approves lead access first",
+      "reviewBody": "TikTok reviews every app that reads lead data. Once approved, leads from this account arrive in Leads automatically.",
+      "access": "Access",
+      "accessValue": "Lead forms, read only",
+      "request": "Request access",
+      "requesting": "Sending the request to TikTok…",
+      "doneTitle": "Waiting for TikTok developer approval",
+      "doneBody": "We switch this channel on as soon as TikTok approves. There's nothing else to do.",
+      "toast": "Request sent to TikTok"
+    },
+    "gmail": {
+      "title": "Connect my Gmail",
+      "intro": "Connect your own mailbox so emails you send from the CRM come from your address.",
+      "stepAllow": "Allow access",
+      "wantsTo": "HCO CRM wants to:",
+      "permSend": "Read, write and send email from {{email}}",
+      "permThreads": "Show email threads with your contacts in the Inbox",
+      "allow": "Allow",
+      "connecting": "Connecting {{email}}…",
+      "doneTitle": "Your Gmail is connected",
+      "doneBody": "Emails you send from the CRM go out from {{email}}, and replies land in the Inbox.",
+      "toast": "Gmail connected"
+    }
+  },
+  "assignment": {
+    "title": "Lead assignment",
+    "description": "Decide who picks up each new lead, so every enquiry gets an owner within seconds.",
+    "saved": "Lead assignment saved",
+    "returningNote": "Returning customers who are already contacts stay with their current assignee, whatever the rule.",
+    "errors": {
+      "noneEligible": "Choose at least one teammate for round-robin, or switch to manual."
+    },
+    "next": {
+      "label": "Next lead goes to",
+      "then": "Then",
+      "onlyOne": "Every new lead goes to them.",
+      "manual": "New leads stay unassigned",
+      "manualHelp": "Someone picks each lead up, or a manager assigns it from Leads.",
+      "nobody": "Nobody is taking new leads",
+      "nobodyHelp": "Tick at least one teammate below."
+    },
+    "strategy": {
+      "title": "How new leads are assigned",
+      "round_robin": {
+        "label": "Round-robin",
+        "help": "Leads take turns through the chosen teammates, one each, so work is shared evenly."
+      },
+      "manual": {
+        "label": "Manual",
+        "help": "Leads arrive unassigned. A teammate or manager assigns each one."
+      }
+    },
+    "eligible": {
+      "title": "Who takes new leads",
+      "description": "Leads rotate through these people in this order.",
+      "manualNote": "Used when round-robin is on.",
+      "position": "#{{position}} in turn"
+    }
+  },
+  "onboarding": {
+    "appName": "HCO CRM",
+    "title": "Set up your workspace",
+    "subtitle": "Five short steps. You can change all of this later in Settings.",
+    "haveWorkspace": "Already have a workspace?",
+    "signIn": "Sign in",
+    "progress": "Setup progress",
+    "stepOf": "Step {{current}} of {{total}}: {{label}}",
+    "optional": "Optional",
+    "back": "Back",
+    "continue": "Continue",
+    "skipTeam": "Skip for now",
+    "create": "Create workspace",
+    "creating": "Creating workspace…",
+    "created": "{{name}} is ready",
+    "steps": {
+      "business": "Business",
+      "owner": "You",
+      "team": "Team",
+      "pipeline": "Pipeline",
+      "review": "Review"
+    },
+    "business": {
+      "title": "Your business",
+      "description": "This name and TRN appear on your quotes.",
+      "name": "Business name",
+      "namePlaceholder": "As it appears on your trade licence",
+      "trn": "TRN",
+      "trnHelp": "Your 15-digit UAE Tax Registration Number. Add it now or later.",
+      "emirate": "Emirate"
+    },
+    "owner": {
+      "title": "About you",
+      "description": "You sign in with this email.",
+      "name": "Your name",
+      "namePlaceholder": "First and last name",
+      "email": "Work email",
+      "emailPlaceholder": "name@business.ae",
+      "emailHelp": "Use the email you check every day. Lead alerts go here.",
+      "roleNote": "You'll be the owner: you see every lead, deal and conversation, and you control settings, channels and the team."
+    },
+    "team": {
+      "title": "Invite your team",
+      "description": "Add the people who reply to leads. Reps take turns getting new leads.",
+      "name": "Full name",
+      "namePlaceholder": "Full name",
+      "email": "Work email",
+      "emailPlaceholder": "name@business.ae",
+      "role": "Role",
+      "rowLabel": "Teammate {{n}}",
+      "remove": "Remove teammate {{n}}",
+      "add": "Add another teammate",
+      "addFirst": "Add a teammate",
+      "empty": "Just you for now. Invite people whenever you're ready.",
+      "later": "You can invite more people later from Settings."
+    },
+    "pipeline": {
+      "title": "Your pipeline",
+      "description": "The stages a deal moves through, from first enquiry to closed.",
+      "startFrom": "Start from",
+      "stageCount_one": "{{count}} open stage",
+      "stageCount_other": "{{count}} open stages",
+      "customised": "Edited to fit your business.",
+      "stages": "Stages",
+      "stageLabel": "Stage {{n}} name",
+      "stagePlaceholder": "Stage name",
+      "stageN": "stage {{n}}",
+      "moveUp": "Move {{name}} up",
+      "moveDown": "Move {{name}} down",
+      "remove": "Remove {{name}}",
+      "add": "Add a stage",
+      "won": "Won",
+      "lost": "Lost",
+      "alwaysLast": "Always last"
+    },
+    "review": {
+      "title": "Review and create",
+      "description": "Check the details. Everything can be changed later.",
+      "notAdded": "Not added",
+      "justYou": "Just you for now.",
+      "edit": "Edit",
+      "editSection": "Edit {{section}}",
+      "signInNote": "You'll be signed in as {{name}}."
+    },
+    "preview": {
+      "label": "Workspace preview",
+      "hint": "Your workspace updates as you type.",
+      "namePlaceholder": "Your business",
+      "detailsPlaceholder": "Emirate and TRN",
+      "you": "You",
+      "team": "Team",
+      "people_one": "Just you",
+      "people_other": "{{count}} people",
+      "more": "and {{count}} more",
+      "pipeline": "Pipeline",
+      "unnamedStage": "Unnamed stage"
+    },
+    "presets": {
+      "clinic": {
+        "label": "Clinic / healthcare",
+        "stages": ["New enquiry", "Consultation booked", "Consultation done", "Treatment plan sent"]
+      },
+      "realEstate": {
+        "label": "Real estate",
+        "stages": ["New enquiry", "Viewing booked", "Viewing done", "Offer made", "Contract signing"]
+      },
+      "b2b": {
+        "label": "General B2B",
+        "stages": ["New lead", "Qualified", "Meeting held", "Proposal sent", "Negotiation"]
+      }
+    },
+    "errors": {
+      "workspaceName": "Enter your business name.",
+      "trn": "A TRN has 15 digits. Check the number on your VAT certificate.",
+      "ownerName": "Enter your name.",
+      "email": "Enter a valid email, like name@business.ae.",
+      "emailTwice": "This email is already used above. Each person needs their own.",
+      "inviteName": "Enter their name.",
+      "noStages": "Add at least one stage.",
+      "stageName": "Name this stage, or remove it.",
+      "stageTwice": "Each stage needs a different name."
+    }
+  }
+}
