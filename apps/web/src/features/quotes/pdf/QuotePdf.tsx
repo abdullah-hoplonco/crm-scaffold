@@ -44,7 +44,6 @@ const s = StyleSheet.create({
     color: INK,
     lineHeight: 1.35,
   },
-  topRule: { position: "absolute", top: 0, left: 0, right: 0, height: 5, backgroundColor: LAGOON },
   watermark: {
     position: "absolute",
     top: 330,
@@ -145,7 +144,6 @@ function QuotePdfDocument({ text, fontFamily }: { text: QuoteDocumentText; fontF
   return (
     <Document title={`${text.title} ${text.number}`} author={text.seller.name} subject={text.subject.value}>
       <Page size="A4" style={[s.page, { fontFamily }]}>
-        <View style={s.topRule} fixed />
         {text.watermark ? (
           <Text style={s.watermark} fixed>
             {text.watermark}

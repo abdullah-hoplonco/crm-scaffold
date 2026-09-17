@@ -25,7 +25,6 @@ export function QuoteDocument({
         aria-label={t("quotes:document.label", { number: text.number })}
         className="relative overflow-hidden rounded-md border border-border/70 bg-card text-card-foreground shadow-[0_1px_2px_rgb(19_35_42/0.05),0_18px_40px_-20px_rgb(19_35_42/0.25)]"
       >
-        <div aria-hidden="true" className="h-1.5 bg-primary" />
         {text.watermark ? (
           <span
             aria-hidden="true"
