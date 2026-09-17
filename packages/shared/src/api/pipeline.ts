@@ -39,6 +39,8 @@ export const DealCard = z.object({
   closedAt: Timestamp.nullable(),
   openTasksCount: z.number().int(),
   hasUnreadMessages: z.boolean(),
+  /** Why a lost deal was lost, when known. */
+  lostReason: LostReason.nullable().optional(),
 });
 export type DealCard = z.infer<typeof DealCard>;
 
@@ -161,6 +163,13 @@ export const pipelineRoutes = {
       toStageId: z.string(),
       /** Target index inside the destination column. Appends when omitted. */
       index: z.number().int().min(0).optional(),
+      /**
+       * Place the deal just above this deal of the destination column. Wins over `index`, which is
+       * ambiguous when the board is filtered (Mine, search, source).
+       */
+      beforeDealId: z.string().nullable().optional(),
+      /** Place the deal just below this deal of the destination column (used when dropped last). */
+      afterDealId: z.string().nullable().optional(),
       lostReason: LostReason.optional(),
       lostNote: z.string().trim().optional(),
     }),
