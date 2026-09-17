@@ -58,7 +58,7 @@ function ExpandedColumn({
     <section
       aria-labelledby={headingId}
       className={cn(
-        "flex h-full min-w-[248px] flex-1 flex-col",
+        "flex h-full min-w-[232px] flex-1 flex-col",
         stage.type === "open" ? "max-w-[360px]" : "max-w-[300px]",
       )}
     >
@@ -84,7 +84,7 @@ function ExpandedColumn({
           ) : null}
         </div>
         <div className="mt-1 flex items-baseline justify-between gap-2">
-          <Money value={totalValueAed} className="text-[13px] font-medium text-foreground/80" />
+          <Money value={totalValueAed} className="text-sm font-medium text-foreground/80" />
           {stage.type === "open" ? (
             <Tooltip>
               <TooltipTrigger asChild>
@@ -141,34 +141,41 @@ function CollapsedColumn({ stage, cards, totalValueAed, onToggleCollapsed, isOve
   const lane = LANE[stage.type];
 
   return (
-    <section aria-label={stage.name} className="flex h-full w-14 shrink-0 flex-col">
-      <button
-        ref={setNodeRef}
-        type="button"
-        onClick={onToggleCollapsed}
-        aria-label={t("board.expand", { stage: stage.name, count: cards.length })}
-        className={cn(
-          "flex h-full flex-col items-center gap-3 rounded-xl px-1 pt-2.5 pb-4 ring-0 transition-[background-color,box-shadow] duration-150 ring-inset outline-none",
-          "hover:brightness-[0.98] focus-visible:ring-[3px] focus-visible:ring-ring/50",
-          lane.body,
-          isOver && ["ring-2", lane.over],
-        )}
-      >
-        <ChevronsLeftRight className="size-3.5 text-muted-foreground" aria-hidden="true" />
-        <StageIcon type={stage.type} />
-        <span className="rounded-full bg-card px-1.5 text-xs font-medium text-muted-foreground tabular-nums shadow-[inset_0_0_0_1px_var(--border)]">
-          {cards.length}
-        </span>
-        <span className="flex items-center gap-3 text-sm font-semibold whitespace-nowrap [writing-mode:vertical-rl]">
-          {stage.name}
-          <Money value={totalValueAed} compact className="text-xs font-medium text-muted-foreground" />
-        </span>
-        {isOver ? (
-          <span className="mt-auto text-xs font-medium [writing-mode:vertical-rl]">
-            {stage.type === "won" ? t("board.dropToWin") : t("board.dropToLose")}
-          </span>
-        ) : null}
-      </button>
+    <section aria-label={stage.name} className="flex h-full w-16 shrink-0 flex-col">
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            ref={setNodeRef}
+            type="button"
+            onClick={onToggleCollapsed}
+            aria-label={t("board.expand", { stage: stage.name, count: cards.length })}
+            className={cn(
+              "flex h-full flex-col items-center gap-2.5 rounded-xl border border-border/70 px-1 pt-3 pb-4 ring-0 transition-[background-color,border-color,box-shadow] duration-150 ring-inset outline-none",
+              "hover:border-primary/40 focus-visible:ring-[3px] focus-visible:ring-ring/50",
+              lane.body,
+              isOver && ["ring-2", lane.over],
+            )}
+          >
+            <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-card text-muted-foreground shadow-[inset_0_0_0_1px_var(--border)]">
+              <ChevronsLeftRight className="size-3.5" aria-hidden="true" />
+            </span>
+            <StageIcon type={stage.type} />
+            <span className="rounded-full bg-card px-1.5 text-xs font-medium text-muted-foreground tabular-nums shadow-[inset_0_0_0_1px_var(--border)]">
+              {cards.length}
+            </span>
+            <span className="my-auto flex items-center gap-3 text-sm font-semibold whitespace-nowrap [writing-mode:vertical-rl]">
+              {stage.name}
+              <Money value={totalValueAed} compact className="text-xs font-medium text-muted-foreground" />
+            </span>
+            {isOver ? (
+              <span className="mt-auto text-xs font-medium [writing-mode:vertical-rl]">
+                {stage.type === "won" ? t("board.dropToWin") : t("board.dropToLose")}
+              </span>
+            ) : null}
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>{t("board.expand", { stage: stage.name, count: cards.length })}</TooltipContent>
+      </Tooltip>
     </section>
   );
 }
