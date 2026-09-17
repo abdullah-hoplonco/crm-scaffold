@@ -79,7 +79,8 @@ export function LeadsPage() {
         <div
           role="group"
           aria-label={t("views.label")}
-          className="-mx-4 flex gap-1 overflow-x-auto border-b px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+          // Wrap rather than scroll: a tab cut off at the screen edge reads as clipped on a phone.
+          className="-mx-4 flex flex-wrap gap-x-1 border-b px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
         >
           {LEAD_VIEWS.map((v) => {
             const active = v === view;
@@ -291,7 +292,7 @@ function LeadRow({ lead, now }: { lead: LeadListItem; now: Date }) {
             <SourceBadge source={lead.source} className="shrink-0" />
             {existing}
           </div>
-          <p className="mt-0.5 truncate text-[13px] text-muted-foreground">
+          <p className="mt-0.5 truncate text-sm text-muted-foreground">
             {lead.campaignName ? <span className="text-foreground/70">{lead.campaignName}: </span> : null}
             {snippet || t("row.noMessage")}
           </p>
@@ -320,7 +321,7 @@ function LeadRow({ lead, now }: { lead: LeadListItem; now: Date }) {
       {/* Phone: a compact card */}
       <div className="flex flex-col gap-1.5 lg:hidden">
         <div className="flex items-baseline justify-between gap-3">
-          <span className={cn("truncate text-[15px]", isNew ? "font-semibold" : "font-medium")}>{lead.name}</span>
+          <span className={cn("truncate text-sm", isNew ? "font-semibold" : "font-medium")}>{lead.name}</span>
           <time dateTime={lead.receivedAt} className="shrink-0 text-xs text-muted-foreground tabular-nums">
             {received(lead.receivedAt, now)}
           </time>
