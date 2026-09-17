@@ -12,3 +12,18 @@ export {
   WHATSAPP_TEMPLATES,
 } from "./catalog";
 export { createRng, type Rng } from "./rng";
+export {
+  pickMixedSource,
+  simulateFollowUp,
+  simulateLead,
+  simulatePerson,
+  simulateUaeMobile,
+  simulateUnknownWhatsapp,
+  simulateWhatsappMessageId,
+  treatmentFromText,
+  type PatientPhase,
+  type SimulatedLead,
+  type SimulatedPerson,
+  type SimulatedWhatsappMessage,
+  type SimulatorLeadSource,
+} from "./simulator";
