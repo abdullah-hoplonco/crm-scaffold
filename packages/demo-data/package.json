@@ -1,0 +1,17 @@
+{
+  "name": "@hco/demo-data",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@hco/core": "workspace:*",
+    "@hco/shared": "workspace:*"
+  }
+}

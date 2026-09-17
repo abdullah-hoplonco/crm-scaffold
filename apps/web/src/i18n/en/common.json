@@ -1,0 +1,111 @@
+{
+  "appName": "HCO CRM",
+  "nav": {
+    "today": "Today",
+    "dashboard": "Dashboard",
+    "leads": "Leads",
+    "inbox": "Inbox",
+    "pipeline": "Pipeline",
+    "contacts": "Contacts",
+    "companies": "Companies",
+    "settings": "Settings",
+    "demo": "Demo panel",
+    "more": "More",
+    "signOut": "Sign out"
+  },
+  "roles": {
+    "owner": "Owner",
+    "manager": "Manager",
+    "rep": "Rep"
+  },
+  "sources": {
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "manual": "Manual",
+    "csv": "CSV import"
+  },
+  "leadStatus": {
+    "new": "New",
+    "contacted": "Contacted",
+    "qualified": "Qualified",
+    "disqualified": "Disqualified",
+    "converted": "Converted"
+  },
+  "disqualifyReasons": {
+    "spam": "Spam",
+    "wrong_number": "Wrong number",
+    "not_interested": "Not interested",
+    "out_of_area": "Out of area",
+    "duplicate": "Duplicate",
+    "other": "Other"
+  },
+  "lostReasons": {
+    "price": "Price",
+    "competitor": "Went with a competitor",
+    "no_budget": "No budget",
+    "no_response": "Stopped responding",
+    "timing": "Bad timing",
+    "other": "Other"
+  },
+  "emirates": {
+    "abu_dhabi": "Abu Dhabi",
+    "dubai": "Dubai",
+    "sharjah": "Sharjah",
+    "ajman": "Ajman",
+    "umm_al_quwain": "Umm Al Quwain",
+    "ras_al_khaimah": "Ras Al Khaimah",
+    "fujairah": "Fujairah"
+  },
+  "jurisdiction": {
+    "mainland": "Mainland",
+    "free_zone": "Free zone"
+  },
+  "messageStatus": {
+    "queued": "Queued",
+    "sent": "Sent",
+    "delivered": "Delivered",
+    "read": "Read",
+    "failed": "Failed"
+  },
+  "actions": {
+    "save": "Save",
+    "saveChanges": "Save changes",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "close": "Close",
+    "retry": "Try again",
+    "search": "Search",
+    "clear": "Clear",
+    "back": "Back",
+    "viewAll": "View all"
+  },
+  "states": {
+    "loading": "Loading…",
+    "errorTitle": "This didn't load",
+    "unassigned": "Unassigned",
+    "none": "None",
+    "demoData": "Demo data"
+  },
+  "time": {
+    "justNow": "Just now",
+    "overdue": "Overdue",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "yesterday": "Yesterday"
+  },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "Sales inbox and pipeline for your team",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "demoTitle": "Try the demo as",
+    "demoHint": "Demo workspace with sample data. Nothing you do here reaches real customers.",
+    "newWorkspace": "Set up a new workspace"
+  }
+}

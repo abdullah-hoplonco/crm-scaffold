@@ -1,0 +1,151 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * HCO CRM tokens. Calm lagoon teal for actions, saffron for things that need attention,
+ * deep ink for the navigation rail. Channel colours identify where a lead came from.
+ */
+:root {
+  --radius: 0.625rem;
+
+  --background: #f3f6f6;
+  --foreground: #13232a;
+  --card: #ffffff;
+  --card-foreground: #13232a;
+  --popover: #ffffff;
+  --popover-foreground: #13232a;
+  --primary: #0f5f66;
+  --primary-foreground: #f2fbfb;
+  --secondary: #e5eded;
+  --secondary-foreground: #13232a;
+  --muted: #eaf0f0;
+  --muted-foreground: #58696d;
+  --accent: #e0eeee;
+  --accent-foreground: #0b474c;
+  --destructive: #b4372f;
+  --destructive-foreground: #ffffff;
+  --border: #d9e2e2;
+  --input: #cfd9d9;
+  --ring: #0f5f66;
+
+  --success: #1e7a4b;
+  --success-soft: #e2f2e8;
+  --warning: #b87708;
+  --warning-soft: #fcf0d8;
+  --attention: #e3a21a;
+  --danger-soft: #f8e4e2;
+  --info: #2f5ea8;
+  --info-soft: #e5ecf8;
+
+  --chart-1: #0f5f66;
+  --chart-2: #e3a21a;
+  --chart-3: #4f6fd1;
+  --chart-4: #c2477a;
+  --chart-5: #7a8c90;
+
+  --sidebar: #0f2b31;
+  --sidebar-foreground: #d5e5e6;
+  --sidebar-muted: #8aaeb2;
+  --sidebar-accent: #173f48;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-primary: #e3a21a;
+  --sidebar-border: #1d3c43;
+
+  --channel-whatsapp: #1b9e55;
+  --channel-instagram: #c13584;
+  --channel-facebook: #1877f2;
+  --channel-tiktok: #161b22;
+  --channel-email: #5b6b7a;
+  --channel-manual: #8a6d3b;
+  --channel-csv: #475569;
+}
+
+@theme inline {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-attention: var(--attention);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-border: var(--sidebar-border);
+
+  --color-channel-whatsapp: var(--channel-whatsapp);
+  --color-channel-instagram: var(--channel-instagram);
+  --color-channel-facebook: var(--channel-facebook);
+  --color-channel-tiktok: var(--channel-tiktok);
+  --color-channel-email: var(--channel-email);
+  --color-channel-manual: var(--channel-manual);
+  --color-channel-csv: var(--channel-csv);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "kern", "liga";
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
