@@ -55,7 +55,7 @@ export function TimelineEntry({
     </time>
   );
   const leadTag = showLeadTag ? (
-    <span className="rounded-full border px-1.5 text-[11px] leading-4 text-muted-foreground">
+    <span className="rounded-full border px-1.5 text-xs leading-4 text-muted-foreground">
       {t("timeline.leadTag")}
     </span>
   ) : null;
@@ -234,7 +234,7 @@ const TONES: Record<Tone, string> = {
   primary: "bg-accent text-accent-foreground",
   success: "bg-success-soft text-success",
   danger: "bg-danger-soft text-destructive",
-  attention: "bg-warning-soft text-[#7A5200]",
+  attention: "bg-warning-soft text-warning",
   whatsapp: "bg-[#E3F4EA] text-channel-whatsapp",
   email: "bg-muted text-channel-email",
   muted: "bg-muted text-muted-foreground",

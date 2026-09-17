@@ -97,7 +97,7 @@ function TeamList({ users }: { users: User[] }) {
     <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b px-4 py-3 sm:px-5">
         <p className="text-sm font-semibold">{t("team.activeCount", { count: active.length })}</p>
-        <p className="text-[13px] text-muted-foreground">{counts.join(", ")}</p>
+        <p className="text-sm text-muted-foreground">{counts.join(", ")}</p>
       </div>
       <div
         role="table"
@@ -190,7 +190,7 @@ function TeamRow({ user, roleLabel }: { user: User; roleLabel: string }) {
           >
             <span className="truncate">{user.name}</span>
             {isSelf ? (
-              <span className="shrink-0 rounded-full bg-accent px-1.5 py-px text-[11px] font-medium text-accent-foreground">
+              <span className="shrink-0 rounded-full bg-accent px-1.5 py-px text-xs font-medium text-accent-foreground">
                 {t("team.you")}
               </span>
             ) : null}

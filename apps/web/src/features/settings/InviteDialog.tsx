@@ -151,7 +151,7 @@ function InviteForm({
                 <RadioGroupItem id={`${id}-role-${option}`} value={option} className="mt-0.5" />
                 <span className="min-w-0">
                   <span className="block text-sm font-medium">{tc(`roles.${option}`)}</span>
-                  <span className="block text-[13px] leading-snug text-muted-foreground">
+                  <span className="block text-sm leading-snug text-muted-foreground">
                     {t(`team.roleHelp.${option}`)}
                   </span>
                 </span>
@@ -231,14 +231,14 @@ function InviteResult({ result, onDone }: { result: { user: User; inviteUrl: str
             value={inviteUrl}
             readOnly
             onFocus={(e) => e.currentTarget.select()}
-            className="text-[13px]"
+            className="text-sm"
           />
           <Button type="button" variant="outline" onClick={() => void copy()} className="shrink-0">
             {copied ? <Check className="text-success" /> : <Copy />}
             {copied ? t("team.inviteResult.copiedShort") : t("team.inviteResult.copy")}
           </Button>
         </div>
-        <p className="text-[13px] text-muted-foreground">{t("team.inviteResult.demoNote")}</p>
+        <p className="text-sm text-muted-foreground">{t("team.inviteResult.demoNote")}</p>
       </div>
 
       <DialogFooter>

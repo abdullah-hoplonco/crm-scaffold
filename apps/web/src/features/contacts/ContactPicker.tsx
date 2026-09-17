@@ -84,7 +84,7 @@ export function ContactPicker({
         >
           {label ? (
             <span className="flex min-w-0 items-center gap-2">
-              <UserAvatar name={label} size="sm" className="size-5 text-[9px]" />
+              <UserAvatar name={label} size="sm" className="size-5 text-xs" />
               <span className="truncate">{label}</span>
             </span>
           ) : (

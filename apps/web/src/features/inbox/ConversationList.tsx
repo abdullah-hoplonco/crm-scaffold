@@ -75,7 +75,7 @@ export function ConversationList({
                 aria-pressed={active}
                 onClick={() => onFilterChange(f)}
                 className={cn(
-                  "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-2.5 text-[13px] transition-colors",
+                  "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-2.5 text-sm transition-colors",
                   "focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
                   active
                     ? "border-primary bg-primary text-primary-foreground"
@@ -190,7 +190,7 @@ function ConversationRow({
         <span className="flex items-center gap-2">
           <span
             className={cn(
-              "min-w-0 flex-1 truncate text-[13px]",
+              "min-w-0 flex-1 truncate text-sm",
               unread ? "text-foreground" : "text-muted-foreground",
             )}
           >
@@ -205,7 +205,7 @@ function ConversationRow({
             />
           ) : null}
           {unread ? (
-            <span className="inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] font-semibold text-primary-foreground tabular-nums">
+            <span className="inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-primary px-1.5 text-xs font-semibold text-primary-foreground tabular-nums">
               <span aria-hidden="true">{c.unreadCount}</span>
               <span className="sr-only">{t("list.unread", { count: c.unreadCount })}</span>
             </span>

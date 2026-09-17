@@ -175,7 +175,7 @@ export function OnboardingPage() {
                 )}
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   {step === 4 ? (
-                    <p className="text-center text-[13px] text-muted-foreground sm:me-2 sm:text-end">
+                    <p className="text-center text-sm text-muted-foreground sm:me-2 sm:text-end">
                       {t("onboarding.review.signInNote", { name: draft.ownerName.trim() })}
                     </p>
                   ) : null}

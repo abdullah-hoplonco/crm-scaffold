@@ -21,7 +21,7 @@ export function Panel({
       className={cn("flex min-w-0 flex-col rounded-xl border bg-card", className)}
     >
       <header className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 px-4 pt-4 sm:px-5 sm:pt-5">
-        <h2 id={id} className="text-[15px] font-semibold">
+        <h2 id={id} className="text-sm font-semibold">
           {title}
         </h2>
         {scope ? <p className="text-xs text-muted-foreground">{scope}</p> : null}
