@@ -26,6 +26,19 @@ Show it in this order. Each part ends with something the client can see happened
 
 ---
 
+## Shortcut: the guided tour
+
+If you would rather the software walk the client through it, open **Demo panel → Guided tour** and pick one:
+
+- **Present it** — seven chapters that move on by themselves while you talk. Pause and play are on the card.
+- **Walk it yourself** — the client advances with **Next**, and the chapters that ask for an action wait until they actually do it. Finished chapters tick off, and the tour remembers where they got to, so it can be resumed in the next meeting.
+
+Each chapter dims the screen and spotlights the real control it is talking about — the real leads list, the real WhatsApp thread, the real board. It is never a video: the client is looking at the working product.
+
+The tour is demo-only. It cannot appear in a real workspace once the backend is live.
+
+---
+
 ## Part 1 — The pipeline (2 minutes)
 
 **Where:** left rail → **Pipeline** (sign in as Hessa).
