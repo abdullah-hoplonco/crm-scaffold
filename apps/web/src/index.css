@@ -63,6 +63,12 @@
 }
 
 @theme inline {
+  /* Flat at rest: shadows only for floating (md), dragged (lg) and modal (xl) elements. See DESIGN.md. */
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow-md: 0 8px 24px rgb(15 43 49 / 0.12), 0 1px 2px rgb(15 43 49 / 0.06);
+  --shadow-lg: 0 12px 28px rgb(15 43 49 / 0.18);
+  --shadow-xl: 0 24px 48px rgb(15 43 49 / 0.2);
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

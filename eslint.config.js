@@ -5,7 +5,7 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["**/dist/**", "**/node_modules/**", "**/routeTree.gen.ts", "**/.turbo/**", "docs/**"],
+    ignores: ["**/dist/**", "**/node_modules/**", "**/routeTree.gen.ts", "**/.turbo/**", "docs/**", ".claude/**"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

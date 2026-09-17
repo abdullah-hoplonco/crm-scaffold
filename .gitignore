@@ -7,3 +7,4 @@ dist
 .DS_Store
 apps/web/src/routeTree.gen.ts
 .wrangler
+.claude/worktrees/

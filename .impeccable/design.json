@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-17T16:52:33.015839+00:00",
+  "title": "Design System: HCO CRM",
+  "extensions": {
+    "colorMeta": {
+      "lagoon-teal": {
+        "role": "primary",
+        "displayName": "Lagoon Teal",
+        "canonical": "#0F5F66",
+        "tonalRamp": ["#082F33", "#0B474C", "#0F5F66", "#2E7A80", "#5E9CA1", "#96C1C4", "#C6DEDF", "#E0EEEE"]
+      },
+      "saffron": {
+        "role": "secondary",
+        "displayName": "Saffron",
+        "canonical": "#E3A21A",
+        "tonalRamp": ["#5A3A00", "#8A5A04", "#B87708", "#E3A21A", "#EDBB52", "#F4D38C", "#F9E6C0", "#FCF0D8"]
+      },
+      "deep-ink": {
+        "role": "tertiary",
+        "displayName": "Deep Ink",
+        "canonical": "#0F2B31",
+        "tonalRamp": ["#081A1E", "#0F2B31", "#173F48", "#1D3C43", "#3F6268", "#8AAEB2", "#BFD3D5", "#D5E5E6"]
+      },
+      "ledger-ink": {
+        "role": "neutral",
+        "displayName": "Ledger Ink",
+        "canonical": "#13232A"
+      },
+      "ledger-grey": {
+        "role": "neutral",
+        "displayName": "Ledger Grey",
+        "canonical": "#58696D"
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "canonical": "#F3F6F6"
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#FFFFFF"
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#D9E2E2"
+      },
+      "signal-green": {
+        "role": "semantic",
+        "displayName": "Signal Green",
+        "canonical": "#1E7A4B"
+      },
+      "signal-red": {
+        "role": "semantic",
+        "displayName": "Signal Red",
+        "canonical": "#B4372F"
+      },
+      "channel-whatsapp": {
+        "role": "channel",
+        "displayName": "WhatsApp mark",
+        "canonical": "#1B9E55"
+      },
+      "channel-instagram": {
+        "role": "channel",
+        "displayName": "Instagram mark",
+        "canonical": "#C13584"
+      },
+      "channel-facebook": {
+        "role": "channel",
+        "displayName": "Facebook mark",
+        "canonical": "#1877F2"
+      },
+      "channel-tiktok": {
+        "role": "channel",
+        "displayName": "TikTok mark",
+        "canonical": "#161B22"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles and record names."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section, panel, dialog and deal card titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Lists, tables, forms and messages; long text capped at 65-75ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Chips, metadata, timestamps, counts; sentence case."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Every AED amount, count and percentage, tabular numerals."
+      }
+    },
+    "shadows": [
+      {
+        "name": "float",
+        "value": "0 8px 24px rgba(15, 43, 49, 0.12), 0 1px 2px rgba(15, 43, 49, 0.06)",
+        "purpose": "Menus, popovers, notification panel, template picker, toasts."
+      },
+      {
+        "name": "lifted-card",
+        "value": "0 12px 28px rgba(15, 43, 49, 0.18)",
+        "purpose": "A kanban card while it is being dragged."
+      },
+      {
+        "name": "dialog",
+        "value": "0 24px 48px rgba(15, 43, 49, 0.20)",
+        "purpose": "Modal dialogs and sheets over a rgba(15,43,49,0.4) scrim."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-quart",
+        "value": "cubic-bezier(0.25, 1, 0.5, 1)",
+        "purpose": "Default for state changes: hover fills, popovers opening, cards settling after a drop."
+      },
+      {
+        "name": "duration-fast",
+        "value": "150ms",
+        "purpose": "Hover and press feedback."
+      },
+      {
+        "name": "duration-base",
+        "value": "220ms",
+        "purpose": "Popovers, sheets, new message or lead arriving."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "390px"
+      },
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "desktop",
+        "value": "1440px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one action per view.",
+      "html": "<button class=\"ds-btn-primary\">Mark as won</button>",
+      "css": ".ds-btn-primary{font-family:'IBM Plex Sans',system-ui,sans-serif;background:#0F5F66;color:#fff;border:1px solid transparent;border-radius:8px;height:36px;padding:0 16px;font-size:14px;font-weight:500;cursor:pointer;transition:background 150ms cubic-bezier(0.25,1,0.5,1)}.ds-btn-primary:hover{background:#0B474C}.ds-btn-primary:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(15,95,102,0.5)}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary actions next to a primary.",
+      "html": "<button class=\"ds-btn-outline\">Add note</button>",
+      "css": ".ds-btn-outline{font-family:'IBM Plex Sans',system-ui,sans-serif;background:#fff;color:#13232A;border:1px solid #D9E2E2;border-radius:8px;height:36px;padding:0 16px;font-size:14px;font-weight:500;cursor:pointer;transition:background 150ms cubic-bezier(0.25,1,0.5,1)}.ds-btn-outline:hover{background:#E0EEEE}.ds-btn-outline:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(15,95,102,0.5)}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Default field with teal focus and fix-it errors.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">TRN</span><input class=\"ds-input\" placeholder=\"100458392700003\"/></label>",
+      "css": ".ds-field{display:grid;gap:6px;font-family:'IBM Plex Sans',system-ui,sans-serif;max-width:280px}.ds-field-label{font-size:14px;font-weight:500;color:#13232A}.ds-input{height:36px;border:1px solid #CFD9D9;border-radius:8px;padding:0 12px;font-size:14px;color:#13232A;background:#fff}.ds-input::placeholder{color:#58696D}.ds-input:focus-visible{outline:none;border-color:#0F5F66;box-shadow:0 0 0 3px rgba(15,95,102,0.5)}"
+    },
+    {
+      "name": "Source Chip",
+      "kind": "chip",
+      "refersTo": "source-chip",
+      "description": "Where a lead came from, chip-sized channel colour.",
+      "html": "<span class=\"ds-chip\"><span class=\"ds-dot\"></span>Instagram</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:12px;font-weight:500;color:rgba(19,35,42,0.8);background:#fff;border:1px solid #D9E2E2;border-radius:9999px;padding:2px 8px}.ds-dot{width:8px;height:8px;border-radius:9999px;background:#C13584}"
+    },
+    {
+      "name": "Attention Count",
+      "kind": "chip",
+      "refersTo": "attention-count",
+      "description": "Saffron means now: unread and new counts.",
+      "html": "<span class=\"ds-count\">5</span>",
+      "css": ".ds-count{display:inline-flex;min-width:20px;justify-content:center;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;color:#2B1D00;background:#E3A21A;border-radius:9999px;padding:0 6px;line-height:18px}"
+    },
+    {
+      "name": "Navigation Rail",
+      "kind": "nav",
+      "refersTo": "nav-rail-item",
+      "description": "Deep Ink rail with saffron active marker.",
+      "html": "<nav class=\"ds-rail\"><a class=\"ds-rail-item\" href=\"#\">Today</a><a class=\"ds-rail-item ds-active\" href=\"#\" aria-current=\"page\">Pipeline</a><a class=\"ds-rail-item\" href=\"#\">Inbox <span class=\"ds-count\">3</span></a></nav>",
+      "css": ".ds-rail{display:grid;gap:2px;width:220px;padding:8px;background:#0F2B31;font-family:'IBM Plex Sans',system-ui,sans-serif;border-radius:10px}.ds-rail-item{position:relative;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:8px;color:#D5E5E6;font-size:14px;text-decoration:none}.ds-rail-item:hover{background:#173F48;color:#fff}.ds-rail-item.ds-active{background:#173F48;color:#fff;font-weight:500}.ds-rail-item.ds-active::before{content:'';position:absolute;inset-block:6px;inset-inline-start:0;width:2px;border-radius:2px;background:#E3A21A}.ds-count{font-size:11px;font-weight:600;color:#2B1D00;background:#E3A21A;border-radius:9999px;padding:0 6px}"
+    },
+    {
+      "name": "Kanban Card",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Flat deal card with tabular AED and stale flag.",
+      "html": "<article class=\"ds-deal\"><p class=\"ds-deal-title\">Invisalign \u2014 Rania Khoury</p><p class=\"ds-deal-meta\">Rania Khoury</p><p class=\"ds-deal-value\">AED 18,500</p><span class=\"ds-stale\">No activity for 5 days</span></article>",
+      "css": ".ds-deal{font-family:'IBM Plex Sans',system-ui,sans-serif;width:260px;background:#fff;border:1px solid #D9E2E2;border-radius:8px;padding:12px;display:grid;gap:4px}.ds-deal-title{margin:0;font-size:14px;font-weight:600;color:#13232A}.ds-deal-meta{margin:0;font-size:12px;color:#58696D}.ds-deal-value{margin:4px 0 0;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;color:#13232A}.ds-stale{justify-self:start;margin-top:6px;font-size:12px;font-weight:500;color:#B87708;background:#FCF0D8;border-radius:9999px;padding:2px 8px}"
+    },
+    {
+      "name": "Message Bubbles",
+      "kind": "custom",
+      "refersTo": "panel",
+      "description": "Inbound on surface, outbound on soft teal wash with read ticks.",
+      "html": "<div class=\"ds-thread\"><div class=\"ds-in\">Is the laser offer still on?<span class=\"ds-time\">14:02</span></div><div class=\"ds-out\">Yes, until the 30th. Shall I book a consultation?<span class=\"ds-time\">14:05 <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M18 6 7 17l-5-5\"/><path d=\"m22 10-7.5 7.5L13 16\"/></svg></span></div></div>",
+      "css": ".ds-thread{font-family:'IBM Plex Sans',system-ui,sans-serif;display:grid;gap:8px;width:320px;padding:12px;background:#F3F6F6;border-radius:10px}.ds-in,.ds-out{max-width:80%;font-size:14px;line-height:1.45;color:#13232A;padding:8px 12px;border-radius:10px;display:grid;gap:2px}.ds-in{justify-self:start;background:#fff;border:1px solid #D9E2E2}.ds-out{justify-self:end;background:#E0EEEE}.ds-time{justify-self:end;display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#58696D}.ds-out .ds-time svg{color:#0F5F66}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quiet Ledger",
+    "overview": "HCO CRM is kept like a good ledger: every enquiry, message, amount and follow-up written down exactly once, in the right place, legible at a glance. The interface is quiet so the record can speak. Surfaces are pale and flat, separated by hairlines rather than shadows; colour is spent sparingly and always carries a meaning.",
+    "keyCharacteristics": [
+      "Pale teal-tinted canvas (#F3F6F6) with white working surfaces and hairline borders.",
+      "One action colour (Lagoon Teal), one attention colour (Saffron), and semantic signals only where state demands it.",
+      "A single typeface, IBM Plex Sans, in four weights. It has an Arabic sibling for the future RTL build.",
+      "Money and counts in tabular figures; time always in Asia/Dubai.",
+      "Flat by default: depth only for things that float (menus, dialogs, a card being dragged).",
+      "Works equally on a 1440px desktop and a 390px phone with a bottom tab bar."
+    ],
+    "rules": [
+      {
+        "name": "The One Action Colour Rule",
+        "body": "Lagoon Teal is the only colour that means \"do this\". It never decorates. If two teal things compete on a screen, one of them is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Saffron Means Now Rule",
+        "body": "Saffron is reserved for time-sensitive attention: unread, new, due, stale. If it isn't urgent, it isn't saffron.",
+        "section": "colors"
+      },
+      {
+        "name": "The Small Channel Rule",
+        "body": "Channel colours appear at chip or dot size only, never as backgrounds, headers or large fills. The product is a sales tool, not a WhatsApp or Instagram skin.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sentence Case Rule",
+        "body": "Every label, button, tab, heading and chip is sentence case. All-caps tracked labels are prohibited.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Money Rule",
+        "body": "Any figure that can sit above or below another figure (column totals, card values, dashboard numbers, quote lines) uses tabular numerals so the digits line up like a ledger.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "body": "Panels, cards, list rows and inputs have no shadow at rest; a 1px Hairline border separates them. A shadow appears only when something floats (menu, dialog) or is being moved (dragged card).",
+        "section": "elevation"
+      },
+      {
+        "name": "The No Nesting Rule",
+        "body": "A bordered panel never sits inside another bordered panel. Use a divider or spacing instead.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep screens flat: Canvas (#F3F6F6) behind, white Surface panels with 1px Hairline (#D9E2E2) borders, shadows only on floating or dragged elements.",
+      "Do use Lagoon Teal (#0F5F66) for the one primary action per view, and Saffron (#E3A21A) only for unread, new, due or stale.",
+      "Do render every AED amount with tabular figures as `AED 18,500` and every timestamp in Asia/Dubai.",
+      "Do write sentence-case labels that say what happens (\"Send quote on WhatsApp\"), with a toast that repeats the verb (\"Quote sent\").",
+      "Do give every list and page explicit loading, empty and error states; an empty screen invites the next action.",
+      "Do use logical spacing and alignment (start/end, ms/me, ps/pe) so the Arabic RTL build needs no redesign.",
+      "Do keep text readable: Ledger Grey (#58696D) is the lightest colour allowed for text people need to read."
+    ],
+    "donts": [
+      "Don't look like a generic SaaS template: no purple gradients, no identical card grids, no stock hero metrics.",
+      "Don't become a WhatsApp clone: no green chat-app skin, no WhatsApp green (#25D366) backgrounds, no chat wallpaper. Channel colours stay chip-sized.",
+      "Don't go dark hacker or terminal: no dark mode as the default, no neon accents, no monospace data labels.",
+      "Don't use side-stripe accents (a coloured border-left or border-right thicker than 1px) on cards, rows or alerts. The only exception is the 2px Saffron active marker on the navigation rail.",
+      "Don't use gradient text, glassmorphism, decorative blur, or all-caps tracked eyebrow labels.",
+      "Don't nest bordered panels inside bordered panels.",
+      "Don't show a raw float or an unformatted phone number: always `formatAed` and `+971 50 123 4567`."
+    ]
+  }
+}
