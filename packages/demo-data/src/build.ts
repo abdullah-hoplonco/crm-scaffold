@@ -25,11 +25,9 @@ import {
   type User,
 } from "@hco/shared";
 import {
-  CAMPAIGNS,
   CLINIC,
   COMPANIES,
   ENQUIRIES,
-  LEAD_NAMES,
   PATIENTS,
   PIPELINE_NAME,
   STAFF,
@@ -39,6 +37,14 @@ import {
   type Treatment,
 } from "./catalog";
 import { createRng } from "./rng";
+import {
+  campaignFor,
+  simulateEnquiry,
+  simulateLead,
+  simulatePerson,
+  simulateTreatmentKey,
+  type SimulatorLeadSource,
+} from "./simulator";
 
 export interface BuildOptions {
   /** Reference "now"; every date in the story is relative to it. */
@@ -68,6 +74,13 @@ const LEAD_TARGETS: Record<LeadSource, number> = {
 
 type RepKey = "priya" | "yousef" | "maria" | "manager";
 
+/** Leads that arrived minutes ago, so Leads opens with a live speed-to-lead countdown. */
+const FRESH_LEADS: Array<{ source: LeadSource; minutesAgo: number; rep: "priya" | "yousef" | "maria" }> = [
+  { source: "instagram", minutesAgo: 6, rep: "priya" },
+  { source: "tiktok", minutesAgo: 24, rep: "yousef" },
+  { source: "facebook", minutesAgo: 41, rep: "maria" },
+];
+
 interface DealPlan {
   patient?: number;
   company?: number;
@@ -82,6 +95,8 @@ interface DealPlan {
   valueAed?: string;
   lostReason?: "price" | "competitor";
   quote?: "draft" | "sent" | "accepted";
+  /** The patient wrote last and is waiting for a reply (shows under "Waiting for your reply" on Today). */
+  waiting?: boolean;
 }
 
 const DEAL_PLAN: DealPlan[] = [
@@ -93,6 +108,7 @@ const DEAL_PLAN: DealPlan[] = [
     fromLead: true,
     days: 0.15,
     assignee: "priya",
+    waiting: true,
   },
   {
     patient: 1,
@@ -102,6 +118,7 @@ const DEAL_PLAN: DealPlan[] = [
     fromLead: true,
     days: 0.5,
     assignee: "yousef",
+    waiting: true,
   },
   {
     patient: 10,
@@ -109,8 +126,9 @@ const DEAL_PLAN: DealPlan[] = [
     stage: "enquiry",
     source: "facebook",
     fromLead: true,
-    days: 1,
+    days: 4,
     assignee: "maria",
+    waiting: true,
   },
   {
     patient: 13,
@@ -120,6 +138,7 @@ const DEAL_PLAN: DealPlan[] = [
     fromLead: true,
     days: 5,
     assignee: "priya",
+    waiting: true,
   },
   {
     company: 3,
@@ -140,6 +159,7 @@ const DEAL_PLAN: DealPlan[] = [
     fromLead: true,
     days: 0.8,
     assignee: "maria",
+    waiting: true,
   },
   {
     patient: 2,
@@ -215,6 +235,7 @@ const DEAL_PLAN: DealPlan[] = [
     fromLead: false,
     days: 7,
     assignee: "yousef",
+    waiting: true,
   },
   {
     company: 4,
@@ -273,7 +294,7 @@ const DEAL_PLAN: DealPlan[] = [
     stage: "won",
     source: "instagram",
     fromLead: true,
-    days: 3,
+    days: 1,
     assignee: "priya",
     quote: "accepted",
   },
@@ -301,7 +322,7 @@ const DEAL_PLAN: DealPlan[] = [
     stage: "won",
     source: "whatsapp",
     fromLead: true,
-    days: 22,
+    days: 18,
     assignee: "priya",
   },
   {
@@ -335,6 +356,35 @@ const NOTES = [
   "Compared our price with a clinic in JLT. Value the free follow-up visits.",
   "Has insurance with partial dental cover. Checking what applies.",
 ];
+
+const BOOKING_SLOTS = [
+  {
+    ask: "Yes please. Do you have anything on Thursday evening?",
+    offer: "Thursday at 6:30 pm is free. Shall I book it for you?",
+    when: "Thursday at 6:30 pm",
+  },
+  {
+    ask: "Yes please. Saturday morning would be best for me",
+    offer: "Saturday at 11 am is available with Dr. Hessa. Shall I book it?",
+    when: "Saturday at 11 am",
+  },
+  {
+    ask: "Sure. Can I come after work, around 7?",
+    offer: "We have 7:15 pm on Tuesday. Would that work for you?",
+    when: "Tuesday at 7:15 pm",
+  },
+];
+
+const CONFIRMATIONS = ["Perfect, please book it", "Yes that works, thank you", "Great, see you then"];
+
+const NUDGES = ["Hello? Any update on the price?", "Hi, just following up on my message above"];
+
+/** Last message from a patient who is still waiting for a reply, by stage. */
+const WAITING_QUESTIONS: Record<string, string> = {
+  booked: "Can I move my consultation to Saturday morning?",
+  consulted: "Can you send me the price for the 4 sessions again? I want to discuss it with my family first.",
+  plan: "Is the 0% instalment plan available on Emirates NBD cards?",
+};
 
 const CALLS = [
   "Called to confirm the consultation. Confirmed for Thursday 6:30 pm.",
@@ -570,8 +620,10 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     companyName?: string | null;
   }): Lead => {
     const tr = treatment(input.treatmentKey);
-    const message = enquiryFor(input.treatmentKey);
-    const campaigns = CAMPAIGNS[input.source];
+    const simSource = input.source === "manual" || input.source === "csv" ? null : input.source;
+    const message = simSource
+      ? simulateEnquiry(rng, simSource, input.treatmentKey)
+      : enquiryFor(input.treatmentKey);
     const formFields: Record<string, string> =
       input.source === "instagram" || input.source === "facebook" || input.source === "tiktok"
         ? {
@@ -597,7 +649,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       companyName: input.companyName ?? null,
       message,
       formFields,
-      campaignName: campaigns ? rng.pick(campaigns) : null,
+      campaignName: simSource ? campaignFor(simSource, input.treatmentKey) : null,
       status: input.status,
       disqualifyReason: null,
       disqualifyNote: null,
@@ -821,36 +873,62 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     conv.unreadCount = last?.dir === "in" ? rng.int(1, 3) : 0;
   };
 
-  const chatScript = (first: string, tr: Treatment, repFirst: string, stageKey: string) => {
-    const lines: Array<{ dir: "in" | "out"; body: string; kind?: "text" | "document"; quoteId?: string }> = [
-      { dir: "in", body: enquiryFor(tr.key) },
-    ];
-    const depth = stageOrder.indexOf(stageKey);
+  type ChatLine = {
+    dir: "in" | "out";
+    body: string;
+    kind?: "text" | "template" | "document";
+    templateVariables?: string[];
+  };
+  const firstTouch = (first: string, treatmentShort: string, repFirst: string): ChatLine => ({
+    dir: "out",
+    kind: "template",
+    body: firstTouchTemplate.body
+      .replace("{{1}}", first)
+      .replace("{{2}}", treatmentShort)
+      .replace("{{3}}", repFirst),
+    templateVariables: [first, treatmentShort, repFirst],
+  });
+
+  /** A WhatsApp thread that matches how far the deal got. Ad leads start with the first-touch template. */
+  const chatScript = (input: {
+    first: string;
+    tr: Treatment;
+    repFirst: string;
+    stageKey: string;
+    source: LeadSource;
+    enquiry: string;
+    waiting: boolean;
+    idleDays: number;
+    lostReason?: "price" | "competitor";
+  }): ChatLine[] => {
+    const { first, tr, repFirst, stageKey } = input;
+    const fromAd = input.source === "instagram" || input.source === "facebook" || input.source === "tiktok";
+    const lines: ChatLine[] = fromAd
+      ? [firstTouch(first, tr.short, repFirst), { dir: "in", body: `Hi ${repFirst}. ${input.enquiry}` }]
+      : [{ dir: "in", body: input.enquiry }];
+    const invite: ChatLine = {
+      dir: "out",
+      body: fromAd
+        ? `Happy to help, ${first}. Our doctor can see you for a free consultation this week and answer everything in person. Shall I book one for you?`
+        : `Hi ${first}, this is ${repFirst} from ${CLINIC.shortName}. Thank you for asking about ${tr.short}. Would you like a free consultation with our doctor this week?`,
+    };
     if (stageKey === "enquiry") {
-      if (rng.chance(0.5)) {
-        lines.push({
-          dir: "out",
-          body: `Hi ${first}, this is ${repFirst} from ${CLINIC.shortName}. Thank you for asking about ${tr.short}. Would you like a free consultation with our doctor this week?`,
-        });
-      }
+      if (!input.waiting) lines.push(invite);
+      else if (input.idleDays >= 3) lines.push({ dir: "in", body: rng.pick(NUDGES) });
       return lines;
     }
+    const slot = rng.pick(BOOKING_SLOTS);
     lines.push(
+      invite,
+      { dir: "in", body: slot.ask },
+      { dir: "out", body: slot.offer },
+      { dir: "in", body: rng.pick(CONFIRMATIONS) },
       {
         dir: "out",
-        body: `Hi ${first}, this is ${repFirst} from ${CLINIC.shortName}. Thank you for asking about ${tr.short}. Would you like a free consultation with our doctor this week?`,
-      },
-      { dir: "in", body: "Yes please. Do you have anything on Thursday evening?" },
-      {
-        dir: "out",
-        body: "Thursday at 6:30 pm is free at our Dubai Marina clinic. Shall I book it for you?",
-      },
-      { dir: "in", body: "Perfect, please book it" },
-      {
-        dir: "out",
-        body: "Done. You're booked for Thursday 6:30 pm. Parking is free in Marina Plaza, level B2.",
+        body: `Done, you're booked for ${slot.when} at our Dubai Marina clinic. Parking is free in Marina Plaza, level B2.`,
       },
     );
+    const depth = stageOrder.indexOf(stageKey);
     if (depth >= 2 && stageKey !== "lost") {
       lines.push(
         {
@@ -868,7 +946,23 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       );
     }
     if (stageKey === "lost") {
-      lines.push({ dir: "in", body: "Thanks, but I found a better price elsewhere for now." });
+      lines.push(
+        {
+          dir: "in",
+          body:
+            input.lostReason === "competitor"
+              ? "Thanks, but I've decided to go with a clinic closer to home. They offered a package."
+              : "Thank you, but it's above my budget for now. Maybe later in the year.",
+        },
+        {
+          dir: "out",
+          body: "Understood, thank you for letting us know. If anything changes, we're always happy to help.",
+        },
+      );
+    }
+    if (input.waiting && stageKey !== "enquiry") {
+      const question = WAITING_QUESTIONS[stageKey];
+      if (question) lines.push({ dir: "in", body: question });
     }
     return lines;
   };
@@ -889,7 +983,8 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       plan.stage === "lost"
         ? ["enquiry", "booked", "lost"]
         : stageOrder.slice(0, Math.max(1, depth + 1)).filter((k) => k !== "lost");
-    const spanDays = 1.5 + pathKeys.length * rng.int(2, 4);
+    // Converted leads stay inside the dashboard's 30-day window.
+    const spanDays = Math.min(1.5 + pathKeys.length * rng.int(2, 4), plan.fromLead ? 27 - plan.days : 60);
     const createdMs = lastMs - spanDays * DAY;
     const createdAt = iso(createdMs);
     const value = plan.valueAed
@@ -915,6 +1010,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
         status: "converted",
         assigneeId: assignee.id,
       });
+      lead.firstContactedAt = iso(new Date(receivedAt).getTime() + rng.int(3, 12) * MIN);
       leadsBySourceConverted[plan.source] = (leadsBySourceConverted[plan.source] ?? 0) + 1;
       contact.createdAt = createdAt;
       contact.updatedAt = createdAt;
@@ -1032,8 +1128,21 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       conversationFor.set(contact.id, conv);
     } else {
       const conv = addConversation({ channel: "whatsapp", contact, assigneeId: assignee.id, createdAt });
-      const script = chatScript(patientFirst, tr, firstName(assignee), plan.stage);
-      addMessages(conv, script, createdMs, lastMs, links, assignee.id);
+      const script = chatScript({
+        first: patientFirst,
+        tr,
+        repFirst: firstName(assignee),
+        stageKey: plan.stage,
+        source: plan.source,
+        enquiry: lead?.message ?? enquiryFor(tr.key),
+        waiting: plan.waiting ?? false,
+        idleDays: plan.days,
+        lostReason: plan.lostReason,
+      });
+      const chatStartMs = lead?.firstContactedAt
+        ? new Date(plan.source === "whatsapp" ? lead.receivedAt : lead.firstContactedAt).getTime()
+        : createdMs;
+      addMessages(conv, script, chatStartMs, lastMs, links, assignee.id);
       conversationFor.set(contact.id, conv);
     }
 
@@ -1107,22 +1216,40 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
   });
 
   // -- Unconverted leads ------------------------------------------------------------------
-  let nameCursor = 0;
   const reps = repKeys.map((k) => user(k));
   let rr = 0;
   const treatmentKeys = TREATMENTS.map((x) => x.key);
+  const treatmentOfLead = new Map<string, string>();
+  const freshLeadIds = new Set<string>();
+  // Varied names: no repeated full names and each first name at most twice.
+  const usedNames = new Set(t.contacts.map(contactName));
+  const firstNameCount = new Map<string, number>();
+  const uniquePerson = (treatmentKey: string) => {
+    for (let attempt = 0; ; attempt++) {
+      const person = simulatePerson(rng, treatmentKey);
+      const firstUses = firstNameCount.get(person.firstName) ?? 0;
+      if ((!usedNames.has(person.name) && firstUses < 2) || attempt > 12) {
+        usedNames.add(person.name);
+        firstNameCount.set(person.firstName, firstUses + 1);
+        return person;
+      }
+    }
+  };
   for (const source of Object.keys(LEAD_TARGETS) as LeadSource[]) {
     const remaining = LEAD_TARGETS[source] - (leadsBySourceConverted[source] ?? 0);
+    const fresh = FRESH_LEADS.filter((f) => f.source === source);
     for (let i = 0; i < remaining; i++) {
+      const pinned = fresh[i];
       // Skew towards recent days.
-      const ageDays = Math.pow(rng.next(), 1.8) * 30;
-      const receivedMs = nowMs - ageDays * DAY - rng.int(0, 59) * MIN;
-      const name = must(LEAD_NAMES[nameCursor % LEAD_NAMES.length], "lead name");
-      nameCursor += 1;
+      const ageDays = pinned ? pinned.minutesAgo / (24 * 60) : Math.pow(rng.next(), 1.8) * 30;
+      const receivedMs = pinned
+        ? nowMs - pinned.minutesAgo * MIN
+        : nowMs - ageDays * DAY - rng.int(0, 59) * MIN;
       let status: LeadStatus;
       let reason: DisqualifyReason | null = null;
       const roll = rng.next();
-      if (ageDays < 1) status = roll < 0.65 ? "new" : "contacted";
+      if (pinned) status = "new";
+      else if (ageDays < 1) status = roll < 0.25 ? "new" : "contacted";
       else if (source === "tiktok")
         status = roll < 0.6 ? "disqualified" : roll < 0.9 ? "contacted" : "qualified";
       else if (ageDays < 7) status = roll < 0.5 ? "contacted" : roll < 0.7 ? "qualified" : "disqualified";
@@ -1133,21 +1260,46 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
             ? rng.pick(["not_interested", "spam", "wrong_number", "not_interested"] as const)
             : rng.pick(["not_interested", "out_of_area", "duplicate", "other"] as const);
       }
-      const assignee = ageDays < 0.1 && rng.chance(0.3) ? null : must(reps[rr++ % reps.length], "rep");
+      const assignee = pinned
+        ? user(pinned.rep)
+        : ageDays < 0.1 && rng.chance(0.3)
+          ? null
+          : must(reps[rr++ % reps.length], "rep");
+      const simSource: SimulatorLeadSource | null = source === "manual" || source === "csv" ? null : source;
+      const treatmentKey = simSource ? simulateTreatmentKey(rng, simSource) : rng.pick(treatmentKeys);
+      const person = uniquePerson(treatmentKey);
       const lead = makeLead({
-        name,
-        phone: source === "tiktok" && rng.chance(0.15) ? null : uaeMobile(),
-        email: rng.chance(0.5)
-          ? `${slug(name)}@${rng.pick(["gmail.com", "hotmail.com", "icloud.com"])}`
-          : null,
+        name: person.name,
+        phone: uaeMobile(),
+        email: null,
         source,
         receivedAt: iso(receivedMs),
-        treatmentKey: rng.pick(treatmentKeys),
+        treatmentKey,
         status,
         assigneeId: assignee?.id ?? null,
       });
+      if (simSource) {
+        // Form answers, enquiry and ids exactly as the Simulator produces them for this person.
+        const sim = simulateLead(rng, {
+          source: simSource,
+          usedPhones,
+          now: new Date(receivedMs),
+          phoneE164: lead.phoneE164,
+          treatmentKey,
+          person,
+        });
+        lead.email = sim.email;
+        lead.message = sim.message;
+        lead.formFields = sim.formFields;
+        lead.campaignName = sim.campaignName;
+        lead.externalId = sim.externalId;
+        lead.rawPayload = sim.rawPayload;
+      } else if (rng.chance(0.5)) {
+        lead.email = `${slug(person.firstName)}.${slug(person.lastName)}@${rng.pick(["gmail.com", "hotmail.com", "icloud.com"])}`;
+      }
+      treatmentOfLead.set(lead.id, treatmentKey);
+      if (pinned) freshLeadIds.add(lead.id);
       lead.disqualifyReason = reason;
-      if (source === "tiktok" && lead.phoneE164 === null) lead.message = "(no phone number submitted)";
       if (status !== "new") {
         lead.updatedAt = lead.firstContactedAt ?? lead.updatedAt;
       }
@@ -1195,9 +1347,11 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
   returningLead.matchedContactId = returning.id;
 
   // WhatsApp conversations for recent leads: some unanswered, some waiting on a template reply.
+  // Fresh ad leads have no conversation yet: nobody has replied to them.
   const recentLeads = t.leads
     .filter((l) => l.status === "new" || l.status === "contacted")
     .filter((l) => l.phoneE164 && l.matchedContactId === null && l.convertedContactId === null)
+    .filter((l) => !freshLeadIds.has(l.id) || l.source === "whatsapp")
     .sort((a, b) => b.receivedAt.localeCompare(a.receivedAt))
     .slice(0, 7);
   recentLeads.forEach((lead, i) => {
@@ -1222,7 +1376,13 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     } else {
       const first = lead.name.split(" ")[0] ?? lead.name;
       const repFirst = assignee ? firstName(assignee) : "the team";
-      const tr = treatment(rng.pick(treatmentKeys));
+      const tr = treatment(treatmentOfLead.get(lead.id) ?? rng.pick(treatmentKeys));
+      const sentMs = receivedMs + 6 * MIN;
+      if (lead.status === "new") {
+        lead.status = "contacted";
+        lead.updatedAt = iso(sentMs);
+      }
+      if (!lead.firstContactedAt || lead.firstContactedAt > iso(sentMs)) lead.firstContactedAt = iso(sentMs);
       addMessages(
         conv,
         [
@@ -1236,8 +1396,8 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
             templateVariables: [first, tr.short, repFirst],
           },
         ],
-        receivedMs + 6 * MIN,
-        receivedMs + 6 * MIN,
+        sentMs,
+        sentMs,
         links,
         assignee?.id ?? null,
       );
@@ -1275,8 +1435,8 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       t.deals.find((d) => d.title.includes(fragment)),
       `deal ${fragment}`,
     );
-  const today9 = new Date(now);
-  today9.setUTCHours(5, 0, 0, 0); // 09:00 Asia/Dubai
+  // 09:00 today in Asia/Dubai (UTC+4 all year).
+  const today9 = new Date(`${new Date(nowMs + 4 * HOUR).toISOString().slice(0, 10)}T05:00:00.000Z`);
   const manualTasks: Array<{ title: string; deal: Deal; dueMs: number }> = [
     {
       title: "Send the Invisalign treatment plan",
@@ -1453,14 +1613,12 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
 
   // -- Counters, assignment -------------------------------------------------------------------
   t.quoteCounters.push({ workspaceId: ws.id, year: quoteYear, lastNumber: quoteSeq });
-  const lastAssigned = [...t.leads]
-    .filter((l) => l.assigneeId && reps.some((r) => r.id === l.assigneeId))
-    .sort((a, b) => b.receivedAt.localeCompare(a.receivedAt))[0];
   t.assignmentRules.push({
     ...row(workspaceCreated, ago(1 * HOUR)),
     strategy: "round_robin",
     eligibleUserIds: reps.map((r) => r.id),
-    lastAssignedUserId: lastAssigned?.assigneeId ?? null,
+    // Maria was last, so the first simulated lead goes to Priya, as the demo panel's script says.
+    lastAssignedUserId: user("maria").id,
   });
 
   // Order deals inside each column by recency.
