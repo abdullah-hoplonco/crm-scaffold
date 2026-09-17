@@ -69,7 +69,7 @@
     "title": "Rep windows",
     "description": "Each window signs in on its own, so you stay here as {{name}}.",
     "open": "Open window",
-    "openLabel": "Open as {{name}} in a new window",
+    "openLabel": "Open window for {{name}}",
     "next": "Next lead",
     "newLeads_one": "{{count}} new lead",
     "newLeads_other": "{{count}} new leads",

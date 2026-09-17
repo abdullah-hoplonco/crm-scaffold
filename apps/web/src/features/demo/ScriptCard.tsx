@@ -3,6 +3,7 @@ import { AppWindow, Check, ClipboardList } from "lucide-react";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useDemoSession } from "./demo-session";
 import { openRepWindow } from "./RepWindows";
@@ -45,10 +46,13 @@ function Step({
 /** The three-step story from the brief, with live ticks as the presenter follows it. */
 export function ScriptCard({
   status,
+  isLoading,
   pending,
   onRun,
 }: {
   status: DemoStatus | undefined;
+  /** While true the rep names aren't known yet, so the steps show placeholders. */
+  isLoading: boolean;
   pending: DemoActionKey | null;
   onRun: (key: DemoActionKey) => void;
 }) {
@@ -77,48 +81,59 @@ export function ScriptCard({
       <h2 id="demo-script" className="text-base font-semibold">
         {t("script.title")}
       </h2>
-      <ol className="mt-4 flex flex-col gap-4">
-        <Step
-          number={1}
-          done={step1Done}
-          action={
-            rep ? (
-              <Button variant="outline" size="sm" onClick={() => openRepWindow(rep)}>
-                <AppWindow />
-                {t("script.step1Action", { name: repFirst })}
+      {isLoading ? (
+        <div className="mt-4 flex flex-col gap-4" aria-busy="true">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="flex items-center gap-3">
+              <Skeleton className="size-6 rounded-full" />
+              <Skeleton className="h-4 w-full max-w-sm" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <ol className="mt-4 flex flex-col gap-4">
+          <Step
+            number={1}
+            done={step1Done}
+            action={
+              rep ? (
+                <Button variant="outline" size="sm" onClick={() => openRepWindow(rep)}>
+                  <AppWindow />
+                  {t("script.step1Action", { name: repFirst })}
+                </Button>
+              ) : null
+            }
+          >
+            {t("script.step1", { name: repFirst })}
+          </Step>
+          <Step
+            number={2}
+            done={step2Done}
+            action={
+              <Button size="sm" onClick={() => onRun("instagram")} disabled={pending !== null}>
+                <ClipboardList />
+                {t("actions.instagram.label")}
               </Button>
-            ) : null
-          }
-        >
-          {t("script.step1", { name: repFirst })}
-        </Step>
-        <Step
-          number={2}
-          done={step2Done}
-          action={
-            <Button size="sm" onClick={() => onRun("instagram")} disabled={pending !== null}>
-              <ClipboardList />
-              {t("actions.instagram.label")}
-            </Button>
-          }
-        >
-          {t("script.step2")}
-          {nextIsSomeoneElse && assignment?.nextAssigneeName ? (
-            <p className="mt-1.5 rounded-md bg-warning-soft px-2.5 py-1.5 text-xs leading-relaxed text-[#6B4700]">
-              {t("script.nextIsSomeoneElse", {
-                next: assignment.nextAssigneeName,
-                nextFirst: firstNameOf(assignment.nextAssigneeName),
-              })}
-            </p>
-          ) : null}
-          {isManual ? (
-            <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{t("script.manual")}</p>
-          ) : null}
-        </Step>
-        <Step number={3} done={step3Done}>
-          {t("script.step3", { name: repFirst })}
-        </Step>
-      </ol>
+            }
+          >
+            {t("script.step2")}
+            {nextIsSomeoneElse && assignment?.nextAssigneeName ? (
+              <p className="mt-1.5 rounded-md bg-warning-soft px-2.5 py-1.5 text-xs leading-relaxed text-[#6B4700]">
+                {t("script.nextIsSomeoneElse", {
+                  next: assignment.nextAssigneeName,
+                  nextFirst: firstNameOf(assignment.nextAssigneeName),
+                })}
+              </p>
+            ) : null}
+            {isManual ? (
+              <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{t("script.manual")}</p>
+            ) : null}
+          </Step>
+          <Step number={3} done={step3Done}>
+            {t("script.step3", { name: repFirst })}
+          </Step>
+        </ol>
+      )}
     </section>
   );
 }

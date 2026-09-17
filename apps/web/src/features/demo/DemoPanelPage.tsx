@@ -56,7 +56,12 @@ function DemoPanel() {
       <div className="px-4 pb-10 sm:px-6 lg:px-8">
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_26rem] xl:items-start xl:gap-8">
           <div className="flex min-w-0 flex-col gap-8">
-            <ScriptCard status={status.data} pending={pending} onRun={(key) => void runAction(key)} />
+            <ScriptCard
+              status={status.data}
+              isLoading={status.isPending}
+              pending={pending}
+              onRun={(key) => void runAction(key)}
+            />
             <SimulatorControls
               pending={pending}
               onRun={(key) => void runAction(key)}
