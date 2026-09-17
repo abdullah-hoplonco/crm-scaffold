@@ -8,19 +8,46 @@
         "role": "primary",
         "displayName": "Lagoon Teal",
         "canonical": "#0F5F66",
-        "tonalRamp": ["#082F33", "#0B474C", "#0F5F66", "#2E7A80", "#5E9CA1", "#96C1C4", "#C6DEDF", "#E0EEEE"]
+        "tonalRamp": [
+          "#082F33",
+          "#0B474C",
+          "#0F5F66",
+          "#2E7A80",
+          "#5E9CA1",
+          "#96C1C4",
+          "#C6DEDF",
+          "#E0EEEE"
+        ]
       },
       "saffron": {
         "role": "secondary",
         "displayName": "Saffron",
         "canonical": "#E3A21A",
-        "tonalRamp": ["#5A3A00", "#8A5A04", "#B87708", "#E3A21A", "#EDBB52", "#F4D38C", "#F9E6C0", "#FCF0D8"]
+        "tonalRamp": [
+          "#3D2800",
+          "#5A3A00",
+          "#8a5a00",
+          "#C4830F",
+          "#E3A21A",
+          "#EDBB52",
+          "#F4D38C",
+          "#FCF0D8"
+        ]
       },
       "deep-ink": {
         "role": "tertiary",
         "displayName": "Deep Ink",
         "canonical": "#0F2B31",
-        "tonalRamp": ["#081A1E", "#0F2B31", "#173F48", "#1D3C43", "#3F6268", "#8AAEB2", "#BFD3D5", "#D5E5E6"]
+        "tonalRamp": [
+          "#081A1E",
+          "#0F2B31",
+          "#173F48",
+          "#1D3C43",
+          "#3F6268",
+          "#8AAEB2",
+          "#BFD3D5",
+          "#D5E5E6"
+        ]
       },
       "ledger-ink": {
         "role": "neutral",

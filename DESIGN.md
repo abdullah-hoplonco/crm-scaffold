@@ -6,7 +6,7 @@ colors:
   lagoon-teal-ink: "#0B474C"
   lagoon-mist: "#E0EEEE"
   saffron: "#E3A21A"
-  saffron-deep: "#B87708"
+  saffron-deep: "#8a5a00"
   saffron-mist: "#FCF0D8"
   deep-ink: "#0F2B31"
   deep-ink-raised: "#173F48"
@@ -159,7 +159,7 @@ A restrained palette: teal-tinted neutrals, one action accent, one attention acc
 
 ### Secondary
 
-- **Saffron** (#E3A21A): anything that needs the user now: unread and new-lead counts, the "Reply within 8 min" speed-to-lead chip, stale-deal flags ("No activity for 5 days"), the active marker on the navigation rail. **Saffron Deep** (#B87708) carries saffron-coloured text on light surfaces; **Saffron Mist** (#FCF0D8) is its background wash.
+- **Saffron** (#E3A21A): anything that needs the user now: unread and new-lead counts, the "Reply within 8 min" speed-to-lead chip, stale-deal flags ("No activity for 5 days"), the active marker on the navigation rail. **Saffron Deep** (#8a5a00) carries saffron-coloured text on light surfaces — darkened from #B87708, which measured 3.70:1 on white and failed the 4.5:1 body-text floor; **Saffron Mist** (#FCF0D8) is its background wash.
 
 ### Tertiary
 
