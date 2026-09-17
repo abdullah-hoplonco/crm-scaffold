@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import { ErrorState } from "@/components/app/States";
+import { TourHost } from "@/features/tour";
 import { useLiveUpdates } from "@/lib/live";
 import { sessionQuery, useSession } from "@/lib/session";
 
@@ -20,6 +21,8 @@ function SignedInLayout() {
   return (
     <AppShell>
       <Outlet />
+      {/* Guided tour. Renders nothing unless the demo flag is on (see features/tour). */}
+      <TourHost />
     </AppShell>
   );
 }

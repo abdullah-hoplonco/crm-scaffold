@@ -21,6 +21,7 @@ export function HeadlineFigures({ summary, className }: { summary: DashboardSumm
   return (
     <section
       aria-label={t("figures.label")}
+      data-tour="dashboard-headline"
       className={cn(
         "grid grid-cols-2 overflow-hidden rounded-xl border bg-card md:grid-cols-[2fr_1fr_1fr] xl:grid-cols-2",
         className,

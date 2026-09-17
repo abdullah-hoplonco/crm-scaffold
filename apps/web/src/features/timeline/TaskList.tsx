@@ -39,7 +39,7 @@ export function TaskList({ subject }: { subject: TimelineSubject }) {
     <div className="flex flex-col gap-3">
       <AddTaskForm subject={subject} />
       {open.length > 0 ? (
-        <ul className="flex flex-col divide-y rounded-lg border bg-card">
+        <ul className="flex flex-col divide-y rounded-lg border bg-card" data-tour="task-list">
           {open.map((task) => (
             <TaskRow key={task.id} task={task} listInput={input} subject={subject} />
           ))}

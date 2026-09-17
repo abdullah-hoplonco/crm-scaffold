@@ -18,7 +18,7 @@ export function TotalsSummary({
 }) {
   const { t } = useTranslation("quotes");
   return (
-    <dl aria-live="polite" className={cn("rounded-lg border bg-card p-4 text-sm", className)}>
+    <dl aria-live="polite" data-tour="quote-totals" className={cn("rounded-lg border bg-card p-4 text-sm", className)}>
       <div className="flex justify-between gap-4 py-1">
         <dt className="text-muted-foreground">{t("builder.subtotal")}</dt>
         <dd className="tabular-nums">AED {formatAmount(subtotalAed)}</dd>

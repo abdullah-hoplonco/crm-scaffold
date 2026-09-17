@@ -26,6 +26,7 @@ export function MobilePipeline({ columns, boardInput }: { columns: BoardColumn[]
       <div
         role="tablist"
         aria-label={t("mobile.stagesLabel")}
+        data-tour="stage-tabs"
         className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:-mx-6 sm:px-6"
       >
         {columns.map((column) => {
@@ -73,7 +74,7 @@ export function MobilePipeline({ columns, boardInput }: { columns: BoardColumn[]
 
       <ul id="pipeline-stage-list" role="tabpanel" className="flex flex-col gap-2">
         {selected.deals.map((card) => (
-          <li key={card.id} className="relative">
+          <li key={card.id} className="relative" data-tour="deal-card">
             <DealCardView
               card={card}
               actions={

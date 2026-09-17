@@ -117,7 +117,7 @@ export function QuoteBuilder({
           </p>
         )}
 
-        <section aria-labelledby="quote-items" className="flex flex-col gap-3">
+        <section aria-labelledby="quote-items" data-tour="quote-lines" className="flex flex-col gap-3">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 id="quote-items" className="text-base font-semibold">
@@ -193,14 +193,18 @@ export function QuoteBuilder({
             <Eye />
             {t("builder.preview")}
           </Button>
-          <Button type="submit" disabled={submitting}>
+          <Button type="submit" data-tour="quote-save" disabled={submitting}>
             {submitting ? t("builder.saving") : submitLabel}
           </Button>
         </div>
       </div>
 
       {/* Live preview beside the form on wide screens */}
-      <aside aria-label={t("builder.previewTitle")} className="sticky top-6 hidden min-w-0 xl:block">
+      <aside
+        aria-label={t("builder.previewTitle")}
+        data-tour="quote-preview"
+        className="sticky top-6 hidden min-w-0 xl:block"
+      >
         <QuoteDocument model={preview} />
       </aside>
 
@@ -223,7 +227,7 @@ export function QuoteBuilder({
         >
           <Eye />
         </Button>
-        <Button type="submit" disabled={submitting}>
+        <Button type="submit" data-tour="quote-save" disabled={submitting}>
           {submitting ? t("builder.saving") : submitLabel}
         </Button>
       </div>

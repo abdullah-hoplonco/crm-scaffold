@@ -1,0 +1,154 @@
+{
+  "start": {
+    "title": "Guided tour",
+    "body": "Seven chapters that walk a client through the whole story on the real screens. The tour drives the demo workspace: it sends the lead, opens the thread, and points at what matters.",
+    "present": "Present it",
+    "presentHint": "Chapters move on by themselves. For a demo you are giving.",
+    "selfServe": "Walk it yourself",
+    "selfServeHint": "Next moves a chapter on; the steps that ask for something show you where to click. For a client on their own.",
+    "resume": "Resume chapter {{number}}",
+    "restart": "Start from the beginning",
+    "checklistTitle": "Chapters",
+    "checklistHint": "Pick any chapter to jump straight to it.",
+    "progress": "{{done}} of {{total}} done",
+    "done": "Done",
+    "notStarted": "Not started",
+    "inProgress": "In progress"
+  },
+  "card": {
+    "chapter": "Chapter {{number}} of {{total}}",
+    "step": "Step {{number}} of {{total}}",
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip",
+    "finish": "Finish",
+    "close": "Close the tour",
+    "pause": "Pause",
+    "play": "Play",
+    "paused": "Paused",
+    "waiting": "Do it on the screen when you are ready.",
+    "gap": "This screen isn't ready yet. Carry on with Next.",
+    "doneTitle": "That is the story",
+    "doneBody": "One enquiry: Instagram ad to WhatsApp to quotation to money in the owner's dashboard. Start again whenever you like.",
+    "doneAgain": "Start again",
+    "doneClose": "Close",
+    "progressLabel": "Tour progress"
+  },
+  "resumePill": "Continue the tour",
+  "resumePillDismiss": "Hide",
+  "toast": {
+    "title": "A new enquiry just arrived",
+    "body": "{{text}}",
+    "failed": "The demo could not set this step up. Carry on with Next."
+  },
+  "chapters": {
+    "enquiry": {
+      "name": "An enquiry arrives",
+      "steps": {
+        "arrives": {
+          "body": "An Instagram ad just delivered a real lead into the demo workspace. Nothing was typed in by hand."
+        },
+        "listed": {
+          "title": "Straight to the top",
+          "body": "Every enquiry lands in one list, newest first, with the campaign that produced it."
+        },
+        "speed": {
+          "title": "Speed is the product",
+          "body": "The saffron chip counts down the reply window. Fifteen minutes is the clinic's own rule, and it is visible to whoever picks it up."
+        }
+      }
+    },
+    "assigned": {
+      "name": "It's already assigned",
+      "steps": {
+        "owner": {
+          "body": "Round-robin gave the lead to a coordinator the second it arrived. Nobody has to triage it in the morning."
+        },
+        "task": {
+          "title": "And it has a task",
+          "body": "A follow-up was created with it: call within fifteen minutes. It sits on the lead and on the rep's day."
+        }
+      }
+    },
+    "whatsapp": {
+      "name": "Reply on WhatsApp",
+      "steps": {
+        "thread": {
+          "body": "The patient writes to the clinic on WhatsApp. It lands in the same record as the ad, so the whole conversation sits in one place."
+        },
+        "window": {
+          "title": "The 24-hour rule",
+          "body": "WhatsApp allows free replies for 24 hours after the patient's last message. The bar shows exactly how long is left."
+        },
+        "composer": {
+          "title": "Reply from here",
+          "body": "Type and send. It goes out on the clinic's WhatsApp and lands on the lead's timeline as a message."
+        }
+      }
+    },
+    "deal": {
+      "name": "Turn it into a deal",
+      "steps": {
+        "convert": {
+          "body": "Press Convert to deal. The name, the number and the treatment all came across from the ad. Nothing was retyped."
+        },
+        "dialog": {
+          "title": "Nothing to retype",
+          "body": "Contact, treatment and stage are already set. Type the treatment value, then Convert to deal writes the contact, the deal and the history in one go."
+        },
+        "board": {
+          "title": "On the board",
+          "body": "The deal is in the first stage with its value, its owner and its source. That is real pipeline now, not a spreadsheet row."
+        }
+      }
+    },
+    "pipeline": {
+      "name": "Move it forward",
+      "steps": {
+        "drag": {
+          "body": "Drag the card into Consultation booked. On a phone, use Move to. The board writes the change down as it happens."
+        },
+        "won": {
+          "title": "And finish it",
+          "body": "Drop it on Treatment booked once the patient says yes — on a phone, open Consultation booked and use Move to. The deal closes, and the whole history stays with it."
+        }
+      }
+    },
+    "quote": {
+      "name": "Send the quote",
+      "steps": {
+        "build": {
+          "body": "The treatment is already priced. Add it from the clinic's own price list, then check what the patient will see."
+        },
+        "totals": {
+          "title": "5% VAT, in AED",
+          "body": "Subtotal, VAT and total are worked out as you go, in the clinic's currency and with its TRN. Press Save draft."
+        },
+        "pdf": {
+          "title": "A real quotation",
+          "body": "This is a proper UAE quotation for the patient to keep. Download PDF gives you the file that gets sent."
+        },
+        "send": {
+          "title": "Send it on WhatsApp",
+          "body": "Press Send on WhatsApp. The PDF goes out inside the 24-hour window and is filed against the deal."
+        },
+        "landed": {
+          "title": "It's in the chat",
+          "body": "The quotation is now a document in the conversation, linked to the quote and the deal. One record, from ad to answer."
+        }
+      }
+    },
+    "owner": {
+      "name": "The owner's view",
+      "steps": {
+        "money": {
+          "body": "What is open, what is weighted, what closed this month. This is the screen the owner actually buys."
+        },
+        "sources": {
+          "title": "What brings business",
+          "body": "TikTok sends the most enquiries and closes none of them. Instagram and WhatsApp bring the revenue. The clinic can see where to spend."
+        }
+      }
+    }
+  }
+}

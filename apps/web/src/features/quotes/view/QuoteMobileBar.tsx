@@ -55,6 +55,7 @@ export function QuoteMobileBar({
     <Button
       variant="outline"
       size="icon"
+      data-tour="quote-download"
       aria-label={actions.downloading ? t("view.downloading") : t("view.download")}
       disabled={actions.downloading}
       onClick={actions.download}
@@ -75,7 +76,7 @@ export function QuoteMobileBar({
           {downloadButton}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="flex-1" disabled={actions.sendingVia !== null}>
+              <Button className="flex-1" data-tour="quote-send" disabled={actions.sendingVia !== null}>
                 {actions.sendingVia ? t("send.sending") : t("send.title", { name: detail.contact.firstName })}
                 <ChevronUp />
               </Button>

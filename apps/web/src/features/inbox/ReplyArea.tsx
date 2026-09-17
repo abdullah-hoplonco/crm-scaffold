@@ -41,6 +41,7 @@ export function ReplyArea({
         ) : (
           <div
             role="status"
+            data-tour="service-window"
             className="flex flex-col gap-3 border-b border-attention/30 bg-warning-soft px-4 py-3 sm:flex-row sm:items-center"
           >
             <p className="flex min-w-0 flex-1 gap-2.5 text-sm text-foreground">
@@ -97,7 +98,7 @@ function WindowOpenBar({ remainingMs }: { remainingMs: number }) {
           style={{ width: `${Math.max(1, left * 100)}%` }}
         />
       </span>
-      <p className="flex items-center gap-1.5 px-4 pt-2.5 text-xs sm:px-5">
+      <p className="flex items-center gap-1.5 px-4 pt-2.5 text-xs sm:px-5" data-tour="service-window">
         <Timer
           aria-hidden="true"
           className={cn("size-3.5 shrink-0", closing ? "text-warning" : "text-channel-whatsapp")}
@@ -150,7 +151,7 @@ function Composer({
       : t("composer.placeholder");
 
   return (
-    <form onSubmit={submit} className="flex items-end gap-2 px-3 py-3 sm:px-4">
+    <form onSubmit={submit} className="flex items-end gap-2 px-3 py-3 sm:px-4" data-tour="composer">
       {channel === "whatsapp" ? (
         <Button
           type="button"

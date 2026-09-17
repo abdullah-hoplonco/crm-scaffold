@@ -29,6 +29,7 @@ export const SortableDealCard = memo(function SortableDealCard({
   return (
     <li
       ref={setNodeRef}
+      data-tour="deal-card"
       style={{ transform: CSS.Translate.toString(transform), transition }}
       {...attributes}
       {...listeners}

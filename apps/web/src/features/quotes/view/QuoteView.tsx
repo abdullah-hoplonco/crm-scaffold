@@ -51,7 +51,12 @@ export function QuoteView({ detail }: { detail: QuoteDetail }) {
                 </Link>
               </Button>
             ) : null}
-            <Button variant="outline" disabled={actions.downloading} onClick={actions.download}>
+            <Button
+              variant="outline"
+              data-tour="quote-download"
+              disabled={actions.downloading}
+              onClick={actions.download}
+            >
               <Download />
               {actions.downloading ? t("view.downloading") : t("view.download")}
             </Button>

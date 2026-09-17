@@ -138,7 +138,7 @@ function LeadDetailView({ detail }: { detail: LeadDetail }) {
         </div>
         {isOpen ? (
           <div className="flex flex-col gap-2 sm:flex-row-reverse sm:flex-wrap sm:items-center lg:shrink-0">
-            <Button onClick={() => setConverting(true)} className="w-full sm:w-auto">
+            <Button onClick={() => setConverting(true)} className="w-full sm:w-auto" data-tour="lead-convert">
               <ArrowRightLeft className="size-4" />
               {t("actions.convert")}
             </Button>
@@ -242,7 +242,7 @@ function LeadDetailView({ detail }: { detail: LeadDetail }) {
           <Timeline subject={{ leadId: lead.id }} allowCompose={isOpen} />
         </section>
 
-        <section className="lg:col-start-1 lg:row-start-3" aria-labelledby="lead-tasks">
+        <section className="lg:col-start-1 lg:row-start-3" aria-labelledby="lead-tasks" data-tour="lead-tasks">
           <h2 id="lead-tasks" className="mb-3 text-base font-semibold">
             {t("detail.tasks")}
           </h2>

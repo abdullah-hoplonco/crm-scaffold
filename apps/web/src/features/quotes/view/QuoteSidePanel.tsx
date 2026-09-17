@@ -103,7 +103,7 @@ function SendSection({ detail, actions }: { detail: QuoteDetail; actions: QuoteA
   const { t } = useTranslation("quotes");
   const name = detail.contact.firstName;
   return (
-    <section className="flex flex-col gap-4 p-4 sm:p-5">
+    <section data-tour="quote-send-desktop" className="flex flex-col gap-4 p-4 sm:p-5">
       <h2 className="text-sm font-semibold">{t("send.title", { name })}</h2>
       <ChannelRow
         icon={MessageCircle}

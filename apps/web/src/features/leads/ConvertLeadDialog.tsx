@@ -135,7 +135,10 @@ export function ConvertLeadDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-[calc(100dvh-2rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl">
+      <DialogContent
+        data-tour="convert-dialog"
+        className="flex max-h-[calc(100dvh-2rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl"
+      >
         <DialogHeader className="border-b px-5 pt-5 pb-4 text-start sm:px-6">
           <DialogTitle>{t("convert.title", { name: lead.name })}</DialogTitle>
           <DialogDescription>{t("convert.description")}</DialogDescription>
