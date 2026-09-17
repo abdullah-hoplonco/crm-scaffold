@@ -27,7 +27,7 @@
     "goingCold_one": "1 going cold",
     "goingCold_other": "{{count}} going cold",
     "allMoving": "None going cold",
-    "noOpenDeals": "Nothing in the pipeline yet"
+    "noOpenDeals": "No deals yet"
   },
   "insights": {
     "title": "What stands out",
@@ -46,7 +46,9 @@
     "connectChannels": "Connect channels",
     "openLeads": "Open leads",
     "footnote_one": "Picked by fixed rules from the last day of leads and deals.",
-    "footnote_other": "Picked by fixed rules from the last {{count}} days of leads and deals."
+    "footnote_other": "Picked by fixed rules from the last {{count}} days of leads and deals.",
+    "periodSummary_one": "1 lead came in and {{deals}} became a deal.",
+    "periodSummary_other": "{{count}} leads came in and {{deals}} became deals."
   },
   "sources": {
     "title": "Where leads come from",

@@ -1,7 +1,7 @@
 import { dashboardInsights, type Insight } from "@hco/core/reports/index";
 import type { DashboardSummary } from "@hco/shared/api/dashboard";
 import { Link } from "@tanstack/react-router";
-import { Inbox, Snowflake, TrendingDown, Trophy, type LucideIcon } from "lucide-react";
+import { Inbox, Snowflake, TrendingDown, Trophy, UserPlus, type LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { sourceColorClass } from "@/components/app/SourceBadge";
 import { Button } from "@/components/ui/button";
@@ -44,6 +44,8 @@ function useInsightText() {
           count: insight.count,
           value: formatAed(insight.valueAed, { compact: true }),
         });
+      case "period_summary":
+        return t("insights.periodSummary", { count: insight.leads, deals: insight.deals });
       case "no_leads":
         return t("insights.noLeads");
     }
@@ -61,6 +63,7 @@ function Marker({ insight }: { insight: Insight }) {
   const icons: Record<Exclude<Insight["kind"], "source_without_deals" | "best_source">, LucideIcon> = {
     stale_deals: Snowflake,
     funnel_drop: TrendingDown,
+    period_summary: UserPlus,
     won_this_month: Trophy,
     no_leads: Inbox,
   };

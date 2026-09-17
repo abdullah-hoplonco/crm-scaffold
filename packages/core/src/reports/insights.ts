@@ -11,6 +11,7 @@ export type Insight =
   | { kind: "stale_deals"; count: number; valueAed: string }
   | { kind: "funnel_drop"; fromStage: string; toStage: string; conversionPct: number }
   | { kind: "won_this_month"; count: number; valueAed: string }
+  | { kind: "period_summary"; leads: number; deals: number }
   | { kind: "no_leads" };
 
 export interface InsightInput {
@@ -27,8 +28,7 @@ const WEAK_STEP_PCT = 50;
 
 export function dashboardInsights(input: InsightInput, limit = 3): Insight[] {
   const totalLeads = input.leadsBySource.reduce((n, s) => n + s.leads, 0);
-  if (totalLeads === 0 && input.funnel.every((s) => s.reachedCount === 0)) return [{ kind: "no_leads" }];
-
+  const totalDeals = input.leadsBySource.reduce((n, s) => n + s.deals, 0);
   const found: Insight[] = [];
 
   const withoutDeals = input.leadsBySource
@@ -71,5 +71,13 @@ export function dashboardInsights(input: InsightInput, limit = 3): Insight[] {
     found.push({ kind: "won_this_month", ...input.wonThisMonth });
   }
 
+  // Nothing crossed a threshold: still say what happened, or invite the first lead.
+  if (found.length === 0) {
+    found.push(
+      totalLeads > 0
+        ? { kind: "period_summary", leads: totalLeads, deals: totalDeals }
+        : { kind: "no_leads" },
+    );
+  }
   return found.slice(0, limit);
 }
