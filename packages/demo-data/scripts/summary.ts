@@ -1,11 +1,11 @@
 /**
  * Story check for the demo dataset: prints what the owner dashboard and each rep's Today will show.
- * Run with `pnpm --filter @hco/demo-data exec tsx scripts/summary.ts`.
+ * Run with `pnpm --filter @hco/demo-data exec tsx scripts/summary.ts` (set NOW=2026-10-01T04:00:00Z to try another day).
  */
 import { buildDemoDataset } from "../src/index";
 
 const DAY = 86_400_000;
-const now = new Date();
+const now = process.env.NOW ? new Date(process.env.NOW) : new Date();
 const t = buildDemoDataset({ now });
 const nowIso = now.toISOString();
 const since = (days: number) => new Date(now.getTime() - days * DAY).toISOString();

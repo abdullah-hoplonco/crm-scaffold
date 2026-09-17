@@ -219,7 +219,10 @@ const COPY: Record<string, TreatmentCopy> = {
       "Is HydraFacial okay for sensitive skin? I get redness easily",
     ],
     tiktok: ["hydrafacial price", "do u have offer this month"],
-    whatsapp: ["Hi, how much is one HydraFacial session? Can I come this weekend?"],
+    whatsapp: [
+      "Hi, how much is one HydraFacial session? Can I come this weekend?",
+      "Hello! Do you have a HydraFacial package for brides? My wedding is next month",
+    ],
     campaign: "Summer glow HydraFacial",
   },
   invisalign: {
@@ -252,19 +255,28 @@ const COPY: Record<string, TreatmentCopy> = {
       "Price for forehead and crow's feet? I want it to look natural",
     ],
     tiktok: ["botox price?", "how much for forehead", "is it safe"],
-    whatsapp: ["Hi, is Dr. Hessa available for Botox this week? Forehead lines only"],
+    whatsapp: [
+      "Hi, is Dr. Hessa available for Botox this week? Forehead lines only",
+      "Hello, how long does Botox last? Thinking of doing it before Eid",
+    ],
     campaign: "Botox myths busted",
   },
   fillers: {
     form: ["Lip filler 1 ml price? Natural look only", "Do you use Juvederm or Restylane for lips?"],
     tiktok: ["lips price", "how much 1ml", "do you have offers"],
-    whatsapp: ["Hi! How much is lip filler? I saw the before and after video"],
+    whatsapp: [
+      "Hi! How much is lip filler? I saw the before and after video",
+      "Hello, can I get lip filler and be back at work the next day?",
+    ],
     campaign: "Lip filler before & after",
   },
   whitening: {
     form: ["Teeth whitening before my wedding next month, how long does it last?"],
     tiktok: ["whitening price"],
-    whatsapp: ["Hello, how much is Zoom whitening? Is it one session?"],
+    whatsapp: [
+      "Hello, how much is Zoom whitening? Is it one session?",
+      "Hi, I have a wedding in 3 weeks. Is whitening enough time?",
+    ],
     campaign: "Wedding-ready smile",
   },
   veneers: {
@@ -273,19 +285,28 @@ const COPY: Record<string, TreatmentCopy> = {
       "What's the difference between composite and porcelain veneers in price?",
     ],
     tiktok: ["veneers price per tooth", "hollywood smile cost"],
-    whatsapp: ["Hi, my friend did her veneers with you last year. Can I book a smile consultation?"],
+    whatsapp: [
+      "Hi, my friend did her veneers with you last year. Can I book a smile consultation?",
+      "Hello, how much for a full smile makeover with veneers? Top and bottom",
+    ],
     campaign: "Smile makeover stories",
   },
   prp: {
     form: ["PRP for hair loss, how many sessions and what's the price?"],
     tiktok: ["prp hair price"],
-    whatsapp: ["Hello, I'm losing hair at the front. Does PRP work? How much for 4 sessions?"],
+    whatsapp: [
+      "Hello, I'm losing hair at the front. Does PRP work? How much for 4 sessions?",
+      "Hi, do you do PRP for hair on Fridays? I'm in JLT",
+    ],
     campaign: "PRP hair restoration",
   },
   profhilo: {
     form: ["Profhilo for neck and face, what is the downtime?"],
     tiktok: ["profhilo price"],
-    whatsapp: ["Hi, how much is Profhilo? Is there any downtime? I have an event on Friday"],
+    whatsapp: [
+      "Hi, how much is Profhilo? Is there any downtime? I have an event on Friday",
+      "Hello, is Profhilo good for the neck? What's the price for 2 sessions?",
+    ],
     campaign: "Skin booster season",
   },
 };
@@ -488,7 +509,12 @@ export function simulateUnknownWhatsapp(
 /** Where a patient is with the clinic, which decides what they write about next. */
 export type PatientPhase = "enquiry" | "booked" | "consulted" | "customer" | "none";
 
-const FOLLOW_UPS: Record<PatientPhase, readonly string[]> = {
+/** Dental treatments; everything else is aesthetic. Some follow-ups only make sense for one of them. */
+const DENTAL = new Set(["invisalign", "implant", "whitening", "veneers"]);
+
+type FollowUp = string | { text: string; only: "dental" | "aesthetic" };
+
+const FOLLOW_UPS: Record<PatientPhase, readonly FollowUp[]> = {
   enquiry: [
     "Hi again, any update on the price for {treatment}?",
     "Do you have anything available this Saturday morning?",
@@ -503,7 +529,8 @@ const FOLLOW_UPS: Record<PatientPhase, readonly string[]> = {
     "Which floor is the clinic on?",
   ],
   consulted: [
-    "Sent you the photos of my teeth",
+    { text: "Sent you the photos of my teeth", only: "dental" },
+    { text: "Sent you a photo of the area I would like to treat", only: "aesthetic" },
     "I spoke to my family. Can we do the 12-month instalment plan?",
     "Can you send me the treatment plan again? I can't find it",
     "If I start next week, when would the {treatment} be finished?",
@@ -511,8 +538,9 @@ const FOLLOW_UPS: Record<PatientPhase, readonly string[]> = {
   ],
   customer: [
     "Thank you so much, I'm really happy with the result!",
-    "Is it normal to have a little redness the day after?",
-    "Can I book my next session for the same time next month?",
+    { text: "Is it normal to have a little redness the day after?", only: "aesthetic" },
+    { text: "My teeth feel a bit sensitive since yesterday, is that normal?", only: "dental" },
+    "Can I book my next appointment for the same time next month?",
     "My sister wants the same treatment. Can she get the same price?",
   ],
   none: [
@@ -528,7 +556,11 @@ export function simulateFollowUp(
   options: { phase: PatientPhase; treatmentKey?: string | null },
 ): string {
   const treatment = TREATMENTS.find((t) => t.key === options.treatmentKey);
-  const lines = FOLLOW_UPS[options.phase].filter((line) => treatment || !line.includes("{treatment}"));
+  const area = treatment ? (DENTAL.has(treatment.key) ? "dental" : "aesthetic") : null;
+  const lines = FOLLOW_UPS[options.phase]
+    .filter((line) => typeof line === "string" || line.only === area)
+    .map((line) => (typeof line === "string" ? line : line.text))
+    .filter((line) => treatment || !line.includes("{treatment}"));
   return rng.pick(lines).replace("{treatment}", treatment?.short ?? "the treatment");
 }
 
