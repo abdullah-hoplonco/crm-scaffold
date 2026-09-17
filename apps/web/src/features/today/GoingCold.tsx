@@ -5,7 +5,7 @@ import { ChevronRight, Snowflake } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Money } from "@/components/app/Money";
 import { SourceBadge } from "@/components/app/SourceBadge";
-import { TodaySection } from "./TodaySection";
+import { ShowMoreButton, TodaySection, useCollapsedList } from "./TodaySection";
 
 /** Open deals with no activity for the workspace's stale threshold, idle longest first. */
 export function GoingCold({
@@ -21,6 +21,7 @@ export function GoingCold({
 }) {
   const { t } = useTranslation("dashboard");
   const { t: tc } = useTranslation();
+  const list = useCollapsedList(deals);
 
   return (
     <TodaySection
@@ -32,7 +33,7 @@ export function GoingCold({
       className={className}
     >
       <ul className="divide-y">
-        {deals.map((deal) => (
+        {list.visible.map((deal) => (
           <li key={deal.id}>
             <Link
               to="/deals/$dealId"
@@ -62,6 +63,7 @@ export function GoingCold({
           </li>
         ))}
       </ul>
+      <ShowMoreButton hidden={list.hidden} onClick={list.expand} />
     </TodaySection>
   );
 }

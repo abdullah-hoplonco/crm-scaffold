@@ -4,7 +4,7 @@ import { ChevronRight, Clock, Lock, Mail, MessageCircle, MessagesSquare } from "
 import { useTranslation } from "react-i18next";
 import { UserAvatar } from "@/components/app/UserAvatar";
 import { cn } from "@/lib/utils";
-import { TodaySection, useDurationLabel } from "./TodaySection";
+import { ShowMoreButton, TodaySection, useCollapsedList, useDurationLabel } from "./TodaySection";
 
 /** A WhatsApp window closing within this long is flagged so the reply goes out as free text. */
 const CLOSING_SOON_MS = 3 * 3_600_000;
@@ -63,17 +63,18 @@ export function WaitingForReply({
   const { t } = useTranslation("dashboard");
   const { t: tc } = useTranslation();
   const duration = useDurationLabel();
+  const list = useCollapsedList(conversations);
 
   return (
     <TodaySection
       id="replies"
       icon={MessagesSquare}
-      title={t("today.replies.title")}
+      title={t(showAssignee ? "today.replies.titleTeam" : "today.replies.title")}
       count={conversations.length}
       className={className}
     >
       <ul className="divide-y">
-        {conversations.map((c) => {
+        {list.visible.map((c) => {
           const ChannelIcon = c.channel === "email" ? Mail : MessageCircle;
           const waited = c.lastInboundAt ? now.getTime() - new Date(c.lastInboundAt).getTime() : 0;
           return (
@@ -122,6 +123,7 @@ export function WaitingForReply({
           );
         })}
       </ul>
+      <ShowMoreButton hidden={list.hidden} onClick={list.expand} />
     </TodaySection>
   );
 }

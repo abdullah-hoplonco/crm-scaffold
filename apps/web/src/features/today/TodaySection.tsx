@@ -1,5 +1,5 @@
-import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import { ChevronDown, type LucideIcon } from "lucide-react";
+import { useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { durationParts } from "./time";
@@ -56,4 +56,32 @@ export function useDurationLabel() {
     const { unit, count } = durationParts(ms);
     return t(`duration.${unit}`, { count });
   };
+}
+
+/** Long lists (an owner sees everyone's replies) start short on a phone-sized screen. */
+const COLLAPSED_ROWS = 5;
+
+export function useCollapsedList<T>(items: T[]) {
+  const [expanded, setExpanded] = useState(false);
+  const hidden = expanded ? 0 : Math.max(0, items.length - COLLAPSED_ROWS);
+  return {
+    visible: hidden ? items.slice(0, COLLAPSED_ROWS) : items,
+    hidden,
+    expand: () => setExpanded(true),
+  };
+}
+
+export function ShowMoreButton({ hidden, onClick }: { hidden: number; onClick: () => void }) {
+  const { t } = useTranslation("dashboard");
+  if (!hidden) return null;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex w-full items-center justify-center gap-1.5 border-t px-4 py-2.5 text-sm font-medium text-primary hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-inset"
+    >
+      {t("today.showMore", { count: hidden })}
+      <ChevronDown className="size-4" aria-hidden="true" />
+    </button>
+  );
 }

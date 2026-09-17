@@ -152,7 +152,8 @@
       "email": "Email",
       "windowOpen": "{{duration}} left to reply freely",
       "windowClosing": "Reply window closes in {{duration}}",
-      "windowClosed": "Reply window closed, send a template"
+      "windowClosed": "Reply window closed, send a template",
+      "titleTeam": "Waiting for a reply"
     },
     "cold": {
       "title": "Going cold",
@@ -164,7 +165,9 @@
       "description": "Nothing is due today, nobody is waiting for a reply and every deal is moving.",
       "openLeads": "Open leads",
       "openPipeline": "Open pipeline"
-    }
+    },
+    "showMore_one": "Show 1 more",
+    "showMore_other": "Show {{count}} more"
   },
   "notifications": {
     "title": "Notifications",
