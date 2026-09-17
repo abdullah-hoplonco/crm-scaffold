@@ -21,6 +21,8 @@ export const ConversationDetail = z.object({
   contact: Contact.nullable(),
   lead: Lead.nullable(),
   openDeals: z.array(DealCard),
+  /** What the person enquired about (from their latest lead's form answers), for template variables. */
+  interest: z.string().nullable().optional(),
 });
 export type ConversationDetail = z.infer<typeof ConversationDetail>;
 
@@ -44,7 +46,20 @@ export const inboxRoutes = {
       channel: Channel.optional(),
       q: z.string().optional(),
     }),
-    response: z.object({ items: z.array(ConversationListItem), unreadTotal: z.number().int() }),
+    response: z.object({
+      items: z.array(ConversationListItem),
+      /** Conversations with unread messages the caller can see (ignores filter and search). */
+      unreadTotal: z.number().int(),
+      /** Conversations per filter chip, with channel and search applied. */
+      counts: z
+        .object({
+          all: z.number().int(),
+          mine: z.number().int(),
+          unassigned: z.number().int(),
+          unread: z.number().int(),
+        })
+        .optional(),
+    }),
   }),
   get: defineRoute({
     method: "GET",
