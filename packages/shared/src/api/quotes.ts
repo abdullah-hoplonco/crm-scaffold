@@ -1,5 +1,16 @@
 import { z } from "zod";
-import { Company, Contact, DateOnly, Decimal, Deal, Message, MoneyAed, Quote, Workspace } from "../entities";
+import {
+  Company,
+  Contact,
+  DateOnly,
+  Decimal,
+  Deal,
+  Message,
+  MoneyAed,
+  Quote,
+  Timestamp,
+  Workspace,
+} from "../entities";
 import { QuoteSendVia } from "../enums";
 import { defineRoute } from "./define";
 
@@ -20,8 +31,28 @@ export const QuoteDetail = z.object({
   /** Whether a WhatsApp send is allowed right now (service window open). */
   canSendWhatsapp: z.boolean(),
   canSendEmail: z.boolean(),
+  /** Name of the user who created the quote, printed as "Prepared by". */
+  preparedByName: z.string().nullable().optional(),
+  /** The contact's WhatsApp conversation, if there is one (for "Open chat"). */
+  whatsappConversationId: z.string().nullable().optional(),
+  /** When that conversation's service window closes or closed; null when the contact never messaged. */
+  serviceWindowExpiresAt: Timestamp.nullable().optional(),
+  /** Whether the workspace has a connected Gmail mailbox to send from. */
+  hasEmailConnection: z.boolean().optional(),
 });
 export type QuoteDetail = z.infer<typeof QuoteDetail>;
+
+/** What the quote builder needs before a quote exists. */
+export const QuoteDraftContext = z.object({
+  deal: Deal,
+  contact: Contact,
+  company: Company.nullable(),
+  workspace: Workspace,
+  /** The number the next saved quote will most likely get; the final number is assigned on save. */
+  nextNumber: z.string(),
+  preparedByName: z.string(),
+});
+export type QuoteDraftContext = z.infer<typeof QuoteDraftContext>;
 
 export const quoteRoutes = {
   listForDeal: defineRoute({
@@ -30,6 +61,13 @@ export const quoteRoutes = {
     summary: "Quotes on a deal, newest first",
     params: z.object({ dealId: z.string() }),
     response: z.object({ items: z.array(Quote) }),
+  }),
+  draftContext: defineRoute({
+    method: "GET",
+    path: "/deals/:dealId/quotes/draft-context",
+    summary: "Deal, contact, company, workspace and the next quote number, for building a new quote",
+    params: z.object({ dealId: z.string() }),
+    response: QuoteDraftContext,
   }),
   get: defineRoute({
     method: "GET",
