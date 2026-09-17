@@ -1,1 +1,199 @@
-{}
+{
+  "title": "Leads",
+  "description": "Enquiries from your ads, WhatsApp and the front desk, assigned as they arrive.",
+  "views": {
+    "label": "Lead views",
+    "new": "New",
+    "open": "Open",
+    "converted": "Converted",
+    "disqualified": "Disqualified",
+    "all": "All"
+  },
+  "filters": {
+    "search": "Search name, phone or message",
+    "searchLabel": "Search leads",
+    "source": "Source",
+    "allSources": "All sources",
+    "assignee": "Assignee",
+    "everyone": "Everyone",
+    "mineAndUnassigned": "Mine and unassigned",
+    "mine": "Assigned to me",
+    "unassigned": "Unassigned"
+  },
+  "columns": {
+    "lead": "Lead",
+    "reply": "Speed to lead",
+    "received": "Received",
+    "assignee": "Assignee",
+    "status": "Status"
+  },
+  "row": {
+    "existing": "Existing patient",
+    "existingOf": "Matches {{name}}",
+    "noMessage": "No message, form submitted"
+  },
+  "speed": {
+    "reply_within": "Reply within {{time}}",
+    "reply_overdue": "Overdue by {{time}}",
+    "task_overdue": "Follow-up overdue by {{time}}"
+  },
+  "duration": {
+    "minute_one": "{{count}} min",
+    "minute_other": "{{count}} min",
+    "hour_one": "{{count}} h",
+    "hour_other": "{{count}} h",
+    "day_one": "{{count}} day",
+    "day_other": "{{count}} days"
+  },
+  "received": {
+    "justNow": "Just now",
+    "ago": "{{time}} ago"
+  },
+  "pagination": {
+    "showing": "Showing {{shown}} of {{total}}",
+    "more": "Show more leads"
+  },
+  "empty": {
+    "filtered": {
+      "title": "No leads match these filters",
+      "description": "Try another source or assignee, or search for part of a name or phone number.",
+      "clear": "Clear filters"
+    },
+    "new": {
+      "title": "No new leads waiting",
+      "description": "Enquiries from Instagram, Facebook, TikTok and WhatsApp land here the moment they arrive, already assigned."
+    },
+    "open": {
+      "title": "No open leads",
+      "description": "Leads you have contacted or qualified stay here until they become deals."
+    },
+    "converted": {
+      "title": "No converted leads yet",
+      "description": "When a lead turns into a deal, it moves here with a link to the deal."
+    },
+    "disqualified": {
+      "title": "Nothing disqualified",
+      "description": "Spam, wrong numbers and people who aren't interested end up here."
+    },
+    "all": {
+      "title": "No leads yet",
+      "description": "Connect your ad accounts in Settings, or add a walk-in or phone enquiry by hand."
+    }
+  },
+  "add": {
+    "action": "Add lead",
+    "title": "Add a lead",
+    "description": "For walk-ins, phone calls and referrals. It is assigned and gets a 15-minute reply task like any other lead.",
+    "name": "Name",
+    "phone": "Mobile number",
+    "email": "Email",
+    "company": "Company",
+    "optional": "(optional)",
+    "message": "What are they interested in?",
+    "messagePlaceholder": "e.g. Asked about Invisalign prices and weekend appointments",
+    "assignee": "Assign to",
+    "assignAuto": "Next in rotation",
+    "submit": "Add lead",
+    "done": "Lead added",
+    "merged": "{{name}} already had an open lead",
+    "mergedDescription": "We added this enquiry to their timeline instead of creating a duplicate.",
+    "errors": {
+      "name": "Enter the person's name.",
+      "reach": "Add a mobile number or an email so the team can reach them."
+    }
+  },
+  "actions": {
+    "convert": "Convert to deal",
+    "markContacted": "Mark contacted",
+    "qualify": "Qualify",
+    "disqualify": "Disqualify",
+    "disqualified": "Lead disqualified",
+    "failed": "Couldn't update the lead",
+    "assigned": "Assigned to {{name}}",
+    "unassigned": "Lead unassigned",
+    "assignFailed": "Couldn't reassign the lead",
+    "done": {
+      "new": "Lead updated",
+      "contacted": "Marked as contacted",
+      "qualified": "Lead qualified",
+      "disqualified": "Lead disqualified",
+      "converted": "Converted to deal"
+    }
+  },
+  "disqualify": {
+    "title": "Disqualify {{name}}",
+    "description": "The lead leaves your open list and its reply tasks are cancelled. The history stays on the timeline.",
+    "reason": "Why are you disqualifying this lead?",
+    "reasonRequired": "Choose a reason so the team knows why this lead was closed.",
+    "note": "Note",
+    "notePlaceholder": "Anything the team should know"
+  },
+  "convert": {
+    "title": "Convert {{name}} to a deal",
+    "description": "Creates the contact and the deal in one step. The WhatsApp chat and open tasks move with them.",
+    "contact": "Contact",
+    "newContact": "New",
+    "existingContact": "Existing",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Mobile number",
+    "email": "Email",
+    "linkingTo": "Linking to",
+    "findContact": "Find a contact",
+    "company": "Company",
+    "noCompany": "None",
+    "newCompany": "New",
+    "existingCompany": "Existing",
+    "companyName": "Company name",
+    "emirate": "Emirate",
+    "findCompany": "Find a company",
+    "deal": "Deal",
+    "dealTitle": "Deal title",
+    "value": "Value",
+    "stage": "Stage",
+    "closeDate": "Expected close",
+    "submit": "Convert to deal",
+    "done": "Converted to deal",
+    "openDeal": "Open deal",
+    "useExisting": "Link to the existing contact instead",
+    "errors": {
+      "firstName": "Enter the contact's first name.",
+      "contact": "Choose the existing contact to link this lead to.",
+      "companyName": "Enter the company name, or set Company to None.",
+      "company": "Choose the company, or set Company to None.",
+      "title": "Give the deal a title.",
+      "value": "Enter the deal value in AED, e.g. 18500."
+    }
+  },
+  "detail": {
+    "unavailable": "This lead isn't available",
+    "backToLeads": "Back to leads",
+    "received": "Received {{when}}",
+    "reach": "Reach them",
+    "phone": "Phone",
+    "email": "Email",
+    "noPhone": "No phone number",
+    "noEmail": "No email",
+    "owner": "Assignee",
+    "details": "Details",
+    "receivedAt": "Received",
+    "source": "Source",
+    "campaign": "Campaign",
+    "company": "Company",
+    "firstContacted": "First contacted",
+    "origin": "Origin",
+    "simulated": "Demo simulator",
+    "enquiry": "Enquiry",
+    "noMessage": "No message came with this lead, only the form answers below.",
+    "formAnswers": "Form answers",
+    "timeline": "Timeline",
+    "tasks": "Tasks",
+    "returning": "Returning patient:",
+    "returningHint": "This person is already in your contacts. Converting links the new deal to them.",
+    "converted": "Converted. The deal and contact carry this lead's history.",
+    "disqualified": "Disqualified: {{reason}}",
+    "noReason": "no reason given",
+    "taskDue": "Due {{when}}",
+    "taskOverdue": "Overdue since {{when}}"
+  }
+}

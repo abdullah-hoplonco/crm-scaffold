@@ -1,22 +1,16 @@
+import { LEAD_VIEWS } from "@hco/core/leads/views";
+import { LeadSource } from "@hco/shared";
 import { createFileRoute } from "@tanstack/react-router";
-import { Hammer } from "lucide-react";
-import { PageHeader } from "@/components/app/PageHeader";
-import { EmptyState } from "@/components/app/States";
+import { z } from "zod";
+import { LeadsPage } from "@/features/leads/LeadsPage";
 
-/** Placeholder page. Owned by the leads-inbox workstream. */
 export const Route = createFileRoute("/_app/leads/")({
-  component: Placeholder,
+  validateSearch: z.object({
+    /** Saved view; "new" when absent. */
+    view: z.enum(LEAD_VIEWS).optional().catch(undefined),
+    source: LeadSource.optional().catch(undefined),
+    /** "mine", "unassigned", "all" or a user id; defaults by role. */
+    assignee: z.string().optional().catch(undefined),
+  }),
+  component: LeadsPage,
 });
-
-function Placeholder() {
-  return (
-    <>
-      <PageHeader title="Leads" />
-      <EmptyState
-        icon={Hammer}
-        title="Leads is being built"
-        description="This screen arrives in the next build step."
-      />
-    </>
-  );
-}

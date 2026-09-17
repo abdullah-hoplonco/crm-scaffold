@@ -2,6 +2,7 @@ import { z } from "zod";
 import { Contact, DateOnly, Lead, MoneyAed, Task, Timestamp, User } from "../entities";
 import { DisqualifyReason, Emirate, Jurisdiction, LeadSource, LeadStatus } from "../enums";
 import { defineRoute, PageQuery, Paginated } from "./define";
+import { DealCard } from "./pipeline";
 
 export const LeadListItem = Lead.extend({
   assigneeName: z.string().nullable(),
@@ -16,8 +17,21 @@ export const LeadDetail = z.object({
   assignee: User.nullable(),
   matchedContact: Contact.nullable(),
   tasks: z.array(Task),
+  /** Set once the lead is converted. */
+  convertedContact: Contact.nullable().optional(),
+  convertedDeal: DealCard.nullable().optional(),
 });
 export type LeadDetail = z.infer<typeof LeadDetail>;
+
+/** Lead counts per saved view, with the source, assignee and search filters applied. */
+export const LeadViewCounts = z.object({
+  new: z.number().int(),
+  open: z.number().int(),
+  converted: z.number().int(),
+  disqualified: z.number().int(),
+  all: z.number().int(),
+});
+export type LeadViewCounts = z.infer<typeof LeadViewCounts>;
 
 export const ConvertLeadInput = z.object({
   contact: z.discriminatedUnion("mode", [
@@ -59,11 +73,12 @@ export const leadRoutes = {
     query: z.object({
       status: z.union([LeadStatus, z.literal("open")]).optional(),
       source: LeadSource.optional(),
+      /** A user id, or "unassigned". */
       assigneeId: z.string().optional(),
       q: z.string().optional(),
       ...PageQuery,
     }),
-    response: Paginated(LeadListItem),
+    response: Paginated(LeadListItem).extend({ counts: LeadViewCounts.optional() }),
   }),
   get: defineRoute({
     method: "GET",
@@ -84,7 +99,8 @@ export const leadRoutes = {
       message: z.string().trim().nullable().optional(),
       assigneeId: z.string().nullable().optional(),
     }),
-    response: LeadListItem,
+    /** `created` is false when the person already had an open lead and the enquiry was added to it. */
+    response: LeadListItem.extend({ created: z.boolean().optional() }),
   }),
   assign: defineRoute({
     method: "POST",

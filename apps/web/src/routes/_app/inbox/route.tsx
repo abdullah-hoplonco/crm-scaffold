@@ -1,6 +1,6 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { InboxLayout } from "@/features/inbox/InboxLayout";
 
-/** Placeholder layout. Owned by the leads-inbox workstream. */
 export const Route = createFileRoute("/_app/inbox")({
-  component: Outlet,
+  component: InboxLayout,
 });

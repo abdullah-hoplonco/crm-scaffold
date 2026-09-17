@@ -1,1 +1,133 @@
-{}
+{
+  "title": "Inbox",
+  "searchPlaceholder": "Search name, number or message",
+  "searchLabel": "Search conversations",
+  "filters": {
+    "label": "Show conversations",
+    "all": "All",
+    "mine": "Mine",
+    "unassigned": "Unassigned",
+    "unread": "Unread"
+  },
+  "list": {
+    "unreadConversations_one": "{{count}} unread",
+    "unreadConversations_other": "{{count}} unread",
+    "you": "You: ",
+    "noMessages": "No messages yet",
+    "windowOpen": "Reply window open",
+    "unread_one": "{{count}} unread message",
+    "unread_other": "{{count}} unread messages"
+  },
+  "empty": {
+    "showAll": "Show all conversations",
+    "all": {
+      "title": "No conversations yet",
+      "description": "When someone messages your WhatsApp number or replies to an email, the conversation shows up here."
+    },
+    "mine": {
+      "title": "Nothing assigned to you",
+      "description": "Conversations with your leads and contacts land here. Pick one up from Unassigned in the meantime."
+    },
+    "unassigned": {
+      "title": "Every conversation has an owner",
+      "description": "New chats from unknown numbers appear here until someone takes them."
+    },
+    "unread": {
+      "title": "You're all caught up",
+      "description": "New messages will show up here the moment they arrive."
+    },
+    "search": {
+      "title": "Nothing matches \"{{q}}\"",
+      "description": "Try a first name, the last digits of a phone number, or a word from the chat.",
+      "clear": "Clear search"
+    }
+  },
+  "home": {
+    "title": "Pick a conversation",
+    "waiting_one": "{{count}} conversation has unread messages. Replies go out on the channel the person used.",
+    "waiting_other": "{{count}} conversations have unread messages. Replies go out on the channel the person used.",
+    "caughtUp": "You're all caught up. Replies go out on the channel the person used, and every message lands on their timeline.",
+    "windowHint": "After someone messages you on WhatsApp, you have 24 hours to reply freely.",
+    "templateHint": "Once that window closes, WhatsApp only allows approved templates until they write again."
+  },
+  "thread": {
+    "back": "Back to inbox",
+    "backToInbox": "Back to inbox",
+    "openContact": "Open contact",
+    "openLead": "Open lead",
+    "assignee": "Assignee",
+    "openDeals": "Open deals",
+    "messages": "Messages",
+    "unavailable": "This conversation isn't available",
+    "noMessages": "No messages yet",
+    "noMessagesDescription": "Start with an approved template. Once they reply, you can write freely for 24 hours."
+  },
+  "message": {
+    "template": "Template: {{name}}",
+    "document": "Document",
+    "quotation": "Quotation",
+    "pdf": "PDF",
+    "size": "{{kb}} KB",
+    "openQuote": "Open quotation {{name}}",
+    "photo": "Photo",
+    "failed": "Not delivered. Check the number and try again."
+  },
+  "status": {
+    "queued": "Sending",
+    "sent": "Sent",
+    "delivered": "Delivered",
+    "read": "Read",
+    "failed": "Not delivered"
+  },
+  "window": {
+    "open": "You can reply freely for {{time}}",
+    "closing": "Reply window closes in {{time}}. Reply now to keep the chat open.",
+    "closed": "The 24-hour reply window closed {{ago}}. WhatsApp only allows approved templates until {{name}} replies.",
+    "never": "{{name}} hasn't messaged you on WhatsApp yet. Start with an approved template; once they reply you can write freely.",
+    "progressLabel": "Time left in the 24-hour reply window"
+  },
+  "composer": {
+    "label": "Message",
+    "placeholder": "Write a message",
+    "placeholderEmail": "Write a reply to {{name}}",
+    "placeholderLocked": "Free-form replies are paused until {{name}} replies",
+    "hint": "Press Enter to send and Shift + Enter for a new line.",
+    "send": "Send message",
+    "templates": "Templates",
+    "sendTemplate": "Send template"
+  },
+  "templates": {
+    "title": "Send a template to {{name}}",
+    "description": "Templates are approved by Meta, so you can send them at any time, even after the 24-hour window.",
+    "choose": "Template",
+    "preview": "Preview",
+    "variable": "Field {{n}}",
+    "empty": "No approved templates yet",
+    "emptyDescription": "Templates are submitted and approved in WhatsApp Manager. Approved ones appear here automatically.",
+    "categories": {
+      "utility": "Utility",
+      "marketing": "Marketing",
+      "authentication": "Authentication"
+    }
+  },
+  "toasts": {
+    "assigned": "Assigned to {{name}}",
+    "unassigned": "Conversation unassigned",
+    "assignFailed": "Couldn't reassign the conversation",
+    "templateSent": "Template sent",
+    "sendFailed": "Message not sent",
+    "windowClosed": "The 24-hour window closed. Send an approved template instead."
+  },
+  "openChat": {
+    "label": "Open WhatsApp",
+    "failed": "Couldn't open the chat"
+  },
+  "duration": {
+    "minute_one": "{{count}} min",
+    "minute_other": "{{count}} min",
+    "hour_one": "{{count}} h",
+    "hour_other": "{{count}} h",
+    "day_one": "{{count}} day",
+    "day_other": "{{count}} days"
+  }
+}
