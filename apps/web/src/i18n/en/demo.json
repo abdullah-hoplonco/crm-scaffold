@@ -1,1 +1,121 @@
-{}
+{
+  "title": "Demo control panel",
+  "description": "Everything here enters the CRM through the same path real Instagram, Facebook, TikTok and WhatsApp leads will use.",
+  "noAccess": {
+    "title": "The demo panel is for owners and managers",
+    "description": "Sign in as an owner or manager to run the demo.",
+    "action": "Go to Today"
+  },
+  "script": {
+    "title": "Try this",
+    "step1": "Open as {{name}} in a new window.",
+    "step1Action": "Open {{name}}'s window",
+    "step2": "Click New Instagram lead.",
+    "step3": "Watch it arrive in {{name}}'s Leads with a 15-minute countdown.",
+    "nextIsSomeoneElse": "Leads rotate between reps: the next one goes to {{next}}. Click again, or open {{nextFirst}}'s window instead.",
+    "manual": "Lead assignment is set to manual, so new leads arrive unassigned and every rep sees them.",
+    "done": "Done",
+    "fallbackRep": "a rep"
+  },
+  "groups": {
+    "ads": {
+      "title": "Leads from ads",
+      "description": "A lead form arrives, is assigned round-robin and gets a 15-minute task."
+    },
+    "whatsapp": {
+      "title": "WhatsApp messages",
+      "description": "The message lands in the inbox live and the assignee gets a notification."
+    },
+    "volume": {
+      "title": "Volume",
+      "description": "See how the team keeps up when many leads arrive at once."
+    }
+  },
+  "actions": {
+    "instagram": {
+      "label": "New Instagram lead",
+      "hint": "Lead ad form, usually aesthetics"
+    },
+    "facebook": {
+      "label": "New Facebook lead",
+      "hint": "Lead ad form, usually dental"
+    },
+    "tiktok": {
+      "label": "New TikTok lead",
+      "hint": "Instant form, often just \"price?\""
+    },
+    "existingPatient": {
+      "label": "Inbound WhatsApp from an existing patient",
+      "hint": "A follow-up that fits where they are, like \"Can I move my consultation to Saturday morning?\""
+    },
+    "unknownNumber": {
+      "label": "Inbound WhatsApp from an unknown number",
+      "hint": "A first message from a new number becomes a WhatsApp lead with its conversation."
+    },
+    "burst": {
+      "label": "Burst: 10 leads",
+      "hint": "Instagram, TikTok, Facebook and WhatsApp mixed, like a busy Thursday evening."
+    },
+    "working": "Creating…"
+  },
+  "phone": {
+    "label": "Route to this phone",
+    "optional": "Optional",
+    "placeholder": "050 123 4567",
+    "hint": "New leads and unknown-number messages use this number instead of a random one. Use your own to rehearse the real-phone demo; in this showcase nothing is sent to it.",
+    "clear": "Clear phone number"
+  },
+  "reps": {
+    "title": "Rep windows",
+    "description": "Each window signs in on its own, so you stay here as {{name}}.",
+    "open": "Open window",
+    "openLabel": "Open as {{name}} in a new window",
+    "next": "Next lead",
+    "newLeads_one": "{{count}} new lead",
+    "newLeads_other": "{{count}} new leads",
+    "unread_one": "{{count}} unread chat",
+    "unread_other": "{{count}} unread chats",
+    "nothingWaiting": "Nothing waiting",
+    "emptyTitle": "No reps in this workspace yet",
+    "emptyDescription": "Invite a teammate with the rep role to open their view side by side.",
+    "emptyAction": "Invite teammates"
+  },
+  "log": {
+    "title": "Recent simulated events",
+    "description": "Only in this window. Newest first.",
+    "clear": "Clear",
+    "emptyTitle": "Nothing simulated yet",
+    "emptyDescription": "Leads and messages you create here show up in this list, with a link to each one.",
+    "kind": {
+      "created": "{{source}} lead",
+      "repeat": "Repeat enquiry",
+      "message": "WhatsApp message"
+    },
+    "assignedTo": "to {{name}}",
+    "unassigned": "unassigned",
+    "openLead": "Open lead",
+    "openConversation": "Open chat"
+  },
+  "toast": {
+    "leadCreated": "{{source}} lead created",
+    "leadCreatedBody": "{{name}}, assigned to {{assignee}}",
+    "leadCreatedUnassigned": "{{name}}, waiting to be assigned",
+    "repeat": "Repeat enquiry added",
+    "repeatBody": "{{name}} already has an open lead, so the enquiry was added to it.",
+    "messageReceived": "Inbound WhatsApp received",
+    "messageReceivedBody": "From {{name}}, in {{assignee}}'s inbox",
+    "messageReceivedUnassigned": "From {{name}}, in the unassigned inbox",
+    "burst_one": "{{count}} lead created",
+    "burst_other": "{{count}} leads created",
+    "open": "Open",
+    "reset": "Demo data reset",
+    "resetBody": "The clinic's story is back at its starting point."
+  },
+  "reset": {
+    "button": "Reset demo data",
+    "title": "Reset demo data?",
+    "description": "Every lead, deal, message and setting goes back to the clinic's starting story, and changes made during the demo are lost. Open windows stay signed in.",
+    "confirm": "Reset demo data",
+    "working": "Resetting…"
+  }
+}
