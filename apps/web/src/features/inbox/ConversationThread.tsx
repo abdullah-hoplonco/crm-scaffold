@@ -191,7 +191,7 @@ function MessageList({
         {days.map((day) => (
           <section key={day.key} aria-label={day.label} className="flex flex-col">
             <div className="sticky top-2 z-10 my-3 flex justify-center">
-              <span className="rounded-full border bg-card/95 px-3 py-0.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur">
+              <span className="rounded-full border bg-card px-3 py-0.5 text-xs font-medium text-muted-foreground">
                 {day.label}
               </span>
             </div>

@@ -81,7 +81,7 @@ export function SettingsRow({
         ) : (
           <p className="text-sm font-medium">{label}</p>
         )}
-        {help ? <p className="mt-1 text-[13px] leading-snug text-muted-foreground">{help}</p> : null}
+        {help ? <p className="mt-1 text-sm leading-snug text-muted-foreground">{help}</p> : null}
       </div>
       <div className="min-w-0">{children}</div>
     </div>
@@ -119,7 +119,7 @@ export function UnsavedChangesBar({
     <div
       role="region"
       aria-label={t("unsaved.label")}
-      className="sticky bottom-[calc(4.75rem+env(safe-area-inset-bottom))] z-20 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border bg-sidebar px-4 py-3 text-sidebar-accent-foreground shadow-lg animate-in fade-in-0 slide-in-from-bottom-2 lg:bottom-4"
+      className="sticky bottom-[calc(4.75rem+env(safe-area-inset-bottom))] z-20 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border bg-card px-4 py-3 shadow-lg animate-in fade-in-0 slide-in-from-bottom-2 lg:bottom-4"
     >
       <p className="text-sm">
         <span
@@ -133,7 +133,7 @@ export function UnsavedChangesBar({
           type="button"
           variant="ghost"
           size="sm"
-          className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+          className="text-muted-foreground hover:bg-accent hover:text-accent-foreground"
           onClick={onDiscard}
           disabled={pending}
         >

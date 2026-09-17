@@ -7,18 +7,17 @@ import { cn } from "@/lib/utils";
 export type ConnectableType = Exclude<ChannelConnectionType, "simulator">;
 
 const GLYPH = {
-  whatsapp_cloud: {
-    icon: MessageCircle,
-    solid: "bg-channel-whatsapp text-white",
-    soft: "text-channel-whatsapp",
-  },
-  meta_leadads: { icon: Megaphone, solid: "bg-channel-facebook text-white", soft: "text-channel-facebook" },
-  tiktok_leads: { icon: Music2, solid: "bg-channel-tiktok text-white", soft: "text-channel-tiktok" },
-  gmail: { icon: Mail, solid: "bg-channel-email text-white", soft: "text-channel-email" },
-  simulator: { icon: FlaskConical, solid: "bg-primary text-primary-foreground", soft: "text-primary" },
-} satisfies Record<ChannelConnectionType, { icon: typeof Mail; solid: string; soft: string }>;
+  whatsapp_cloud: { icon: MessageCircle, tone: "text-channel-whatsapp" },
+  meta_leadads: { icon: Megaphone, tone: "text-channel-facebook" },
+  tiktok_leads: { icon: Music2, tone: "text-channel-tiktok" },
+  gmail: { icon: Mail, tone: "text-channel-email" },
+  simulator: { icon: FlaskConical, tone: "text-primary" },
+} satisfies Record<ChannelConnectionType, { icon: typeof Mail; tone: string }>;
 
-/** Channel icon tile: filled in the channel colour when live, quiet when not. */
+/**
+ * Channel icon tile. The channel colour sits in the icon, at icon size, never as a fill
+ * (Small Channel Rule). A connected channel keeps its colour on white; an idle one goes grey.
+ */
 export function ChannelGlyph({
   type,
   live,
@@ -34,9 +33,9 @@ export function ChannelGlyph({
     <span
       aria-hidden="true"
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-lg",
+        "inline-flex shrink-0 items-center justify-center rounded-lg border",
         size === "md" ? "size-10" : "size-8",
-        live ? glyph.solid : cn("border bg-muted", glyph.soft),
+        live ? cn("bg-card", glyph.tone) : "bg-muted text-muted-foreground",
       )}
     >
       <Icon className={size === "md" ? "size-5" : "size-4"} />
@@ -55,7 +54,7 @@ export function StatusPill({
   const tone = {
     connected: "bg-success-soft text-success",
     always_on: "bg-success-soft text-success",
-    pending: "bg-warning-soft text-[#6B4700]",
+    pending: "bg-warning-soft text-warning",
     error: "bg-danger-soft text-destructive",
     disconnected: "bg-muted text-muted-foreground",
     not_connected: "bg-muted text-muted-foreground",
@@ -90,7 +89,7 @@ export function StatusPill({
 export function DemoConnectionBadge() {
   const { t } = useTranslation("settings");
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-dashed border-primary/40 bg-accent/50 px-2 py-0.5 text-[11px] font-medium text-accent-foreground">
+    <span className="inline-flex items-center gap-1 rounded-full border border-dashed border-primary/40 bg-accent/50 px-2 py-0.5 text-xs font-medium text-accent-foreground">
       <FlaskConical className="size-3" aria-hidden="true" />
       {t("channels.demoConnection")}
     </span>

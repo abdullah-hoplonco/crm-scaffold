@@ -138,7 +138,7 @@ function LoginPage() {
                       type="button"
                       onClick={() => void signIn(u.email)}
                       disabled={pending !== null}
-                      className="group flex w-full items-center gap-3 rounded-lg border bg-card px-3 py-2.5 text-left transition-colors hover:border-primary/40 hover:bg-accent/40 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:opacity-60"
+                      className="group flex w-full items-center gap-3 rounded-lg border bg-card px-3 py-2.5 text-start transition-colors hover:border-primary/40 hover:bg-accent/40 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:opacity-60"
                     >
                       <UserAvatar name={u.name} />
                       <span className="min-w-0 flex-1">

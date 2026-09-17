@@ -40,6 +40,7 @@
     "cardRole": "draggable deal",
     "cardLabel": "{{title}}, {{contact}}",
     "collapse": "Collapse {{stage}}",
+    "closedStages": "Closed stages",
     "expand_one": "Show {{stage}}, {{count}} deal",
     "expand_other": "Show {{stage}}, {{count}} deals",
     "probability": "{{value}}%",
@@ -97,7 +98,7 @@
   },
   "newDealDialog": {
     "title": "New deal",
-    "description": "Track an opportunity with a contact, valued in AED.",
+    "description": "Track a deal with a contact, valued in AED.",
     "titleLabel": "Deal title",
     "titlePlaceholder": "For example: Invisalign for Layla Haddad",
     "titleRequired": "Enter a deal title.",

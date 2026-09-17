@@ -2,11 +2,11 @@ import { leadUrgency, roundDuration } from "@hco/core/leads/speed";
 import type { LeadStatus } from "@hco/shared";
 import { AlarmClock, Timer } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { formatDate } from "@/lib/format";
+import { formatDate, latenessOf } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 const STATUS_TONE: Record<LeadStatus, string> = {
-  new: "bg-warning-soft text-[#6B4700]",
+  new: "bg-warning-soft text-warning",
   contacted: "bg-info-soft text-info",
   qualified: "bg-accent text-accent-foreground",
   converted: "bg-success-soft text-success",
@@ -37,6 +37,13 @@ export function LeadStatusPill({ status, className }: { status: LeadStatus; clas
   );
 }
 
+/** Saffron while a reply is due or only just late; Signal Red once the lead is genuinely overdue. */
+const SPEED_TONE = {
+  due: { chip: "bg-attention/20 text-warning", icon: "text-warning" },
+  nudge: { chip: "bg-warning-soft text-warning", icon: "text-warning" },
+  alert: { chip: "bg-danger-soft text-destructive", icon: "text-destructive" },
+} as const;
+
 /** Speed-to-lead: "Reply within 8 min" in saffron, "Overdue by 2 h" in red. Renders nothing when calm. */
 export function SpeedChip({
   lead,
@@ -53,16 +60,21 @@ export function SpeedChip({
   const { unit, value } = roundDuration(urgency.ms);
   const time = t(`duration.${unit}`, { count: value });
   const overdue = urgency.kind !== "reply_within";
+  const tone = !overdue
+    ? SPEED_TONE.due
+    : latenessOf(lead.nextTaskDueAt ?? now, now) === "alert"
+      ? SPEED_TONE.alert
+      : SPEED_TONE.nudge;
   const Icon = overdue ? AlarmClock : Timer;
   return (
     <span
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap tabular-nums",
-        overdue ? "bg-danger-soft text-destructive" : "bg-attention/20 text-[#6B4700]",
+        tone.chip,
         className,
       )}
     >
-      <Icon aria-hidden="true" className={cn("size-3.5", overdue ? "text-destructive" : "text-warning")} />
+      <Icon aria-hidden="true" className={cn("size-3.5", tone.icon)} />
       {t(`speed.${urgency.kind}`, { time })}
     </span>
   );

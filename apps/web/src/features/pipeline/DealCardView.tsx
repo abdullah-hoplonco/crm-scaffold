@@ -50,7 +50,7 @@ export function DealCardView({
       )}
     >
       {card.isStale ? (
-        <p className="inline-flex w-fit items-center gap-1 rounded-full bg-warning-soft px-2 py-0.5 text-xs font-medium text-[#7A5200]">
+        <p className="inline-flex w-fit items-center gap-1 rounded-full bg-warning-soft px-2 py-0.5 text-xs font-medium text-warning">
           <Hourglass className="size-3" aria-hidden="true" />
           {t("card.stale", { count: daysSince(card.lastActivityAt) })}
         </p>
@@ -65,7 +65,7 @@ export function DealCardView({
         <Money
           value={card.valueAed}
           className={cn(
-            "text-[15px] font-semibold",
+            "text-sm font-semibold",
             card.stageType === "lost" && "text-muted-foreground line-through decoration-1",
           )}
         />

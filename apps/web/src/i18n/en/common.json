@@ -105,7 +105,7 @@
     "password": "Password",
     "submit": "Sign in",
     "demoTitle": "Try the demo as",
-    "demoHint": "Demo workspace with sample data. Nothing you do here reaches real customers.",
+    "demoHint": "Demo workspace with sample data. Nothing you do here reaches anyone outside this demo.",
     "newWorkspace": "Set up a new workspace"
   }
 }

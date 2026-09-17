@@ -24,7 +24,7 @@
   },
   "workspace": {
     "title": "Workspace",
-    "description": "Your business details appear on quotes and in messages to customers.",
+    "description": "Your business details appear on quotes and in messages to contacts.",
     "saved": "Workspace settings saved",
     "business": {
       "title": "Business details",
@@ -165,7 +165,7 @@
     },
     "whatsapp": {
       "name": "WhatsApp Business",
-      "description": "Reply to customers from the Inbox on your business number. Messages to this number arrive live, with delivery and read ticks.",
+      "description": "Reply to contacts from the Inbox on your business number. Messages to this number arrive live, with delivery and read ticks.",
       "number": "Number",
       "verifiedName": "Verified name",
       "quality": "Quality rating",
@@ -232,7 +232,7 @@
       "permTemplates": "Use your approved message templates",
       "stepNumber": "Choose a number",
       "stepVerify": "Verify",
-      "chooseNumber": "Which number do customers message?",
+      "chooseNumber": "Which number do your contacts message?",
       "numberVerified": "Verified as {{name}}",
       "numberNew": "New number, not yet registered",
       "codeLabel": "Enter the 6-digit code sent by SMS to {{phone}}",
@@ -312,7 +312,7 @@
     "title": "Lead assignment",
     "description": "Decide who picks up each new lead, so every enquiry gets an owner within seconds.",
     "saved": "Lead assignment saved",
-    "returningNote": "Returning customers who are already contacts stay with their current assignee, whatever the rule.",
+    "returningNote": "Contacts who are already in the CRM keep their current assignee, whatever the rule.",
     "errors": {
       "noneEligible": "Choose at least one teammate for round-robin, or switch to manual."
     },
@@ -340,7 +340,7 @@
       "title": "Who takes new leads",
       "description": "Leads rotate through these people in this order.",
       "manualNote": "Used when round-robin is on.",
-      "position": "#{{position}} in turn"
+      "position": "Turn {{position}}"
     }
   },
   "onboarding": {

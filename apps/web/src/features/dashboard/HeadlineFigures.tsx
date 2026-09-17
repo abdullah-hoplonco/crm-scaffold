@@ -2,7 +2,7 @@ import { money } from "@hco/core";
 import type { DashboardSummary } from "@hco/shared/api/dashboard";
 import { Snowflake } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { formatAed } from "@/lib/format";
+import { Money } from "@/components/app/Money";
 import { cn } from "@/lib/utils";
 import { primaryFill } from "./chart-colors";
 
@@ -28,8 +28,8 @@ export function HeadlineFigures({ summary, className }: { summary: DashboardSumm
     >
       <div className="col-span-2 flex flex-col p-4 sm:p-6 md:col-span-1 xl:col-span-2">
         <p className="text-sm text-muted-foreground">{t("figures.openPipeline")}</p>
-        <p className="mt-1 text-4xl font-semibold tracking-tight sm:text-5xl">
-          {formatAed(summary.openPipelineAed, { compact: true })}
+        <p className="mt-1 text-2xl font-semibold tracking-tight">
+          <Money value={summary.openPipelineAed} compact />
         </p>
         <div
           className="mt-4 h-2 overflow-hidden rounded-full"
@@ -46,7 +46,7 @@ export function HeadlineFigures({ summary, className }: { summary: DashboardSumm
           />
         </div>
         <p className="mt-2 text-sm">
-          <span className="font-semibold">{formatAed(summary.weightedPipelineAed, { compact: true })}</span>{" "}
+          <Money value={summary.weightedPipelineAed} compact className="font-semibold" />{" "}
           <span className="text-muted-foreground">{t("figures.weightedHint")}</span>
         </p>
       </div>
@@ -54,7 +54,7 @@ export function HeadlineFigures({ summary, className }: { summary: DashboardSumm
       <div className="flex flex-col border-t p-4 sm:px-6 sm:py-5 md:py-6 xl:py-5 md:border-t-0 md:border-s xl:border-t xl:border-s-0">
         <p className="text-sm text-muted-foreground">{t("figures.wonThisMonth")}</p>
         <p className="mt-1 text-2xl font-semibold tracking-tight">
-          {formatAed(summary.wonThisMonth.valueAed, { compact: true })}
+          <Money value={summary.wonThisMonth.valueAed} compact />
         </p>
         <p className="mt-0.5 text-sm text-muted-foreground">
           {t("figures.wonDeals", { count: summary.wonThisMonth.count })}
@@ -63,7 +63,7 @@ export function HeadlineFigures({ summary, className }: { summary: DashboardSumm
 
       <div className="flex flex-col border-t border-s p-4 sm:px-6 sm:py-5 md:py-6 xl:py-5 md:border-t-0 xl:border-t">
         <p className="text-sm text-muted-foreground">{t("figures.openDeals")}</p>
-        <p className="mt-1 text-2xl font-semibold tracking-tight">{summary.openDealsCount}</p>
+        <p className="mt-1 text-2xl font-semibold tracking-tight tabular-nums">{summary.openDealsCount}</p>
         {stale > 0 ? (
           <p className="mt-0.5 flex items-center gap-1.5 text-sm font-medium text-warning">
             <Snowflake className="size-3.5" aria-hidden="true" />

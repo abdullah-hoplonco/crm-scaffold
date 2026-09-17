@@ -26,8 +26,8 @@ export function CompanyMark({
       aria-hidden="true"
       className={cn(
         "inline-flex shrink-0 items-center justify-center border border-primary/15 bg-accent font-semibold text-accent-foreground",
-        size === "xs" && "size-5 rounded-[5px] text-[9px]",
-        size === "sm" && "size-7 rounded-md text-[10px]",
+        size === "xs" && "size-5 rounded-[5px] text-xs",
+        size === "sm" && "size-7 rounded-md text-xs",
         size === "md" && "size-9 rounded-md text-xs",
         size === "lg" && "size-14 rounded-lg text-base",
         className,

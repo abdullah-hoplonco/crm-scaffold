@@ -81,7 +81,7 @@ function Badge({ count, tone = "attention" }: { count: number; tone?: "attention
   return (
     <span
       className={cn(
-        "ml-auto inline-flex min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tabular-nums",
+        "ms-auto inline-flex min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tabular-nums",
         tone === "attention" ? "bg-attention text-[#2B1D00]" : "bg-primary text-primary-foreground",
       )}
     >
@@ -107,7 +107,7 @@ function RailLink({ item, pathname, badge }: { item: NavItem; pathname: string; 
       <span
         aria-hidden="true"
         className={cn(
-          "absolute top-1.5 bottom-1.5 left-0 w-0.5 rounded-full bg-sidebar-primary opacity-0",
+          "absolute top-1.5 bottom-1.5 start-0 w-0.5 rounded-full bg-sidebar-primary opacity-0",
           active && "opacity-100",
         )}
       />
@@ -128,7 +128,7 @@ function UserMenu({ compact = false }: { compact?: boolean }) {
         <button
           type="button"
           className={cn(
-            "flex min-w-0 items-center gap-2 rounded-md text-left focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+            "flex min-w-0 items-center gap-2 rounded-md text-start focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
             compact ? "p-1" : "w-full px-2 py-2 text-sidebar-foreground hover:bg-sidebar-accent",
           )}
           aria-label={user.name}
@@ -203,7 +203,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <BrandMark className="size-7" />
             <span className="truncate text-sm font-semibold">{t("appName")}</span>
           </div>
-          <div className="ml-auto flex items-center gap-1">
+          <div className="ms-auto flex items-center gap-1">
             <span className="hidden rounded-full border border-dashed px-2.5 py-0.5 text-xs text-muted-foreground sm:inline">
               {t("states.demoData")}
             </span>
@@ -236,7 +236,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   <Link
                     to={item.to}
                     className={cn(
-                      "relative flex h-16 flex-col items-center justify-center gap-1 text-[11px] text-muted-foreground",
+                      "relative flex h-16 flex-col items-center justify-center gap-1 text-xs text-muted-foreground",
                       active && "font-medium text-primary",
                     )}
                     aria-current={active ? "page" : undefined}
@@ -244,7 +244,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                     <span className="relative">
                       <Icon className="size-5" />
                       {count ? (
-                        <span className="absolute -top-1.5 -right-2.5 min-w-4 rounded-full bg-attention px-1 text-center text-[10px] leading-4 font-semibold text-[#2B1D00] tabular-nums">
+                        <span className="absolute -top-1.5 -end-2.5 min-w-4 rounded-full bg-attention px-1 text-center text-[11px] leading-4 font-semibold text-[#2B1D00] tabular-nums">
                           {count > 99 ? "99+" : count}
                         </span>
                       ) : null}
@@ -258,7 +258,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={() => setMoreOpen(true)}
-                className="flex h-16 w-full flex-col items-center justify-center gap-1 text-[11px] text-muted-foreground"
+                className="flex h-16 w-full flex-col items-center justify-center gap-1 text-xs text-muted-foreground"
               >
                 <Menu className="size-5" />
                 {t("nav.more")}

@@ -33,7 +33,7 @@ import { TaskList } from "@/features/timeline/TaskList";
 import { Timeline } from "@/features/timeline/Timeline";
 import { errorMessage, isApiError } from "@/lib/api/errors";
 import { useApiMutation, useApiQuery } from "@/lib/api/hooks";
-import { formatDateTime, formatPhone } from "@/lib/format";
+import { formatDateTime, formatPhone, latenessOf } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { ConvertLeadDialog } from "./ConvertLeadDialog";
 import { DisqualifyDialog } from "./DisqualifyDialog";
@@ -306,7 +306,7 @@ function Enquiry({ detail, className }: { detail: LeadDetail; className?: string
         {t("detail.enquiry")}
       </h2>
       {lead.message ? (
-        <blockquote className="mt-3 border-s-[3px] border-primary/40 ps-4 text-[15px] leading-relaxed whitespace-pre-line">
+        <blockquote className="mt-3 rounded-lg bg-accent/50 px-4 py-3 text-sm leading-relaxed whitespace-pre-line">
           {lead.message}
         </blockquote>
       ) : (
@@ -364,16 +364,24 @@ function NextTask({ detail, now }: { detail: LeadDetail; now: Date }) {
     .filter((task) => task.status === "open" && !task.deletedAt)
     .sort((a, b) => a.dueAt.localeCompare(b.dueAt))[0];
   if (!next) return null;
-  const overdue = new Date(next.dueAt) < now;
+  const late = latenessOf(next.dueAt, now);
+  const overdue = late !== "on_time";
   return (
     <div className="mt-3 flex gap-2.5 rounded-lg bg-muted/60 px-3 py-2.5 text-sm">
       <CalendarClock
         aria-hidden="true"
-        className={cn("mt-0.5 size-4 shrink-0", overdue ? "text-destructive" : "text-warning")}
+        className={cn("mt-0.5 size-4 shrink-0", late === "alert" ? "text-destructive" : "text-warning")}
       />
       <div className="min-w-0">
         <p className="font-medium">{next.title}</p>
-        <p className={cn("text-xs tabular-nums", overdue ? "text-destructive" : "text-muted-foreground")}>
+        <p
+          className={cn(
+            "text-xs tabular-nums",
+            late === "alert" && "text-destructive",
+            late === "nudge" && "text-warning",
+            late === "on_time" && "text-muted-foreground",
+          )}
+        >
           {t(overdue ? "detail.taskOverdue" : "detail.taskDue", { when: formatDateTime(next.dueAt) })}
         </p>
       </div>

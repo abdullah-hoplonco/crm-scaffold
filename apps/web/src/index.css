@@ -32,7 +32,9 @@
 
   --success: #1e7a4b;
   --success-soft: #e2f2e8;
-  --warning: #b87708;
+  /* Saffron deep, darkened from #B87708 so saffron text clears 4.5:1 on white (5.9:1) and on
+   * Saffron Mist (5.3:1). DESIGN.md records the original value. */
+  --warning: #8a5a00;
   --warning-soft: #fcf0d8;
   --attention: #e3a21a;
   --danger-soft: #f8e4e2;

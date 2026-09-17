@@ -7,7 +7,7 @@ import { EmptyState, ErrorState } from "@/components/app/States";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useApiQuery } from "@/lib/api/hooks";
-import { inWorkspaceTz } from "@/lib/format";
+import { inWorkspaceTz, latenessOf } from "@/lib/format";
 import { useSession } from "@/lib/session";
 import { cn } from "@/lib/utils";
 import { GoingCold } from "./GoingCold";
@@ -18,6 +18,8 @@ import { WaitingForReply } from "./WaitingForReply";
 interface Counts {
   tasks: number;
   overdue: number;
+  /** True once at least one overdue task is overdue by a lot, which is when red is earned. */
+  overdueAlert: boolean;
   replies: number;
   cold: number;
 }
@@ -69,7 +71,12 @@ function DaySummary({ counts }: { counts: Counts }) {
             >
               {item.label}
               {item.key === "tasks" && counts.overdue > 0 ? (
-                <span className="rounded-full bg-danger-soft px-1.5 text-xs text-destructive">
+                <span
+                  className={cn(
+                    "rounded-full px-1.5 text-xs",
+                    counts.overdueAlert ? "bg-danger-soft text-destructive" : "bg-warning-soft text-warning",
+                  )}
+                >
                   {t("today.summary.overdue", { count: counts.overdue })}
                 </span>
               ) : null}
@@ -107,10 +114,12 @@ export function TodayPage() {
   const showAssignee = user.role !== "rep";
 
   const data = today.data;
+  const overdueTasks = data?.tasksDue.filter((task) => new Date(task.dueAt) < now) ?? [];
   const counts: Counts | null = data
     ? {
         tasks: data.tasksDue.length,
-        overdue: data.tasksDue.filter((task) => new Date(task.dueAt) < now).length,
+        overdue: overdueTasks.length,
+        overdueAlert: overdueTasks.some((task) => latenessOf(task.dueAt, now) === "alert"),
         replies: data.unansweredConversations.length,
         cold: data.staleDeals.length,
       }

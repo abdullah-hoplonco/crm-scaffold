@@ -176,7 +176,7 @@ export function TeamStep({ draft, errors, onChange }: StepProps) {
                     autoFocus={focusKey === invite.key}
                     aria-invalid={nameError ? true : undefined}
                   />
-                  {nameError ? <p className="mt-1 text-[13px] text-destructive">{t(nameError)}</p> : null}
+                  {nameError ? <p className="mt-1 text-sm text-destructive">{t(nameError)}</p> : null}
                 </div>
                 <div>
                   <Input
@@ -187,7 +187,7 @@ export function TeamStep({ draft, errors, onChange }: StepProps) {
                     aria-label={`${label}: ${t("onboarding.team.email")}`}
                     aria-invalid={emailError ? true : undefined}
                   />
-                  {emailError ? <p className="mt-1 text-[13px] text-destructive">{t(emailError)}</p> : null}
+                  {emailError ? <p className="mt-1 text-sm text-destructive">{t(emailError)}</p> : null}
                 </div>
                 <div className="flex gap-2">
                   <Select
@@ -241,7 +241,7 @@ export function TeamStep({ draft, errors, onChange }: StepProps) {
           <Plus />
           {draft.invites.length === 0 ? t("onboarding.team.addFirst") : t("onboarding.team.add")}
         </Button>
-        <p className="text-[13px] text-muted-foreground">{t("onboarding.team.later")}</p>
+        <p className="text-sm text-muted-foreground">{t("onboarding.team.later")}</p>
       </div>
     </div>
   );
@@ -320,7 +320,7 @@ export function PipelineStep({ draft, errors, onChange }: StepProps) {
           })}
         </ToggleGroup>
         {draft.preset === null ? (
-          <p className="text-[13px] text-muted-foreground">{t("onboarding.pipeline.customised")}</p>
+          <p className="text-sm text-muted-foreground">{t("onboarding.pipeline.customised")}</p>
         ) : null}
       </fieldset>
 
@@ -393,7 +393,7 @@ export function PipelineStep({ draft, errors, onChange }: StepProps) {
                     <X />
                   </Button>
                 </div>
-                {error ? <p className="mt-1 ms-9 text-[13px] text-destructive">{t(error)}</p> : null}
+                {error ? <p className="mt-1 ms-9 text-sm text-destructive">{t(error)}</p> : null}
               </li>
             );
           })}

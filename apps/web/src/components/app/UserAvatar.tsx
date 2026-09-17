@@ -30,7 +30,7 @@ export function UserAvatar({
       aria-hidden="true"
       className={cn(
         "inline-flex shrink-0 items-center justify-center rounded-full font-semibold",
-        size === "sm" && "size-6 text-[10px]",
+        size === "sm" && "size-6 text-xs",
         size === "md" && "size-8 text-xs",
         size === "lg" && "size-11 text-sm",
         name ? toneFor(label) : "bg-muted text-muted-foreground",

@@ -32,7 +32,7 @@ export function MessageBubble({
     <div className={cn("flex", outbound ? "justify-end" : "justify-start", continued ? "mt-0.5" : "mt-3")}>
       <div
         className={cn(
-          "relative flex max-w-[85%] min-w-0 flex-col gap-1 rounded-2xl px-3 pt-2 pb-1.5 text-[14.5px] leading-snug shadow-[0_1px_0_rgb(19_35_42/0.06)] sm:max-w-[72%]",
+          "relative flex max-w-[85%] min-w-0 flex-col gap-1 rounded-2xl px-3 pt-2 pb-1.5 text-sm leading-snug shadow-[0_1px_0_rgb(19_35_42/0.06)] sm:max-w-[72%]",
           isEmail && "sm:max-w-[80%]",
           outbound ? "bg-primary/12 text-foreground" : "border bg-card text-card-foreground",
           !continued && (outbound ? "rounded-se-md" : "rounded-ss-md"),
@@ -40,7 +40,7 @@ export function MessageBubble({
         )}
       >
         {m.template ? (
-          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-accent-foreground/80">
+          <span className="inline-flex items-center gap-1 text-xs font-medium text-accent-foreground/80">
             <LayoutTemplate aria-hidden="true" className="size-3" />
             {t("message.template", { name: m.template.name })}
           </span>
@@ -51,7 +51,7 @@ export function MessageBubble({
         {body ? <p className="break-words whitespace-pre-line">{body}</p> : null}
         <span
           className={cn(
-            "flex items-center gap-1 self-end text-[11px] text-muted-foreground tabular-nums",
+            "flex items-center gap-1 self-end text-xs text-muted-foreground tabular-nums",
             outbound && "ps-6",
           )}
         >

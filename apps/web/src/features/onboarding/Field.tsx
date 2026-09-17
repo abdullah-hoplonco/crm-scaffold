@@ -32,7 +32,7 @@ export function Field({
           {t(error)}
         </p>
       ) : help ? (
-        <p id={`${id}-help`} className="text-[13px] text-muted-foreground">
+        <p id={`${id}-help`} className="text-sm text-muted-foreground">
           {help}
         </p>
       ) : null}

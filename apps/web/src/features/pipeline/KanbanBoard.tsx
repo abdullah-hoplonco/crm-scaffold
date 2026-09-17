@@ -57,6 +57,11 @@ export function KanbanBoard({ columns, boardInput }: { columns: BoardColumnData[
   const { collapsed, toggle } = useCollapsedStages(stages);
   const { request, dialogs } = useStageMove({ boardInput });
 
+  // Open stages scroll with the board; a closed stage someone opened joins them, the rest sit in the rail.
+  const inFlow = columns.filter((c) => c.stage.type === "open");
+  const opened = columns.filter((c) => c.stage.type !== "open" && !collapsed.has(c.stage.id));
+  const closed = columns.filter((c) => c.stage.type !== "open" && collapsed.has(c.stage.id));
+
   const lastOverId = useRef<UniqueIdentifier | null>(null);
   const movedToNewColumn = useRef(false);
   useEffect(() => {
@@ -220,20 +225,47 @@ export function KanbanBoard({ columns, boardInput }: { columns: BoardColumnData[
           screenReaderInstructions: { draggable: t("board.instructions") },
         }}
       >
+        {/*
+          The closed stages keep their own rail at the end of the board, outside the scrolling area: a
+          collapsed lane is then never half-cut by the viewport, it just reads as a closed column.
+        */}
         <div className="flex h-full gap-3">
-          {columns.map((column) => (
-            <BoardColumn
-              key={column.stage.id}
-              stage={column.stage}
-              cards={cards[column.stage.id] ?? []}
-              totalValueAed={working ? totalOf(cards[column.stage.id] ?? []) : column.totalValueAed}
-              collapsed={column.stage.type !== "open" && collapsed.has(column.stage.id)}
-              onToggleCollapsed={() => toggle(column.stage.id)}
-              isOver={activeCard !== null && overStageId === column.stage.id}
-              isDragging={activeCard !== null}
-              canDrag={canDrag}
-            />
-          ))}
+          <div className="flex h-full min-w-0 flex-1 gap-3 overflow-x-auto">
+            {[...inFlow, ...opened].map((column) => (
+              <BoardColumn
+                key={column.stage.id}
+                stage={column.stage}
+                cards={cards[column.stage.id] ?? []}
+                totalValueAed={working ? totalOf(cards[column.stage.id] ?? []) : column.totalValueAed}
+                collapsed={false}
+                onToggleCollapsed={() => toggle(column.stage.id)}
+                isOver={activeCard !== null && overStageId === column.stage.id}
+                isDragging={activeCard !== null}
+                canDrag={canDrag}
+              />
+            ))}
+          </div>
+          {closed.length ? (
+            <div
+              role="group"
+              aria-label={t("board.closedStages")}
+              className="flex h-full shrink-0 gap-3 border-s ps-3"
+            >
+              {closed.map((column) => (
+                <BoardColumn
+                  key={column.stage.id}
+                  stage={column.stage}
+                  cards={cards[column.stage.id] ?? []}
+                  totalValueAed={working ? totalOf(cards[column.stage.id] ?? []) : column.totalValueAed}
+                  collapsed
+                  onToggleCollapsed={() => toggle(column.stage.id)}
+                  isOver={activeCard !== null && overStageId === column.stage.id}
+                  isDragging={activeCard !== null}
+                  canDrag={canDrag}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
         <DragOverlay dropAnimation={dropAnimation}>
           {activeCard ? <DealCardView card={activeCard} lifted className="cursor-grabbing" /> : null}

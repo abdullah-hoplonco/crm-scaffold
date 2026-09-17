@@ -79,7 +79,7 @@ export function BusyState({ label, detail }: { label: string; detail?: string })
     <div role="status" className="flex min-h-56 flex-col items-center justify-center gap-3 text-center">
       <LoaderCircle className="size-7 animate-spin text-primary" aria-hidden="true" />
       <p className="text-sm font-medium">{label}</p>
-      {detail ? <p className="max-w-xs text-[13px] text-muted-foreground">{detail}</p> : null}
+      {detail ? <p className="max-w-xs text-sm text-muted-foreground">{detail}</p> : null}
     </div>
   );
 }
@@ -99,7 +99,7 @@ export function ResultState({
       <span
         className={cn(
           "inline-flex size-12 items-center justify-center rounded-full",
-          tone === "success" ? "bg-success-soft text-success" : "bg-warning-soft text-[#6B4700]",
+          tone === "success" ? "bg-success-soft text-success" : "bg-warning-soft text-warning",
         )}
       >
         <Icon className="size-6" aria-hidden="true" />
@@ -152,7 +152,7 @@ export function ChoiceRow({
       <RadioGroupItem id={id} value={value} />
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-medium">{title}</span>
-        {meta ? <span className="block truncate text-[13px] text-muted-foreground">{meta}</span> : null}
+        {meta ? <span className="block truncate text-sm text-muted-foreground">{meta}</span> : null}
       </span>
       {aside ? <span className="shrink-0">{aside}</span> : null}
     </label>

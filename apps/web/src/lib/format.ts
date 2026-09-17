@@ -40,6 +40,21 @@ export function formatRelative(iso: string): string {
   return formatDistanceToNowStrict(new Date(iso), { addSuffix: true });
 }
 
+/**
+ * Signal Red is reserved for "overdue by a lot" (DESIGN.md). Anything later than this earns it; a few
+ * minutes late is still a nudge and stays Saffron, so the colour keeps its meaning.
+ */
+export const OVERDUE_ALERT_MS = 15 * 60_000;
+
+export type Lateness = "on_time" | "nudge" | "alert";
+
+/** How late an ISO due time is, in two steps: a nudge for a short overrun, an alert once it is real. */
+export function latenessOf(dueAt: string | Date, now: Date | number = Date.now()): Lateness {
+  const late = (typeof now === "number" ? now : now.getTime()) - new Date(dueAt).getTime();
+  if (late <= 0) return "on_time";
+  return late >= OVERDUE_ALERT_MS ? "alert" : "nudge";
+}
+
 /** "2 h 14 min" for a duration in ms. */
 export function formatDuration(ms: number): string {
   const totalMinutes = Math.max(0, Math.floor(ms / 60_000));

@@ -51,9 +51,8 @@ export function DealPage({ dealId }: { dealId: string }) {
               <Section title={t("deal.tasks")} count={openTasks}>
                 <TaskList subject={subject} />
               </Section>
-              <Section title={t("deal.quotes")}>
-                <DealQuotesPanel dealId={detail.deal.id} />
-              </Section>
+              {/* The panel carries its own heading, count and "New quote" action. */}
+              <DealQuotesPanel dealId={detail.deal.id} />
             </div>
             <Section title={t("deal.timeline")}>
               <Timeline subject={subject} allowCompose />
@@ -65,7 +64,7 @@ export function DealPage({ dealId }: { dealId: string }) {
         </div>
       ) : (
         <Tabs defaultValue="timeline" className="gap-0">
-          <div className="sticky top-0 z-10 border-b bg-background/95 px-4 py-2 backdrop-blur sm:px-6">
+          <div className="sticky top-0 z-10 border-b bg-background px-4 py-2 sm:px-6">
             <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="timeline">{t("deal.timeline")}</TabsTrigger>
               <TabsTrigger value="tasks">

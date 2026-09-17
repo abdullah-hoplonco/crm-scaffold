@@ -1,6 +1,6 @@
 import { TZDate } from "@date-fns/tz";
 import { differenceInCalendarDays, format } from "date-fns";
-import { formatDuration, inWorkspaceTz, WORKSPACE_TZ } from "@/lib/format";
+import { formatDuration, inWorkspaceTz, latenessOf, WORKSPACE_TZ } from "@/lib/format";
 
 /** A wall-clock time on a calendar day in Dubai, as an ISO timestamp. */
 export function dubaiAt(
@@ -42,7 +42,8 @@ export function formatDueShort(iso: string): string {
 }
 
 export type DueLabel =
-  { kind: "overdue"; text: string } | { kind: "today" | "tomorrow" | "soon" | "later"; text: string };
+  | { kind: "overdue"; text: string; tone: "nudge" | "alert" }
+  | { kind: "today" | "tomorrow" | "soon" | "later"; text: string };
 
 /** How a due time reads in a task list: overdue by how long, or when in Dubai time. */
 export function describeDue(
@@ -61,6 +62,7 @@ export function describeDue(
     const days = Math.floor(ms / 86_400_000);
     return {
       kind: "overdue",
+      tone: latenessOf(dueAt, now) === "alert" ? "alert" : "nudge",
       text: days >= 1 ? labels.overdueDays(days) : labels.overdueFor(formatDuration(ms)),
     };
   }

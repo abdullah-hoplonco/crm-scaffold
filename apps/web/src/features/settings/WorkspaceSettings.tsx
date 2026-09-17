@@ -228,7 +228,7 @@ function WorkspaceForm({ workspace }: { workspace: Workspace }) {
             onChange={(v) => set("staleAfterDays", v)}
             disabled={disabled}
           />
-          <p className="mt-3 inline-flex max-w-full items-center gap-1.5 rounded-md bg-warning-soft px-2 py-1 text-xs font-medium text-[#6B4700]">
+          <p className="mt-3 inline-flex max-w-full items-center gap-1.5 rounded-md bg-warning-soft px-2 py-1 text-xs font-medium text-warning">
             <Snowflake className="size-3.5 shrink-0" aria-hidden="true" />
             <span className="truncate">
               {t("workspace.followUp.preview", { count: draft.staleAfterDays })}
@@ -278,7 +278,7 @@ function LockedRow({
       </span>
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium">{label}</p>
-        <p className="text-[13px] text-muted-foreground">{note}</p>
+        <p className="text-sm text-muted-foreground">{note}</p>
       </div>
       <p className="flex shrink-0 items-center gap-1.5 text-sm font-medium tabular-nums">
         {value}

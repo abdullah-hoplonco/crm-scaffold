@@ -36,7 +36,7 @@ function RepRow({ rep, isNext }: { rep: DemoRep; isNext: boolean }) {
         <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
           <span className="truncate text-sm font-medium">{rep.name}</span>
           {isNext ? (
-            <span className="rounded-full bg-accent px-2 py-px text-[11px] font-medium text-accent-foreground">
+            <span className="rounded-full bg-accent px-2 py-px text-xs font-medium text-accent-foreground">
               {t("reps.next")}
             </span>
           ) : null}

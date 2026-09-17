@@ -24,7 +24,7 @@ function isCurrent(pathname: string, to: SettingsNavItem["to"]) {
   return to === "/settings" ? path === "/settings" : path === to || path.startsWith(`${to}/`);
 }
 
-/** Settings shell: side navigation on desktop, scrollable tabs on phones, the section on the end side. */
+/** Settings shell: side navigation on desktop, wrapping tabs on phones, the section on the end side. */
 export function SettingsLayout() {
   const { t } = useTranslation("settings");
   const { workspace } = useSession();
@@ -40,7 +40,8 @@ export function SettingsLayout() {
       />
       <div className="lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-10 lg:px-8">
         <nav aria-label={t("navLabel")} className="lg:sticky lg:top-6 lg:self-start">
-          <ul className="flex gap-1 overflow-x-auto border-b px-4 [scrollbar-width:none] sm:px-6 lg:flex-col lg:gap-0.5 lg:overflow-visible lg:border-b-0 lg:px-0">
+          {/* Wrap rather than scroll: a tab cut off at the screen edge reads as clipped on a phone. */}
+          <ul className="flex flex-wrap gap-x-1 border-b px-4 sm:px-6 lg:flex-col lg:gap-0.5 lg:border-b-0 lg:px-0">
             {ITEMS.map((item) => {
               const current = isCurrent(pathname, item.to);
               const Icon = item.icon;

@@ -69,7 +69,7 @@ export function PipelinePage({
         <BoardToolbar search={search} view={view} onChange={onSearchChange} />
       </PageHeader>
 
-      <div className="min-h-0 flex-1 px-4 pb-4 sm:px-6 md:overflow-x-auto lg:px-8">
+      <div className="min-h-0 flex-1 px-4 pb-4 sm:px-6 lg:px-8">
         {board.isPending ? (
           <BoardSkeleton />
         ) : board.isError ? (
@@ -115,13 +115,21 @@ export function PipelinePage({
 function BoardSkeleton() {
   return (
     <div className="flex h-full gap-3" aria-busy="true" aria-live="polite">
-      {[3, 4, 2, 3].map((cards, column) => (
-        <div key={column} className="flex min-w-[248px] flex-1 flex-col gap-2 max-md:hidden md:max-w-[360px]">
-          <Skeleton className="mb-2 h-10 w-full" />
-          {Array.from({ length: cards }, (_, i) => (
-            <Skeleton key={i} className="h-[118px] w-full rounded-lg" />
-          ))}
-        </div>
+      <div className="flex h-full min-w-0 flex-1 gap-3 overflow-hidden">
+        {[3, 4, 2, 3].map((cards, column) => (
+          <div
+            key={column}
+            className="flex min-w-[232px] flex-1 flex-col gap-2 max-md:hidden md:max-w-[360px]"
+          >
+            <Skeleton className="mb-2 h-10 w-full" />
+            {Array.from({ length: cards }, (_, i) => (
+              <Skeleton key={i} className="h-[118px] w-full rounded-lg" />
+            ))}
+          </div>
+        ))}
+      </div>
+      {[0, 1].map((rail) => (
+        <Skeleton key={rail} className="hidden h-full w-16 shrink-0 rounded-xl md:block" />
       ))}
       <div className="flex w-full flex-col gap-2 md:hidden">
         <Skeleton className="h-8 w-full rounded-full" />

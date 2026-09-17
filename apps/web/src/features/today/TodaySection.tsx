@@ -37,7 +37,7 @@ export function TodaySection({
         >
           <Icon className="size-3.5" aria-hidden="true" />
         </span>
-        <h2 id={`${id}-title`} className="text-[15px] font-semibold">
+        <h2 id={`${id}-title`} className="text-sm font-semibold">
           {title}
         </h2>
         <span className="ms-auto rounded-full bg-muted px-2 py-0.5 text-xs font-semibold tabular-nums">
