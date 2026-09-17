@@ -42,6 +42,17 @@ export const OnboardingInput = z.object({
 });
 export type OnboardingInput = z.infer<typeof OnboardingInput>;
 
+/** What the person picked in the connect flow (a number, a page and its lead forms, an ad account). */
+export const ConnectChannelDetails = z.object({
+  displayPhone: z.string().trim().min(1).optional(),
+  verifiedName: z.string().trim().min(1).optional(),
+  pageName: z.string().trim().min(1).optional(),
+  instagramHandle: z.string().trim().min(1).optional(),
+  formNames: z.array(z.string().trim().min(1)).max(20).optional(),
+  advertiserName: z.string().trim().min(1).optional(),
+});
+export type ConnectChannelDetails = z.infer<typeof ConnectChannelDetails>;
+
 export const workspaceRoutes = {
   get: defineRoute({ method: "GET", path: "/workspace", summary: "Workspace settings", response: Workspace }),
   update: defineRoute({
@@ -82,7 +93,11 @@ export const workspaceRoutes = {
     method: "POST",
     path: "/channel-connections",
     summary: "Connect a channel (showcase: simulated connect flow)",
-    body: z.object({ type: ChannelConnectionType, displayName: z.string().trim().min(1).optional() }),
+    body: z.object({
+      type: ChannelConnectionType,
+      displayName: z.string().trim().min(1).optional(),
+      details: ConnectChannelDetails.optional(),
+    }),
     response: ChannelConnection,
   }),
   disconnectChannel: defineRoute({
