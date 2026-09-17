@@ -34,6 +34,9 @@ export const CompanyDetail = z.object({
   company: Company,
   contacts: z.array(Contact),
   assignee: User.nullable(),
+  /** Open deals linked to the company or to its contacts. */
+  openDealsCount: z.number().int().optional(),
+  openPipelineAed: MoneyAed.optional(),
 });
 export type CompanyDetail = z.infer<typeof CompanyDetail>;
 
@@ -55,7 +58,7 @@ export const companyRoutes = {
   create: defineRoute({
     method: "POST",
     path: "/companies",
-    summary: "Create a company",
+    summary: "Create a company (409 DUPLICATE_COMPANY when the name exists, details.companyId names it)",
     body: CompanyInput,
     response: Company,
   }),
@@ -70,7 +73,7 @@ export const companyRoutes = {
   remove: defineRoute({
     method: "DELETE",
     path: "/companies/:companyId",
-    summary: "Soft-delete a company",
+    summary: "Soft-delete a company; its contacts stay, without the company",
     params: z.object({ companyId: z.string() }),
     response: Ok,
   }),

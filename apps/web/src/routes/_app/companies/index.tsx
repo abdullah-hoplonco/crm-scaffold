@@ -1,22 +1,24 @@
+import { Emirate } from "@hco/shared";
 import { createFileRoute } from "@tanstack/react-router";
-import { Hammer } from "lucide-react";
-import { PageHeader } from "@/components/app/PageHeader";
-import { EmptyState } from "@/components/app/States";
+import { useCallback } from "react";
+import { z } from "zod";
+import { CompaniesPage } from "@/features/companies/CompaniesPage";
 
-/** Placeholder page. Owned by the contacts-companies workstream. */
 export const Route = createFileRoute("/_app/companies/")({
-  component: Placeholder,
+  validateSearch: z.object({
+    q: z.string().optional(),
+    emirate: Emirate.optional().catch(undefined),
+  }),
+  component: CompaniesRoute,
 });
 
-function Placeholder() {
-  return (
-    <>
-      <PageHeader title="Companies" />
-      <EmptyState
-        icon={Hammer}
-        title="Companies is being built"
-        description="This screen arrives in the next build step."
-      />
-    </>
+function CompaniesRoute() {
+  const { q, emirate } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const onFiltersChange = useCallback(
+    (next: { q: string; emirate: Emirate | undefined }) =>
+      void navigate({ search: { q: next.q || undefined, emirate: next.emirate }, replace: true }),
+    [navigate],
   );
+  return <CompaniesPage search={q ?? ""} emirate={emirate} onFiltersChange={onFiltersChange} />;
 }

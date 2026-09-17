@@ -1,22 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Hammer } from "lucide-react";
-import { PageHeader } from "@/components/app/PageHeader";
-import { EmptyState } from "@/components/app/States";
+import { useCallback } from "react";
+import { z } from "zod";
+import { ContactsPage } from "@/features/contacts/ContactsPage";
 
-/** Placeholder page. Owned by the contacts-companies workstream. */
 export const Route = createFileRoute("/_app/contacts/")({
-  component: Placeholder,
+  validateSearch: z.object({ q: z.string().optional() }),
+  component: ContactsRoute,
 });
 
-function Placeholder() {
-  return (
-    <>
-      <PageHeader title="Contacts" />
-      <EmptyState
-        icon={Hammer}
-        title="Contacts is being built"
-        description="This screen arrives in the next build step."
-      />
-    </>
+function ContactsRoute() {
+  const { q } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const onSearchChange = useCallback(
+    (next: string) => void navigate({ search: { q: next || undefined }, replace: true }),
+    [navigate],
   );
+  return <ContactsPage search={q ?? ""} onSearchChange={onSearchChange} />;
 }
