@@ -1,1 +1,187 @@
-{}
+{
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "period": {
+    "label": "Period",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days"
+  },
+  "scope": {
+    "period_one": "Last {{count}} day",
+    "period_other": "Last {{count}} days",
+    "createdInPeriod_one": "Deals created in the last day",
+    "createdInPeriod_other": "Deals created in the last {{count}} days",
+    "lastWeek": "Last 7 days"
+  },
+  "figures": {
+    "label": "Pipeline figures",
+    "openPipeline": "Open pipeline",
+    "weightedMeter": "Weighted pipeline is {{pct}}% of open pipeline",
+    "weightedHint": "weighted by each stage's chance to close",
+    "wonThisMonth": "Won this month",
+    "wonDeals_zero": "No deals won yet",
+    "wonDeals_one": "1 deal",
+    "wonDeals_other": "{{count}} deals",
+    "openDeals": "Open deals",
+    "goingCold_one": "1 going cold",
+    "goingCold_other": "{{count}} going cold",
+    "allMoving": "None going cold",
+    "noOpenDeals": "No deals yet"
+  },
+  "insights": {
+    "title": "What stands out",
+    "sourceWithoutDeals_one": "{{source}} sent 1 lead and it didn't become a deal.",
+    "sourceWithoutDeals_other": "{{source}} sent {{count}} leads and none became a deal.",
+    "bestSource_one": "{{source}} brought the most deals: 1 from {{leads}} leads.",
+    "bestSource_other": "{{source}} brought the most deals: {{count}} from {{leads}} leads.",
+    "bestSourceWon_one": "{{source}} brought the most deals: 1 from {{leads}} leads, and it's won.",
+    "bestSourceWon_other": "{{source}} brought the most deals: {{count}} from {{leads}} leads, {{won}} already won.",
+    "staleDeals_one": "1 open deal worth {{value}} has had no activity for {{days}} days or more.",
+    "staleDeals_other": "{{count}} open deals worth {{value}} have had no activity for {{days}} days or more.",
+    "funnelDrop": "Only {{pct}}% of deals get from {{from}} to {{to}}.",
+    "wonThisMonth_one": "1 deal won so far this month, worth {{value}}.",
+    "wonThisMonth_other": "{{count}} deals won so far this month, worth {{value}}.",
+    "noLeads": "No leads yet. Connect a channel and this page fills in as enquiries arrive.",
+    "connectChannels": "Connect channels",
+    "openLeads": "Open leads",
+    "footnote_one": "Picked by fixed rules from the last day of leads and deals.",
+    "footnote_other": "Picked by fixed rules from the last {{count}} days of leads and deals.",
+    "periodSummary_one": "1 lead came in and {{deals}} became a deal.",
+    "periodSummary_other": "{{count}} leads came in and {{deals}} became deals."
+  },
+  "sources": {
+    "title": "Where leads come from",
+    "rowSummary_one": "{{source}}: 1 lead, {{deals}} became a deal ({{pct}}%), {{won}} won",
+    "rowSummary_other": "{{source}}: {{count}} leads, {{deals}} became deals ({{pct}}%), {{won}} won",
+    "legendWon": "Won",
+    "legendDeal": "Deal, not won",
+    "legendNoDeal": "No deal",
+    "emptyTitle_one": "No leads in the last day",
+    "emptyTitle_other": "No leads in the last {{count}} days",
+    "emptyDescription": "Leads from Instagram, Facebook, TikTok and WhatsApp show here as they arrive.",
+    "colSource": "Source",
+    "colBar": "Leads split by outcome",
+    "colLeads": "Leads",
+    "colDeals": "Deals",
+    "colWon": "Won",
+    "colRate": "Lead to deal",
+    "rateShort": "{{pct}}% became deals",
+    "leadsCount_one": "1 lead",
+    "leadsCount_other": "{{count}} leads",
+    "dealsCount_one": "1 deal",
+    "dealsCount_other": "{{count}} deals",
+    "wonCount_one": "1 won",
+    "wonCount_other": "{{count}} won",
+    "total": "{{leads}} leads, {{deals}} deals, {{won}} won",
+    "totalLabel": "All sources"
+  },
+  "funnel": {
+    "title": "How far deals get",
+    "movedOn": "{{pct}}% moved on",
+    "reached_one": "1 deal",
+    "reached_other": "{{count}} deals",
+    "inStageNow_zero": "No open deals here now",
+    "inStageNow_one": "1 open deal here now, {{value}}",
+    "inStageNow_other": "{{count}} open deals here now, {{value}}",
+    "wonNow_zero": "Nothing won yet",
+    "wonNow_one": "1 won to date, {{value}}",
+    "wonNow_other": "{{count}} won to date, {{value}}",
+    "lost_zero": "None of these deals were lost.",
+    "lost_one": "1 of {{started}} deals was lost.",
+    "lost_other": "{{count}} of {{started}} deals were lost.",
+    "emptyTitle_one": "No new deals in the last day",
+    "emptyTitle_other": "No new deals in the last {{count}} days",
+    "emptyDescription": "Deals created in this period show here as they move through the pipeline."
+  },
+  "team": {
+    "title": "Team follow-up",
+    "colPerson": "Teammate",
+    "messages": "Messages sent",
+    "notes": "Notes and calls",
+    "tasksDone": "Tasks done",
+    "emptyTitle": "No follow-up logged this week",
+    "emptyDescription": "Messages, notes, calls and completed tasks from the last 7 days show here."
+  },
+  "duration": {
+    "minutes_one": "{{count}} min",
+    "minutes_other": "{{count}} min",
+    "hours_one": "{{count}} h",
+    "hours_other": "{{count}} h",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days"
+  },
+  "today": {
+    "greeting": {
+      "morning": "Good morning, {{name}}",
+      "afternoon": "Good afternoon, {{name}}",
+      "evening": "Good evening, {{name}}"
+    },
+    "summary": {
+      "label": "Your day at a glance",
+      "tasks_one": "1 task due",
+      "tasks_other": "{{count}} tasks due",
+      "overdue_one": "{{count}} overdue",
+      "overdue_other": "{{count}} overdue",
+      "replies_one": "1 waiting for a reply",
+      "replies_other": "{{count}} waiting for a reply",
+      "cold_one": "1 deal going cold",
+      "cold_other": "{{count}} deals going cold",
+      "noTasks": "No tasks due",
+      "noReplies": "Everyone has a reply",
+      "noCold": "No deals going cold"
+    },
+    "tasks": {
+      "title": "Tasks due today",
+      "markDone": "Mark as done: {{title}}",
+      "overdueBy": "Overdue by {{duration}}",
+      "dueAt": "Due {{time}}",
+      "origin": {
+        "auto_lead": "New lead",
+        "auto_stale": "Going cold"
+      },
+      "completed": "Marked as done",
+      "undo": "Undo",
+      "reopened": "Task is back on your list",
+      "overdueGroup_one": "Overdue",
+      "overdueGroup_other": "Overdue",
+      "laterGroup": "Later today",
+      "doneLabel": "Done"
+    },
+    "replies": {
+      "title": "Waiting for your reply",
+      "waited": "Waiting {{duration}}",
+      "email": "Email",
+      "windowOpen": "{{duration}} left to reply freely",
+      "windowClosing": "Reply window closes in {{duration}}",
+      "windowClosed": "Reply window closed, send a template",
+      "titleTeam": "Waiting for a reply"
+    },
+    "cold": {
+      "title": "Going cold",
+      "idle_one": "No activity for 1 day",
+      "idle_other": "No activity for {{count}} days"
+    },
+    "clear": {
+      "title": "You're all caught up",
+      "description": "Nothing is due today, nobody is waiting for a reply and every deal is moving.",
+      "openLeads": "Open leads",
+      "openPipeline": "Open pipeline"
+    },
+    "showMore_one": "Show 1 more",
+    "showMore_other": "Show {{count}} more"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "description": "New leads, messages and deals that need you",
+    "bell": "Notifications",
+    "bellUnread_one": "Notifications, 1 unread",
+    "bellUnread_other": "Notifications, {{count}} unread",
+    "markAllRead": "Mark all as read",
+    "allRead": "Marked all as read",
+    "unread": "Unread",
+    "close": "Close",
+    "emptyTitle": "No notifications yet",
+    "emptyDescription": "New leads, messages and deals that need you show up here."
+  }
+}

@@ -38,6 +38,8 @@ export const DashboardSummary = z.object({
   weightedPipelineAed: MoneyAed,
   openDealsCount: z.number().int(),
   wonThisMonth: z.object({ count: z.number().int(), valueAed: MoneyAed }),
+  /** Open deals with no activity for the workspace's staleAfterDays, and their AED value. */
+  staleDeals: z.object({ count: z.number().int(), valueAed: MoneyAed }).optional(),
 });
 export type DashboardSummary = z.infer<typeof DashboardSummary>;
 
