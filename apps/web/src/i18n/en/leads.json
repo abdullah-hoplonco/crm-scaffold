@@ -46,7 +46,7 @@
     "day_other": "{{count}} days"
   },
   "received": {
-    "justNow": "Just now",
+    "justNow": "just now",
     "ago": "{{time}} ago"
   },
   "pagination": {

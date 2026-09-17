@@ -273,7 +273,7 @@
       "limits": "CSV with column names in the first row, up to 5,000 rows",
       "reading": "Reading your file…",
       "sampleTitle": "No file to hand?",
-      "sampleDescription": "Try a sample of 25 clinic patients. Three are already in your contacts and two have typos in their phone numbers.",
+      "sampleDescription": "Try a sample of 25 rows. Three are already in your contacts and two have typos in their phone numbers.",
       "useSample": "Use sample file",
       "tipsTitle": "What works best",
       "tipHeader": "One person per row, with column names in the first row.",
