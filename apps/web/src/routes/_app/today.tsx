@@ -1,22 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Hammer } from "lucide-react";
-import { PageHeader } from "@/components/app/PageHeader";
-import { EmptyState } from "@/components/app/States";
+import { TodayPage } from "@/features/today/TodayPage";
 
-/** Placeholder page. Owned by the owner-views workstream. */
 export const Route = createFileRoute("/_app/today")({
-  component: Placeholder,
+  component: TodayPage,
 });
-
-function Placeholder() {
-  return (
-    <>
-      <PageHeader title="Today" />
-      <EmptyState
-        icon={Hammer}
-        title="Today is being built"
-        description="This screen arrives in the next build step."
-      />
-    </>
-  );
-}
