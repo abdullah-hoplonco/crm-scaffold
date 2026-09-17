@@ -1,22 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Hammer } from "lucide-react";
-import { PageHeader } from "@/components/app/PageHeader";
-import { EmptyState } from "@/components/app/States";
+import { useCallback } from "react";
+import { PipelinePage } from "@/features/pipeline/PipelinePage";
+import { pipelineSearch, type PipelineSearch } from "@/features/pipeline/search";
 
-/** Placeholder page. Owned by the pipeline workstream. */
 export const Route = createFileRoute("/_app/pipeline")({
-  component: Placeholder,
+  validateSearch: pipelineSearch,
+  component: PipelineRoute,
 });
 
-function Placeholder() {
-  return (
-    <>
-      <PageHeader title="Pipeline" />
-      <EmptyState
-        icon={Hammer}
-        title="Pipeline is being built"
-        description="This screen arrives in the next build step."
-      />
-    </>
+function PipelineRoute() {
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const onSearchChange = useCallback(
+    (next: Partial<PipelineSearch>) =>
+      void navigate({ search: (prev) => ({ ...prev, ...next }), replace: true }),
+    [navigate],
   );
+  return <PipelinePage search={search} onSearchChange={onSearchChange} />;
 }
