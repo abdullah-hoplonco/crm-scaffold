@@ -116,7 +116,7 @@ export function MapStep({
         {!hasName ? (
           <p
             role="status"
-            className="flex items-start gap-2 rounded-md border border-attention/40 bg-warning-soft px-3 py-2.5 text-sm text-[#6B4700]"
+            className="flex items-start gap-2 rounded-md border border-attention/40 bg-warning-soft px-3 py-2.5 text-sm text-warning"
           >
             <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
             {t("import.map.needsName")}
@@ -148,7 +148,7 @@ export function MapStep({
 /** Step actions, kept in view at the bottom of the screen (above the mobile tab bar) while rows scroll. */
 export function StepFooter({ children }: { children: ReactNode }) {
   return (
-    <div className="sticky bottom-[calc(4rem+env(safe-area-inset-bottom))] z-10 flex flex-col-reverse gap-2 rounded-b-lg border-t bg-card/95 px-4 py-3 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:bottom-0">
+    <div className="sticky bottom-[calc(4rem+env(safe-area-inset-bottom))] z-10 flex flex-col-reverse gap-2 rounded-b-lg border-t bg-card px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:bottom-0">
       {children}
     </div>
   );

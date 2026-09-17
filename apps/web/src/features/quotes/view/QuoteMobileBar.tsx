@@ -64,7 +64,7 @@ export function QuoteMobileBar({
   );
 
   return (
-    <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-30 flex items-center gap-2 border-t bg-card/95 px-4 py-2.5 backdrop-blur lg:hidden">
+    <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-30 flex items-center gap-2 border-t bg-card px-4 py-2.5 lg:hidden">
       {quote.status === "draft" ? (
         <>
           <Button asChild variant="outline" size="icon" aria-label={t("view.edit")}>

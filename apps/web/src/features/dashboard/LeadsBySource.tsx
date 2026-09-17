@@ -6,7 +6,7 @@ import { sourceColorClass } from "@/components/app/SourceBadge";
 import { EmptyState } from "@/components/app/States";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { barWidth, inkFill, sourceFill, type SourceStep } from "./chart-colors";
+import { barWidth, inkFill, type SourceStep } from "./chart-colors";
 import { Panel } from "./Panel";
 
 type SourceRow = DashboardSummary["leadsBySource"][number];
@@ -27,7 +27,8 @@ function SourceName({ source }: { source: LeadSource }) {
 
 /**
  * One bar per source, as long as its lead count. The bar is split into won deals, other deals and
- * leads that never became a deal, in three tints of the channel colour with a 2px gap between them.
+ * leads that never became a deal, in three ink tints with a 2px gap between them. The channel keeps
+ * its colour as the dot beside the name, never as a fill (Small Channel Rule).
  */
 function SourceBar({ row, max }: { row: SourceRow; max: number }) {
   const { t } = useTranslation("dashboard");
@@ -59,7 +60,7 @@ function SourceBar({ row, max }: { row: SourceRow; max: number }) {
                 <span
                   key={s.step}
                   className="h-full min-w-[3px] last:rounded-e-[4px]"
-                  style={{ flexGrow: s.value, flexBasis: 0, backgroundColor: sourceFill(row.source, s.step) }}
+                  style={{ flexGrow: s.value, flexBasis: 0, backgroundColor: inkFill(s.step) }}
                 />
               ))}
           </div>

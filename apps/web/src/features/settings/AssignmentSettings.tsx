@@ -132,7 +132,7 @@ function AssignmentForm({ rule, users }: { rule: AssignmentRule; users: User[] }
                     <Icon className="size-4 text-muted-foreground" aria-hidden="true" />
                     {t(`assignment.strategy.${value}.label`)}
                   </span>
-                  <span className="mt-1 block text-[13px] leading-snug text-muted-foreground">
+                  <span className="mt-1 block text-sm leading-snug text-muted-foreground">
                     {t(`assignment.strategy.${value}.help`)}
                   </span>
                 </span>
@@ -184,7 +184,7 @@ function AssignmentForm({ rule, users }: { rule: AssignmentRule; users: User[] }
         </SettingsPanel>
       </fieldset>
 
-      <p className="text-[13px] text-muted-foreground">{t("assignment.returningNote")}</p>
+      <p className="text-sm text-muted-foreground">{t("assignment.returningNote")}</p>
 
       <UnsavedChangesBar
         visible={dirty && canEditTeamRules}
@@ -207,15 +207,15 @@ function NextLeadBanner({ strategy, queue }: { strategy: AssignmentStrategy; que
   if (strategy === "manual" || !nextUser) {
     const Icon = strategy === "manual" ? Hand : UserX;
     return (
-      <div className="flex items-center gap-4 rounded-xl bg-sidebar px-4 py-4 text-sidebar-foreground sm:px-5">
-        <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-sidebar-accent text-sidebar-accent-foreground">
+      <div className="flex items-center gap-4 rounded-xl border bg-accent px-4 py-4 text-accent-foreground sm:px-5">
+        <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-card text-primary">
           <Icon className="size-5" aria-hidden="true" />
         </span>
         <div className="min-w-0">
-          <p className="text-base font-semibold text-sidebar-accent-foreground" aria-live="polite">
+          <p className="text-base font-semibold text-accent-foreground" aria-live="polite">
             {strategy === "manual" ? t("assignment.next.manual") : t("assignment.next.nobody")}
           </p>
-          <p className="text-sm text-sidebar-muted">
+          <p className="text-sm text-muted-foreground">
             {strategy === "manual" ? t("assignment.next.manualHelp") : t("assignment.next.nobodyHelp")}
           </p>
         </div>
@@ -224,24 +224,24 @@ function NextLeadBanner({ strategy, queue }: { strategy: AssignmentStrategy; que
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-xl bg-sidebar px-4 py-4 text-sidebar-foreground sm:flex-row sm:items-center sm:px-5">
+    <div className="flex flex-col gap-4 rounded-xl border bg-accent px-4 py-4 text-accent-foreground sm:flex-row sm:items-center sm:px-5">
       <div className="flex min-w-0 flex-1 items-center gap-3.5">
-        <UserAvatar name={nextUser.name} size="lg" className="ring-2 ring-sidebar-primary" />
+        <UserAvatar name={nextUser.name} size="lg" className="ring-2 ring-card" />
         <div className="min-w-0">
-          <p className="text-sm text-sidebar-muted">{t("assignment.next.label")}</p>
-          <p className="truncate text-lg font-semibold text-sidebar-accent-foreground" aria-live="polite">
+          <p className="text-sm text-muted-foreground">{t("assignment.next.label")}</p>
+          <p className="truncate text-lg font-semibold text-accent-foreground" aria-live="polite">
             {nextUser.name}
           </p>
         </div>
       </div>
       {after.length ? (
         <div className="min-w-0 sm:text-end">
-          <p className="text-xs text-sidebar-muted">{t("assignment.next.then")}</p>
+          <p className="text-xs text-muted-foreground">{t("assignment.next.then")}</p>
           <ol className="mt-1.5 flex flex-wrap items-center gap-1.5 sm:justify-end">
             {after.map((u) => (
               <li
                 key={u.id}
-                className="flex items-center gap-1.5 rounded-full bg-sidebar-accent py-0.5 ps-0.5 pe-2.5 text-xs text-sidebar-accent-foreground"
+                className="flex items-center gap-1.5 rounded-full bg-card py-0.5 ps-0.5 pe-2.5 text-xs text-accent-foreground"
               >
                 <UserAvatar name={u.name} size="sm" />
                 {firstName(u.name)}
@@ -250,7 +250,7 @@ function NextLeadBanner({ strategy, queue }: { strategy: AssignmentStrategy; que
           </ol>
         </div>
       ) : (
-        <p className="text-sm text-sidebar-muted">{t("assignment.next.onlyOne")}</p>
+        <p className="text-sm text-muted-foreground">{t("assignment.next.onlyOne")}</p>
       )}
     </div>
   );

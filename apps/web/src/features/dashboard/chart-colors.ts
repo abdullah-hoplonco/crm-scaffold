@@ -1,5 +1,3 @@
-import type { LeadSource } from "@hco/shared";
-
 /**
  * Chart fills derived from the design tokens. Ordered data (funnel stages, lead → deal → won) uses
  * tints of one hue mixed toward the card surface. The steps were checked with the dataviz ordinal
@@ -14,11 +12,7 @@ function tint(cssVar: string, percent: number): string {
 const SOURCE_STEPS = { noDeal: 62, deal: 82, won: 100 } as const;
 export type SourceStep = keyof typeof SOURCE_STEPS;
 
-export function sourceFill(source: LeadSource, step: SourceStep): string {
-  return tint(`--channel-${source}`, SOURCE_STEPS[step]);
-}
-
-/** Legend swatches for the source chart, in ink so they don't suggest any one channel. */
+/** Source chart fills and legend swatches, in ink: the channel's own colour stays a dot at chip size. */
 export function inkFill(step: SourceStep): string {
   return tint("--foreground", SOURCE_STEPS[step]);
 }

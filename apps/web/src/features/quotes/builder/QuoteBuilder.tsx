@@ -111,7 +111,7 @@ export function QuoteBuilder({
     >
       <div className="flex min-w-0 flex-col gap-8">
         {context.workspace.trn ? null : (
-          <p className="flex gap-2 rounded-lg bg-warning-soft px-3 py-2.5 text-sm text-[#6B4700]">
+          <p className="flex gap-2 rounded-lg bg-warning-soft px-3 py-2.5 text-sm text-warning">
             <Info className="mt-0.5 size-4 shrink-0" />
             {t("builder.noTrnWarning")}
           </p>
@@ -207,7 +207,7 @@ export function QuoteBuilder({
       {/* Phone actions, above the tab bar */}
       <div
         className={cn(
-          "fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-30 flex items-center gap-2 border-t bg-card/95 px-4 py-2.5 backdrop-blur sm:hidden",
+          "fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-30 flex items-center gap-2 border-t bg-card px-4 py-2.5 sm:hidden",
         )}
       >
         <div className="min-w-0 flex-1">
