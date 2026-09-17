@@ -57,6 +57,7 @@ function ExpandedColumn({
   return (
     <section
       aria-labelledby={headingId}
+      data-tour={stage.type === "open" ? "stage-open" : `stage-${stage.type}`}
       className={cn(
         "flex h-full min-w-[248px] flex-1 flex-col",
         stage.type === "open" ? "max-w-[360px]" : "max-w-[300px]",
@@ -141,7 +142,11 @@ function CollapsedColumn({ stage, cards, totalValueAed, onToggleCollapsed, isOve
   const lane = LANE[stage.type];
 
   return (
-    <section aria-label={stage.name} className="flex h-full w-14 shrink-0 flex-col">
+    <section
+      aria-label={stage.name}
+      data-tour={`stage-${stage.type}`}
+      className="flex h-full w-14 shrink-0 flex-col"
+    >
       <button
         ref={setNodeRef}
         type="button"

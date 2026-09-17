@@ -229,7 +229,7 @@ export function LeadsPage() {
                 <span>{t("columns.assignee")}</span>
                 <span>{t("columns.status")}</span>
               </div>
-              <ul className="divide-y">
+              <ul className="divide-y" data-tour="leads-list">
                 {list.data.items.map((lead) => (
                   <li key={lead.id}>
                     <LeadRow lead={lead} now={now} />
@@ -306,7 +306,7 @@ function LeadRow({ lead, now }: { lead: LeadListItem; now: Date }) {
         >
           {received(lead.receivedAt, now)}
         </time>
-        <span className="flex min-w-0 items-center gap-2 text-sm">
+        <span className="flex min-w-0 items-center gap-2 text-sm" data-tour="lead-assignee">
           <UserAvatar name={lead.assigneeName} size="sm" />
           <span className={cn("truncate", !lead.assigneeName && "text-muted-foreground")}>
             {lead.assigneeName ?? t("common:states.unassigned")}
@@ -332,7 +332,7 @@ function LeadRow({ lead, now }: { lead: LeadListItem; now: Date }) {
           <LeadStatusPill status={lead.status} />
           <SpeedChip lead={lead} now={now} />
           {existing}
-          <span className="ms-auto flex items-center gap-1.5 text-xs text-muted-foreground">
+          <span className="ms-auto flex items-center gap-1.5 text-xs text-muted-foreground" data-tour="lead-assignee">
             <UserAvatar name={lead.assigneeName} size="sm" />
             {assigneeFirst ?? t("common:states.unassigned")}
           </span>

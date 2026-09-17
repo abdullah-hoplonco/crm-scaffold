@@ -43,13 +43,14 @@ export function MoveToMenu({
           <Button
             variant="ghost"
             size="icon-sm"
+            data-tour="move-to"
             aria-label={t("moveTo.triggerFor", { title: deal.title })}
             className={cn("relative z-10 size-7 text-muted-foreground", className)}
           >
             <ArrowRightLeft className="size-3.5" />
           </Button>
         ) : (
-          <Button variant="outline" size="sm" className={cn("relative z-10", className)}>
+          <Button variant="outline" size="sm" data-tour="move-to" className={cn("relative z-10", className)}>
             <ArrowRightLeft />
             {label}
           </Button>

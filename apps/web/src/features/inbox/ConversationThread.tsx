@@ -176,6 +176,7 @@ function MessageList({
     <div
       ref={scroller}
       className="min-h-0 flex-1 overflow-y-auto bg-background"
+      data-tour="thread-messages"
       role="log"
       aria-live="polite"
       aria-label={t("thread.messages")}

@@ -95,6 +95,7 @@ function DocumentCard({ media, quoteId, outbound }: { media: Media; quoteId: str
     <Link
       to="/quotes/$quoteId"
       params={{ quoteId }}
+      data-tour="thread-document"
       className={cn(
         className,
         "transition-colors hover:bg-card focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
@@ -104,7 +105,9 @@ function DocumentCard({ media, quoteId, outbound }: { media: Media; quoteId: str
       {content}
     </Link>
   ) : (
-    <div className={className}>{content}</div>
+    <div className={className} data-tour="thread-document">
+      {content}
+    </div>
   );
 }
 
