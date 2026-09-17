@@ -42,13 +42,13 @@ function PeriodToggle({ value, onChange }: { value: Period; onChange: (period: P
 function DashboardSkeleton() {
   return (
     <div className="grid gap-4 lg:gap-5" aria-busy="true" aria-live="polite">
-      <div className="grid gap-4 lg:grid-cols-12 lg:gap-5">
-        <Skeleton className="h-52 lg:col-span-7" />
-        <Skeleton className="h-52 lg:col-span-5" />
+      <div className="grid gap-4 xl:grid-cols-12 lg:gap-5">
+        <Skeleton className="h-52 xl:col-span-7" />
+        <Skeleton className="h-52 xl:col-span-5" />
       </div>
-      <div className="grid gap-4 lg:grid-cols-12 lg:gap-5">
-        <Skeleton className="h-80 lg:col-span-7" />
-        <Skeleton className="h-80 lg:col-span-5" />
+      <div className="grid gap-4 xl:grid-cols-12 lg:gap-5">
+        <Skeleton className="h-80 xl:col-span-7" />
+        <Skeleton className="h-80 xl:col-span-5" />
       </div>
       <Skeleton className="h-56" />
     </div>
@@ -95,13 +95,13 @@ export function DashboardPage({
             )}
             aria-busy={summary.isPlaceholderData}
           >
-            <div className="grid gap-4 lg:grid-cols-12 lg:gap-5">
-              <StandsOut summary={summary.data} className="lg:col-span-7" />
-              <HeadlineFigures summary={summary.data} className="lg:col-span-5" />
+            <div className="grid gap-4 xl:grid-cols-12 lg:gap-5">
+              <StandsOut summary={summary.data} className="xl:col-span-7" />
+              <HeadlineFigures summary={summary.data} className="xl:col-span-5" />
             </div>
-            <div className="grid gap-4 lg:grid-cols-12 lg:gap-5">
-              <LeadsBySource summary={summary.data} className="lg:col-span-7" />
-              <StageFunnel summary={summary.data} className="lg:col-span-5" />
+            <div className="grid gap-4 xl:grid-cols-12 lg:gap-5">
+              <LeadsBySource summary={summary.data} className="xl:col-span-7" />
+              <StageFunnel summary={summary.data} className="xl:col-span-5" />
             </div>
             <TeamActivity summary={summary.data} />
           </div>

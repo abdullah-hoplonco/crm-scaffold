@@ -21,9 +21,12 @@ export function HeadlineFigures({ summary, className }: { summary: DashboardSumm
   return (
     <section
       aria-label={t("figures.label")}
-      className={cn("grid grid-cols-2 overflow-hidden rounded-xl border bg-card", className)}
+      className={cn(
+        "grid grid-cols-2 overflow-hidden rounded-xl border bg-card md:grid-cols-[2fr_1fr_1fr] xl:grid-cols-2",
+        className,
+      )}
     >
-      <div className="col-span-2 flex flex-col p-4 sm:p-6">
+      <div className="col-span-2 flex flex-col p-4 sm:p-6 md:col-span-1 xl:col-span-2">
         <p className="text-sm text-muted-foreground">{t("figures.openPipeline")}</p>
         <p className="mt-1 text-4xl font-semibold tracking-tight sm:text-5xl">
           {formatAed(summary.openPipelineAed, { compact: true })}
@@ -48,7 +51,7 @@ export function HeadlineFigures({ summary, className }: { summary: DashboardSumm
         </p>
       </div>
 
-      <div className="flex flex-col border-t p-4 sm:px-6 sm:py-5">
+      <div className="flex flex-col border-t p-4 sm:px-6 sm:py-5 md:py-6 xl:py-5 md:border-t-0 md:border-s xl:border-t xl:border-s-0">
         <p className="text-sm text-muted-foreground">{t("figures.wonThisMonth")}</p>
         <p className="mt-1 text-2xl font-semibold tracking-tight">
           {formatAed(summary.wonThisMonth.valueAed, { compact: true })}
@@ -58,7 +61,7 @@ export function HeadlineFigures({ summary, className }: { summary: DashboardSumm
         </p>
       </div>
 
-      <div className="flex flex-col border-t border-s p-4 sm:px-6 sm:py-5">
+      <div className="flex flex-col border-t border-s p-4 sm:px-6 sm:py-5 md:py-6 xl:py-5 md:border-t-0 xl:border-t">
         <p className="text-sm text-muted-foreground">{t("figures.openDeals")}</p>
         <p className="mt-1 text-2xl font-semibold tracking-tight">{summary.openDealsCount}</p>
         {stale > 0 ? (

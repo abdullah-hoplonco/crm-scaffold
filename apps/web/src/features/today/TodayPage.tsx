@@ -88,9 +88,9 @@ function DaySummary({ counts }: { counts: Counts }) {
 
 function TodaySkeleton() {
   return (
-    <div className="grid gap-4 lg:grid-cols-12 lg:items-start lg:gap-5" aria-busy="true" aria-live="polite">
-      <Skeleton className="h-72 lg:col-span-7" />
-      <div className="grid gap-4 lg:col-span-5 lg:gap-5">
+    <div className="grid gap-4 xl:grid-cols-12 xl:items-start lg:gap-5" aria-busy="true" aria-live="polite">
+      <Skeleton className="h-72 xl:col-span-7" />
+      <div className="grid gap-4 xl:col-span-5 lg:gap-5">
         <Skeleton className="h-44" />
         <Skeleton className="h-36" />
       </div>
@@ -156,8 +156,8 @@ export function TodayPage() {
         ) : (
           <div
             className={cn(
-              "grid gap-4 lg:items-start lg:gap-5",
-              data.tasksDue.length ? "lg:grid-cols-12" : "lg:grid-cols-2",
+              "grid gap-4 xl:items-start lg:gap-5",
+              data.tasksDue.length ? "xl:grid-cols-12" : "xl:grid-cols-2",
             )}
           >
             {data.tasksDue.length ? (
@@ -165,14 +165,14 @@ export function TodayPage() {
                 tasks={data.tasksDue}
                 now={now}
                 showAssignee={showAssignee}
-                className="lg:col-span-7"
+                className="xl:col-span-7"
               />
             ) : null}
             {data.unansweredConversations.length || data.staleDeals.length ? (
               <div
                 className={cn(
                   "grid gap-4 lg:gap-5",
-                  data.tasksDue.length ? "lg:col-span-5" : "lg:col-span-2 lg:grid-cols-2 lg:items-start",
+                  data.tasksDue.length ? "xl:col-span-5" : "xl:col-span-2 xl:grid-cols-2 xl:items-start",
                 )}
               >
                 {data.unansweredConversations.length ? (

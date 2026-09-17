@@ -97,7 +97,7 @@ export function StandsOut({ summary, className }: { summary: DashboardSummary; c
           <span className="mt-0.5 shrink-0 sm:mt-1">
             <Marker insight={headline} />
           </span>
-          <p className="text-xl leading-snug font-semibold tracking-tight text-pretty sm:text-2xl">
+          <p className="text-xl leading-snug font-semibold tracking-tight text-balance sm:text-2xl">
             {text(headline)}
           </p>
         </div>
