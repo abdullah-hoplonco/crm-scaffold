@@ -20,7 +20,7 @@ type Filter = "all" | ImportDraftStatus;
 
 const TONE: Record<ImportDraftStatus, { dot: string; text: string }> = {
   new: { dot: "bg-success", text: "text-success" },
-  duplicate: { dot: "bg-attention", text: "text-[#6B4700]" },
+  duplicate: { dot: "bg-attention", text: "text-warning" },
   error: { dot: "bg-destructive", text: "text-destructive" },
 };
 
@@ -226,7 +226,7 @@ function DraftRow({
   } else if (status === "duplicate" && draft.duplicateOfContactId) {
     result = (
       <span className="grid gap-0.5">
-        <span className="text-[#6B4700]">
+        <span className="text-warning">
           <Trans
             t={t}
             i18nKey="import.review.matches"

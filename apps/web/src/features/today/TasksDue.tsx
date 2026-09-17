@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { errorMessage } from "@/lib/api/errors";
 import { useApiMutation } from "@/lib/api/hooks";
-import { formatListTime } from "@/lib/format";
+import { formatListTime, latenessOf } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { TodaySection, useDurationLabel } from "./TodaySection";
 
@@ -27,7 +27,7 @@ function TaskRow({
 }) {
   const { t } = useTranslation("dashboard");
   const duration = useDurationLabel();
-  const overdue = !checked && new Date(task.dueAt) < now;
+  const late = checked ? "on_time" : latenessOf(task.dueAt, now);
 
   return (
     <li className="flex items-start gap-3 px-4 py-3">
@@ -48,10 +48,16 @@ function TaskRow({
           {task.title}
         </p>
         <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-          <span className={cn(overdue && "font-medium text-destructive", checked && "text-success")}>
+          <span
+            className={cn(
+              late === "alert" && "font-medium text-destructive",
+              late === "nudge" && "font-medium text-warning",
+              checked && "text-success",
+            )}
+          >
             {checked
               ? t("today.tasks.doneLabel")
-              : overdue
+              : late !== "on_time"
                 ? t("today.tasks.overdueBy", {
                     duration: duration(now.getTime() - new Date(task.dueAt).getTime()),
                   })
@@ -128,6 +134,8 @@ export function TasksDue({
 
   const overdue = tasks.filter((task) => new Date(task.dueAt) < now);
   const later = tasks.filter((task) => new Date(task.dueAt) >= now);
+  // The group only wears Signal Red once one of its tasks is overdue by a lot.
+  const overdueAlert = overdue.some((task) => latenessOf(task.dueAt, now) === "alert");
   const row = (task: TaskListItem) => (
     <TaskRow
       key={task.id}
@@ -152,7 +160,12 @@ export function TasksDue({
     >
       {overdue.length ? (
         <>
-          <h3 className="bg-danger-soft/60 px-4 py-1.5 text-xs font-medium text-destructive">
+          <h3
+            className={cn(
+              "px-4 py-1.5 text-xs font-medium",
+              overdueAlert ? "bg-danger-soft/60 text-destructive" : "bg-warning-soft text-warning",
+            )}
+          >
             {t("today.tasks.overdueGroup", { count: overdue.length })}
           </h3>
           <ul className="divide-y">{overdue.map(row)}</ul>

@@ -261,7 +261,7 @@ export function DealHeader({
           </Field>
           <Field label={t("deal.lastActivity")}>
             <span
-              className={cn("flex h-8 items-center text-sm", card.isStale && "font-medium text-[#7A5200]")}
+              className={cn("flex h-8 items-center text-sm", card.isStale && "font-medium text-warning")}
             >
               {t("deal.daysAgo", { count: daysSince(deal.lastActivityAt) })}
             </span>

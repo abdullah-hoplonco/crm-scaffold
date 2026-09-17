@@ -176,8 +176,9 @@ function TaskRow({
             <span
               className={cn(
                 "inline-flex items-center gap-1 tabular-nums",
-                due.kind === "overdue" && "font-medium text-destructive",
-                due.kind === "today" && "font-medium text-[#7A5200]",
+                due.kind === "overdue" && "font-medium",
+                due.kind === "overdue" && (due.tone === "alert" ? "text-destructive" : "text-warning"),
+                due.kind === "today" && "font-medium text-warning",
               )}
             >
               <AlarmClock className="size-3" aria-hidden="true" />

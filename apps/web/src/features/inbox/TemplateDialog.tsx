@@ -168,7 +168,7 @@ export function TemplateDialog({
                   <div className="flex justify-end">
                     <p
                       aria-live="polite"
-                      className="max-w-[92%] rounded-2xl rounded-se-md bg-primary/12 px-3 py-2 text-[14.5px] leading-relaxed break-words whitespace-pre-line"
+                      className="max-w-[92%] rounded-2xl rounded-se-md bg-primary/12 px-3 py-2 text-sm leading-relaxed break-words whitespace-pre-line"
                     >
                       {templateSegments(selected.body).map((segment, i) =>
                         segment.kind === "text" ? (
@@ -180,7 +180,7 @@ export function TemplateDialog({
                         ) : (
                           <span
                             key={i}
-                            className="rounded bg-attention/25 px-1 text-[13px] font-medium text-[#6B4700]"
+                            className="rounded bg-attention/25 px-1 text-sm font-medium text-warning"
                           >
                             {selected.variableHints[segment.index] ?? `{{${segment.index + 1}}}`}
                           </span>

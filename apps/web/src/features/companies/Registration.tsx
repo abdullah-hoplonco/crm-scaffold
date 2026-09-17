@@ -75,7 +75,7 @@ export function RegistrationPanel({ company, onEdit }: { company: Registration; 
           </span>
         ) : (
           <span className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-warning-soft px-2 py-0.5 text-xs font-medium text-[#6B4700]">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-warning-soft px-2 py-0.5 text-xs font-medium text-warning">
               <span className="size-1.5 rounded-full bg-attention" aria-hidden="true" />
               {t("registration.missing", { count: missing.length })}
             </span>

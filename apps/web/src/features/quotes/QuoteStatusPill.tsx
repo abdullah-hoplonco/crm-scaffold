@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
 const TONE: Record<QuoteStatus, { pill: string; dot: string }> = {
-  draft: { pill: "bg-warning-soft text-[#6B4700]", dot: "bg-attention" },
+  draft: { pill: "bg-warning-soft text-warning", dot: "bg-attention" },
   sent: { pill: "bg-info-soft text-info", dot: "bg-info" },
   accepted: { pill: "bg-success-soft text-success", dot: "bg-success" },
   rejected: { pill: "bg-danger-soft text-destructive", dot: "bg-destructive" },

@@ -118,7 +118,7 @@ export function ScriptCard({
           >
             {t("script.step2")}
             {nextIsSomeoneElse && assignment?.nextAssigneeName ? (
-              <p className="mt-1.5 rounded-md bg-warning-soft px-2.5 py-1.5 text-xs leading-relaxed text-[#6B4700]">
+              <p className="mt-1.5 rounded-md bg-warning-soft px-2.5 py-1.5 text-xs leading-relaxed text-warning">
                 {t("script.nextIsSomeoneElse", {
                   next: assignment.nextAssigneeName,
                   nextFirst: firstNameOf(assignment.nextAssigneeName),

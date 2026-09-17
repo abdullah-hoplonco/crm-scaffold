@@ -244,7 +244,7 @@ function ChannelList({
         }
         footer={
           tiktok?.status === "pending" ? (
-            <p className="flex items-start gap-2 text-[13px] text-[#6B4700]">
+            <p className="flex items-start gap-2 text-sm text-warning">
               <Hourglass className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
               {tt.note ?? t("channels.tiktok.pendingNote")}. {t("channels.tiktok.pendingNext")}
             </p>
@@ -445,7 +445,7 @@ function SimulatorCard({ connection }: { connection: ChannelConnection | undefin
           <p className="mt-1 max-w-prose text-sm text-muted-foreground">
             {t("channels.simulator.description")}
           </p>
-          <p className="mt-2 flex items-start gap-2 text-[13px] text-accent-foreground">
+          <p className="mt-2 flex items-start gap-2 text-sm text-accent-foreground">
             <FlaskConical className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
             {note ?? t("channels.simulator.note")}
           </p>
