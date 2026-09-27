@@ -15,7 +15,7 @@ export function WorkspacePreview({ draft, className }: { draft: OnboardingDraft;
   const name = draft.workspaceName.trim();
   const details = [
     draft.emirate ? tc(`emirates.${draft.emirate}`) : null,
-    draft.trn.trim() ? `TRN ${formatTrn(draft.trn)}` : null,
+    draft.trn.trim() ? `NTN ${formatTrn(draft.trn)}` : null,
   ].filter(Boolean);
   const people = [
     draft.ownerName.trim() || t("onboarding.preview.you"),
@@ -37,12 +37,7 @@ export function WorkspacePreview({ draft, className }: { draft: OnboardingDraft;
           {name ? initials(name) : <Building2 className="size-5" />}
         </span>
         <div className="min-w-0">
-          <p
-            className={cn(
-              "truncate font-semibold",
-              name ? "text-foreground" : "text-muted-foreground",
-            )}
-          >
+          <p className={cn("truncate font-semibold", name ? "text-foreground" : "text-muted-foreground")}>
             {name || t("onboarding.preview.namePlaceholder")}
           </p>
           <p className="truncate text-xs text-muted-foreground tabular-nums">
@@ -74,18 +69,13 @@ export function WorkspacePreview({ draft, className }: { draft: OnboardingDraft;
         <ol className="mt-2.5 grid gap-1.5">
           {stages.map((stage, i) => (
             <li key={i} className="flex items-center gap-2.5 text-sm">
-              <span
-                className="h-1.5 w-14 shrink-0 overflow-hidden rounded-full bg-muted"
-                aria-hidden="true"
-              >
+              <span className="h-1.5 w-14 shrink-0 overflow-hidden rounded-full bg-muted" aria-hidden="true">
                 <span
                   className="block h-full rounded-full bg-primary"
                   style={{ width: `${Math.round(((i + 1) / (stages.length + 1)) * 100)}%` }}
                 />
               </span>
-              <span
-                className={cn("truncate", stage ? "text-foreground" : "text-muted-foreground")}
-              >
+              <span className={cn("truncate", stage ? "text-foreground" : "text-muted-foreground")}>
                 {stage || t("onboarding.preview.unnamedStage")}
               </span>
             </li>

@@ -5,6 +5,8 @@ import Papa from "papaparse";
 /** Matches the contract's limit on rows per preview. */
 export const MAX_IMPORT_ROWS = 5000;
 export const SAMPLE_FILE_URL = "/samples/clinic-patients.csv";
+/** The name people see for the sample, in the file summary, on timelines and when they download it. */
+export const SAMPLE_FILE_NAME = "student-enquiries.csv";
 
 export interface ParsedSheet {
   fileName: string;
@@ -61,7 +63,7 @@ export async function parseCsvFile(file: File): Promise<ParsedSheet> {
 export async function loadSampleSheet(): Promise<ParsedSheet> {
   const response = await fetch(SAMPLE_FILE_URL);
   if (!response.ok) throw new CsvProblem("unreadable");
-  return parseCsvText(await response.text(), "clinic-patients.csv");
+  return parseCsvText(await response.text(), SAMPLE_FILE_NAME);
 }
 
 /** Download the rows that can't be imported, with their spreadsheet row number and the problem, to fix and re-import. */

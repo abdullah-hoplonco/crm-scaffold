@@ -2,7 +2,7 @@ import { TZDate } from "@date-fns/tz";
 import { differenceInCalendarDays, format } from "date-fns";
 import { formatDuration, inWorkspaceTz, latenessOf, WORKSPACE_TZ } from "@/lib/format";
 
-/** A wall-clock time on a calendar day in Dubai, as an ISO timestamp. */
+/** A wall-clock time on a calendar day in Pakistan time (workspace timezone), as an ISO timestamp. */
 export function dubaiAt(
   day: { year: number; month: number; date: number },
   hours: number,
@@ -21,7 +21,7 @@ export function todayAtFive(now = new Date()): string {
   return dubaiAt(dubaiDay(0, now), 17);
 }
 
-/** The "Today 5 pm" preset makes no sense after 5 pm in Dubai. */
+/** The "Today 5 pm" preset makes no sense after 5 pm in Pakistan. */
 export function isPastFiveToday(now = new Date()): boolean {
   return new Date(todayAtFive(now)).getTime() <= now.getTime();
 }
@@ -30,13 +30,13 @@ export function tomorrowAtTen(now = new Date()): string {
   return dubaiAt(dubaiDay(1, now), 10);
 }
 
-/** A calendar day picked in the browser plus "HH:mm", read as Dubai time. */
+/** A calendar day picked in the browser plus "HH:mm", read as Pakistan time. */
 export function pickedDue(date: Date, time: string): string {
   const [h = 10, m = 0] = time.split(":").map(Number);
   return dubaiAt({ year: date.getFullYear(), month: date.getMonth(), date: date.getDate() }, h, m);
 }
 
-/** "Mon 21 Sep, 10:00" in Dubai time. */
+/** "Mon 21 Sep, 10:00" in Pakistan time. */
 export function formatDueShort(iso: string): string {
   return format(inWorkspaceTz(iso), "EEE d MMM, HH:mm");
 }
@@ -45,7 +45,7 @@ export type DueLabel =
   | { kind: "overdue"; text: string; tone: "nudge" | "alert" }
   | { kind: "today" | "tomorrow" | "soon" | "later"; text: string };
 
-/** How a due time reads in a task list: overdue by how long, or when in Dubai time. */
+/** How a due time reads in a task list: overdue by how long, or when in Pakistan time. */
 export function describeDue(
   dueAt: string,
   labels: {

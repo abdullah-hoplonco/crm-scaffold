@@ -54,7 +54,7 @@ function Cell({ label, children, className }: { label: string; children: ReactNo
 }
 
 /**
- * The company's UAE registration at a glance (emirate, mainland or free zone, trade licence, TRN), with
+ * The company's registration at a glance (province, standard or SEZ / EPZ, SECP registration no., NTN), with
  * a saffron prompt when details that quotes and invoices need are missing.
  */
 export function RegistrationPanel({ company, onEdit }: { company: Registration; onEdit?: () => void }) {
@@ -96,7 +96,9 @@ export function RegistrationPanel({ company, onEdit }: { company: Registration; 
             <>
               {values.jurisdiction}
               {values.zone ? (
-                <span className="block truncate text-sm font-normal text-muted-foreground">{values.zone}</span>
+                <span className="block truncate text-sm font-normal text-muted-foreground">
+                  {values.zone}
+                </span>
               ) : null}
             </>
           ) : (
@@ -129,7 +131,11 @@ export function RegistrationList({ company }: { company: Registration }) {
     [t("registration.emirate"), values.emirate],
     [
       t("registration.licensedIn"),
-      values.jurisdiction ? (values.zone ? `${values.jurisdiction}, ${values.zone}` : values.jurisdiction) : null,
+      values.jurisdiction
+        ? values.zone
+          ? `${values.jurisdiction}, ${values.zone}`
+          : values.jurisdiction
+        : null,
     ],
     [t("registration.tradeLicence"), values.licence],
     [t("registration.trn"), values.trn],
@@ -139,9 +145,7 @@ export function RegistrationList({ company }: { company: Registration }) {
       {rows.map(([label, value]) => (
         <div key={label} className="flex items-baseline justify-between gap-4 text-sm">
           <dt className="shrink-0 text-muted-foreground">{label}</dt>
-          <dd className="min-w-0 text-end font-medium break-words tabular-nums">
-            {value ?? <NotAdded />}
-          </dd>
+          <dd className="min-w-0 text-end font-medium break-words tabular-nums">{value ?? <NotAdded />}</dd>
         </div>
       ))}
     </dl>

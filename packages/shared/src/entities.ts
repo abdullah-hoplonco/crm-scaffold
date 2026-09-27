@@ -42,7 +42,7 @@ export type Timestamp = z.infer<typeof Timestamp>;
 export const DateOnly = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD");
 export type DateOnly = z.infer<typeof DateOnly>;
 
-/** Decimal money in AED as a string with up to 2 decimals. Never a float. */
+/** Decimal money in PKR as a string with up to 2 decimals. Never a float. */
 export const MoneyAed = z.string().regex(/^-?\d{1,12}(\.\d{1,2})?$/, "Enter an amount like 1250 or 1250.50");
 export type MoneyAed = z.infer<typeof MoneyAed>;
 
@@ -50,10 +50,10 @@ export type MoneyAed = z.infer<typeof MoneyAed>;
 export const Decimal = z.string().regex(/^-?\d{1,12}(\.\d{1,4})?$/, "Enter a number");
 export type Decimal = z.infer<typeof Decimal>;
 
-/** Phone number in E.164 format, e.g. +971501234567. */
+/** Phone number in E.164 format, e.g. +923001234567. */
 export const PhoneE164 = z
   .string()
-  .regex(/^\+[1-9]\d{6,14}$/, "Use international format, e.g. +971501234567");
+  .regex(/^\+[1-9]\d{6,14}$/, "Use international format, e.g. +923001234567");
 export type PhoneE164 = z.infer<typeof PhoneE164>;
 
 export const JsonRecord = z.record(z.string(), z.unknown());
@@ -73,7 +73,7 @@ const tenantRow = {
 export const Workspace = z.object({
   id: Id,
   name: z.string().min(1),
-  currency: z.literal("AED"),
+  currency: z.literal("PKR"),
   vatRate: Decimal,
   trn: z.string().nullable(),
   timezone: z.string(),
@@ -113,9 +113,9 @@ export const Lead = z.object({
   whatsappUserId: z.string().nullable(),
   companyName: z.string().nullable(),
   message: z.string().nullable(),
-  /** Form answers mapped to labels, e.g. { "Treatment of interest": "Laser hair removal" }. */
+  /** Form answers mapped to labels, e.g. { "Service of interest": "UK study visa" }. */
   formFields: z.record(z.string(), z.string()),
-  /** Ad or form name when known, e.g. "Summer laser offer — Instagram". */
+  /** Ad or form name when known, e.g. "UK January intake — apply now (Instagram)". */
   campaignName: z.string().nullable(),
   status: LeadStatus,
   disqualifyReason: DisqualifyReason.nullable(),
@@ -387,7 +387,7 @@ export const WhatsAppTemplate = z.object({
   status: TemplateStatus,
   /** Body with numbered placeholders, e.g. "Hi {{1}}, thanks for your enquiry about {{2}}." */
   body: z.string(),
-  /** Human hints for each placeholder, in order, e.g. ["Patient first name", "Treatment"]. */
+  /** Human hints for each placeholder, in order, e.g. ["Student first name", "Service"]. */
   variableHints: z.array(z.string()),
 });
 export type WhatsAppTemplate = z.infer<typeof WhatsAppTemplate>;

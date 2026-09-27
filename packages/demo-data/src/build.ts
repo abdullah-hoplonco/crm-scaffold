@@ -1,10 +1,11 @@
 import {
   computeQuoteTotals,
-  formatPhone,
+  formatAed,
   formatQuoteNumber,
   serviceWindowExpiry,
   toMoneyString,
 } from "@hco/core";
+import { DEFAULT_QUOTE_VALIDITY_DAYS } from "@hco/core/quotes/index";
 import {
   emptyTables,
   newId,
@@ -39,10 +40,13 @@ import {
 import { createRng } from "./rng";
 import {
   campaignFor,
+  intakesFor,
   simulateEnquiry,
+  simulateFormAnswers,
   simulateLead,
   simulatePerson,
   simulateTreatmentKey,
+  simulateUaeMobile,
   type SimulatorLeadSource,
 } from "./simulator";
 
@@ -55,6 +59,40 @@ export interface BuildOptions {
 const MIN = 60_000;
 const HOUR = 60 * MIN;
 const DAY = 24 * HOUR;
+
+/** Source names as the live mock writes them into activity text. */
+const SOURCE_LABEL: Record<LeadSource, string> = {
+  facebook: "Facebook",
+  instagram: "Instagram",
+  tiktok: "TikTok",
+  whatsapp: "WhatsApp",
+  email: "email",
+  manual: "manual",
+  csv: "CSV",
+};
+
+/** Disqualify reasons as the live mock writes them into activity text. */
+const DISQUALIFY_LABEL: Record<DisqualifyReason, string> = {
+  spam: "spam",
+  wrong_number: "wrong number",
+  not_interested: "not interested",
+  out_of_area: "not eligible",
+  duplicate: "duplicate",
+  other: "other reason",
+};
+
+/**
+ * Replaces a seeded lead's random enquiry with a fixed one, so a hero's chat fits their profile. The form's
+ * preferred intake follows the new text when it names one. Uses no randomness, so the seed stays stable.
+ */
+function pinEnquiry(lead: Lead, treatmentKey: string, message: string) {
+  lead.message = message;
+  const intake = lead.formFields["Preferred intake"];
+  if (intake === undefined) return;
+  const said = message.toLowerCase();
+  const named = intakesFor(treatmentKey).find((i) => said.includes(i.split(" ")[0]?.toLowerCase() ?? i));
+  if (named) lead.formFields["Preferred intake"] = named;
+}
 
 function must<T>(value: T | undefined, what: string): T {
   if (value === undefined) throw new Error(`demo-data: missing ${what}`);
@@ -72,13 +110,13 @@ const LEAD_TARGETS: Record<LeadSource, number> = {
   email: 0,
 };
 
-type RepKey = "priya" | "yousef" | "maria" | "manager";
+type RepKey = "hamza" | "mahnoor" | "usman" | "manager";
 
 /** Leads that arrived minutes ago, so Leads opens with a live speed-to-lead countdown. */
-const FRESH_LEADS: Array<{ source: LeadSource; minutesAgo: number; rep: "priya" | "yousef" | "maria" }> = [
-  { source: "instagram", minutesAgo: 6, rep: "priya" },
-  { source: "tiktok", minutesAgo: 24, rep: "yousef" },
-  { source: "facebook", minutesAgo: 41, rep: "maria" },
+const FRESH_LEADS: Array<{ source: LeadSource; minutesAgo: number; rep: "hamza" | "mahnoor" | "usman" }> = [
+  { source: "instagram", minutesAgo: 6, rep: "hamza" },
+  { source: "tiktok", minutesAgo: 24, rep: "mahnoor" },
+  { source: "facebook", minutesAgo: 41, rep: "usman" },
 ];
 
 interface DealPlan {
@@ -95,303 +133,412 @@ interface DealPlan {
   valueAed?: string;
   lostReason?: "price" | "competitor";
   quote?: "draft" | "sent" | "accepted";
-  /** The patient wrote last and is waiting for a reply (shows under "Waiting for your reply" on Today). */
+  /** The student wrote last and is waiting for a reply (shows under "Waiting for your reply" on Today). */
   waiting?: boolean;
+  /** Pins the lead's enquiry so the hero chats fit the student's profile (random from COPY otherwise). */
+  enquiry?: string;
 }
 
 const DEAL_PLAN: DealPlan[] = [
+  // New enquiry
   {
     patient: 0,
-    treatment: "laser",
+    treatment: "uk",
     stage: "enquiry",
     source: "instagram",
     fromLead: true,
     days: 0.15,
-    assignee: "priya",
+    assignee: "hamza",
     waiting: true,
+    enquiry: "Is the January intake still open? I want MSc Data Science, BS CS with CGPA 3.2",
   },
   {
     patient: 1,
-    treatment: "hydrafacial",
+    treatment: "usa",
     stage: "enquiry",
     source: "instagram",
     fromLead: true,
     days: 0.5,
-    assignee: "yousef",
+    assignee: "mahnoor",
     waiting: true,
+    enquiry: "A-levels ke baad US undergrad ke liye scholarships milti hain? SAT abhi nahi diya",
   },
   {
     patient: 10,
-    treatment: "invisalign",
+    treatment: "canada",
     stage: "enquiry",
     source: "facebook",
     fromLead: true,
     days: 4,
-    assignee: "maria",
+    assignee: "usman",
     waiting: true,
+    enquiry:
+      "Canada mein college diploma ka total kharcha kitna hai, GIC included? A-levels is saal complete honge",
   },
   {
     patient: 13,
-    treatment: "implant",
+    treatment: "australia",
     stage: "enquiry",
     source: "whatsapp",
     fromLead: true,
     days: 5,
-    assignee: "priya",
+    assignee: "hamza",
     waiting: true,
   },
   {
     company: 3,
-    treatment: "botox",
+    treatment: "ielts",
     stage: "enquiry",
     source: "manual",
     fromLead: false,
     days: 1.5,
     assignee: "manager",
-    title: "Desert Pearl — staff skin day, 20 guests",
-    valueAed: "18000",
+    title: "Ravi Crescent — on-campus IELTS batch, 12 A-level students",
+    valueAed: "240000",
   },
   {
     patient: 19,
-    treatment: "profhilo",
+    treatment: "pte",
     stage: "enquiry",
     source: "instagram",
     fromLead: true,
     days: 0.8,
-    assignee: "maria",
+    assignee: "usman",
     waiting: true,
   },
+  // Counselling done
   {
     patient: 2,
-    treatment: "implant",
-    stage: "booked",
+    treatment: "canada",
+    stage: "counselled",
     source: "whatsapp",
     fromLead: true,
     days: 0.3,
-    assignee: "yousef",
+    assignee: "mahnoor",
   },
   {
     patient: 6,
-    treatment: "fillers",
-    stage: "booked",
+    treatment: "ielts",
+    stage: "counselled",
     source: "instagram",
     fromLead: true,
     days: 1.2,
-    assignee: "priya",
+    assignee: "hamza",
   },
   {
-    patient: 16,
-    treatment: "whitening",
-    stage: "booked",
-    source: "manual",
-    fromLead: false,
-    days: 2,
-    assignee: "maria",
+    patient: 7,
+    treatment: "germany",
+    stage: "counselled",
+    source: "instagram",
+    fromLead: true,
+    days: 0.4,
+    assignee: "hamza",
+    quote: "draft",
+  },
+  // Documents collected
+  {
+    patient: 23,
+    treatment: "uk",
+    stage: "documents",
+    source: "instagram",
+    fromLead: true,
+    days: 0.7,
+    assignee: "usman",
+    quote: "sent",
+  },
+  {
+    patient: 8,
+    treatment: "usa",
+    stage: "documents",
+    source: "facebook",
+    fromLead: true,
+    days: 1,
+    assignee: "mahnoor",
+    quote: "sent",
   },
   {
     company: 0,
-    treatment: "whitening",
-    stage: "booked",
+    treatment: "uk",
+    stage: "documents",
     source: "email",
     fromLead: false,
     days: 6,
     assignee: "manager",
-    title: "Gulf Horizon — staff dental screening, 60 employees",
-    valueAed: "15000",
+    title: "Indus Loom — MS sponsorship, 2 engineers (UK)",
+    valueAed: "250000",
   },
-  {
-    patient: 22,
-    treatment: "botox",
-    stage: "booked",
-    source: "facebook",
-    fromLead: true,
-    days: 0.6,
-    assignee: "yousef",
-  },
-  {
-    patient: 7,
-    treatment: "invisalign",
-    stage: "consulted",
-    source: "instagram",
-    fromLead: true,
-    days: 0.4,
-    assignee: "priya",
-    quote: "draft",
-  },
-  {
-    patient: 4,
-    treatment: "veneers",
-    stage: "consulted",
-    source: "whatsapp",
-    fromLead: true,
-    days: 2.5,
-    assignee: "maria",
-  },
+  // Applied to university
   {
     patient: 20,
-    treatment: "prp",
-    stage: "consulted",
+    treatment: "uk",
+    stage: "applied",
     source: "manual",
     fromLead: false,
     days: 7,
-    assignee: "yousef",
+    assignee: "mahnoor",
     waiting: true,
   },
   {
+    patient: 4,
+    treatment: "australia",
+    stage: "applied",
+    source: "whatsapp",
+    fromLead: true,
+    days: 2.5,
+    assignee: "usman",
+  },
+  {
     company: 4,
-    treatment: "profhilo",
-    stage: "consulted",
+    treatment: "germany",
+    stage: "applied",
     source: "email",
     fromLead: false,
     days: 1,
     assignee: "manager",
-    title: "Crescent Fintech — executive skin health, 12 managers",
-    valueAed: "21600",
+    title: "Clifton Codeworks — MS in Germany, 2 developers",
+    valueAed: "225000",
   },
-  {
-    patient: 8,
-    treatment: "implant",
-    stage: "plan",
-    source: "facebook",
-    fromLead: true,
-    days: 1,
-    assignee: "yousef",
-    quote: "sent",
-  },
-  {
-    patient: 23,
-    treatment: "veneers",
-    stage: "plan",
-    source: "instagram",
-    fromLead: true,
-    days: 0.7,
-    assignee: "maria",
-    quote: "sent",
-  },
+  // Offer received
   {
     patient: 11,
-    treatment: "laser",
-    stage: "plan",
+    treatment: "canada",
+    stage: "offer",
     source: "manual",
     fromLead: false,
     days: 3.5,
-    assignee: "priya",
+    assignee: "hamza",
   },
   {
     company: 1,
-    treatment: "whitening",
-    stage: "plan",
+    treatment: "malaysia",
+    stage: "offer",
     source: "manual",
     fromLead: false,
     days: 2,
     assignee: "manager",
-    title: "Palm Crest — hotel staff whitening day, 30 staff",
-    valueAed: "27000",
+    title: "Sportsline — MBA sponsorship, 2 managers (Malaysia)",
+    valueAed: "120000",
+  },
+  // Visa filed
+  {
+    patient: 16,
+    treatment: "ireland",
+    stage: "visa_filed",
+    source: "manual",
+    fromLead: false,
+    days: 2,
+    assignee: "usman",
   },
   {
+    patient: 22,
+    treatment: "germany",
+    stage: "visa_filed",
+    source: "facebook",
+    fromLead: true,
+    days: 0.6,
+    assignee: "mahnoor",
+  },
+  // Visa approved
+  {
     patient: 3,
-    treatment: "hydrafacial",
+    treatment: "uk",
     stage: "won",
     source: "instagram",
     fromLead: true,
     days: 1,
-    assignee: "priya",
+    assignee: "hamza",
     quote: "accepted",
+    enquiry: "Is the January intake still open? I want an MSc in Public Health after MBBS",
   },
   {
     patient: 9,
-    treatment: "botox",
+    treatment: "canada",
     stage: "won",
     source: "instagram",
     fromLead: true,
     days: 8,
-    assignee: "yousef",
+    assignee: "mahnoor",
   },
   {
     patient: 5,
-    treatment: "whitening",
+    treatment: "malaysia",
     stage: "won",
     source: "facebook",
     fromLead: true,
     days: 12,
-    assignee: "maria",
+    assignee: "usman",
+    enquiry: "Is Malaysia a good option on a low budget? FSc done, want BS CS",
   },
   {
     patient: 14,
-    treatment: "invisalign",
+    treatment: "australia",
     stage: "won",
     source: "whatsapp",
     fromLead: true,
     days: 18,
-    assignee: "priya",
+    assignee: "hamza",
   },
+  // Lost
   {
     patient: 17,
-    treatment: "implant",
+    treatment: "usa",
     stage: "lost",
     source: "manual",
     fromLead: false,
     days: 6,
-    assignee: "yousef",
+    assignee: "mahnoor",
     lostReason: "price",
   },
   {
     patient: 21,
-    treatment: "veneers",
+    treatment: "uk",
     stage: "lost",
     source: "manual",
     fromLead: false,
     days: 15,
-    assignee: "maria",
+    assignee: "usman",
     lostReason: "competitor",
   },
 ];
 
 const NOTES = [
-  "Prefers appointments after 6 pm on weekdays.",
-  "Asked about 0% instalments over 12 months on UAE bank cards.",
-  "Referred by a friend who had the same treatment with us last year.",
-  "Wants a female doctor. Booked with Dr. Hessa.",
-  "Travelling to Riyadh next week, follow up after the 25th.",
-  "Compared our price with a clinic in JLT. Value the free follow-up visits.",
-  "Has insurance with partial dental cover. Checking what applies.",
+  "Prefers a call after 5 pm; busy with classes or work during the day.",
+  "Father is the sponsor (runs a pharmacy in Gujranwala). Bank statement will be in his name.",
+  "Referred by a friend who got her UK visa through SBC last year.",
+  "IELTS 6.5 overall, writing 6.0. Advised a retake for 7.0 to widen the university options.",
+  "CGPA 3.1/4.0 with a two-year gap after graduation. Needs an experience letter to explain it.",
+  "Previous UK refusal in 2024 (funds not held for 28 days). Must be declared on the new application.",
+  "Compared our fee with an agent in Johar Town. Values the visa file review and the mock interview.",
+  "HEC degree attestation still pending. Booked the next available slot.",
 ];
 
 const BOOKING_SLOTS = [
   {
-    ask: "Yes please. Do you have anything on Thursday evening?",
-    offer: "Thursday at 6:30 pm is free. Shall I book it for you?",
-    when: "Thursday at 6:30 pm",
+    ask: "Yes please. Kya Thursday shaam ko ho sakta hai?",
+    offer: "Thursday at 5:30 pm is free with Ayesha, our head of counselling. Shall I book it?",
+    when: "Thursday at 5:30 pm",
+    where: "at our Gulberg office, 2nd Floor, 88-B Main Boulevard",
   },
   {
-    ask: "Yes please. Saturday morning would be best for me",
-    offer: "Saturday at 11 am is available with Dr. Hessa. Shall I book it?",
+    ask: "Yes please. Saturday morning would be best, weekdays are busy for me",
+    offer: "Saturday at 11 am is available. Shall I book it for you?",
     when: "Saturday at 11 am",
+    where: "at our Gulberg office, 2nd Floor, 88-B Main Boulevard",
   },
   {
-    ask: "Sure. Can I come after work, around 7?",
-    offer: "We have 7:15 pm on Tuesday. Would that work for you?",
-    when: "Tuesday at 7:15 pm",
+    ask: "Sure. Can we do it on a video call? I'm not based in Lahore",
+    offer: "Of course. Tuesday at 4 pm on a WhatsApp video call, would that work?",
+    when: "Tuesday at 4 pm",
+    where: "on a WhatsApp video call. I'll send the link 10 minutes before",
   },
 ];
 
-const CONFIRMATIONS = ["Perfect, please book it", "Yes that works, thank you", "Great, see you then"];
+const CONFIRMATIONS = [
+  "Perfect, please book it",
+  "Ji theek hai, book kar dein. Thank you",
+  "Great, see you then",
+];
 
-const NUDGES = ["Hello? Any update on the price?", "Hi, just following up on my message above"];
+const NUDGES = ["Hello? Any update on the fee?", "AoA, just following up on my message above"];
 
-/** Last message from a patient who is still waiting for a reply, by stage. */
+/** Last message from a student who is still waiting for a reply, by stage. */
 const WAITING_QUESTIONS: Record<string, string> = {
-  booked: "Can I move my consultation to Saturday morning?",
-  consulted: "Can you send me the price for the 4 sessions again? I want to discuss it with my family first.",
-  plan: "Is the 0% instalment plan available on Emirates NBD cards?",
+  counselled: "Can I bring my father to the next session? He will be my sponsor.",
+  documents: "Does the bank statement need to be in my name or my father's? Abhi abbu ke naam pe hai.",
+  applied:
+    "Any update from the universities? It's been two weeks and my friends have got their offers already.",
+  offer: "The offer letter asks for a deposit. Should I pay it before the visa file or after?",
+  visa_filed: "Kya visa ka koi update aaya? Biometrics were done last Tuesday.",
 };
 
 const CALLS = [
-  "Called to confirm the consultation. Confirmed for Thursday 6:30 pm.",
+  "Called to confirm the counselling session. Student confirmed and will bring the sponsor's documents.",
   "Called, no answer. Sent a WhatsApp instead.",
-  "Discussed the treatment plan and payment options for 15 minutes.",
-  "Quick call to answer questions about downtime and aftercare.",
+  "Went through the university shortlist and total cost for 20 minutes with the student and a parent.",
+  "Quick call to explain the bank statement and funds requirements.",
 ];
+
+/** Notes and calls on deals with corporate clients. */
+const CORPORATE_NOTES = [
+  "HR wants one invoice for all nominees, with sales tax shown separately.",
+  "Nominees sign a two-year service bond. The company pays our fee; embassy fees are on the employees.",
+  "Decision sits with the CEO. HR expects approval after the next board meeting.",
+];
+
+const CORPORATE_CALLS = [
+  "Call with HR to agree the nominee list and the intake.",
+  "Called, no answer. Sent an email instead.",
+  "Walked HR through the timeline from applications to visa, 25 minutes.",
+];
+
+/** Notes and calls on test-prep batches that colleges buy for their students. */
+const COLLEGE_NOTES = [
+  "Principal wants classes after school hours, three days a week.",
+  "The college pays the fee; mock test fees are included.",
+];
+
+const COLLEGE_CALLS = ["Call with the head of A-levels to agree batch size and timings."];
+
+/** Chat wording for test prep and paperwork services. */
+const PREP_COPY: Record<string, { session: string; result: string }> = {
+  ielts: {
+    session: "a free placement test",
+    result:
+      "Your placement test puts you at 6.0, and the 8-week IELTS course should get you to 7.0. I'll send the batch timings shortly.",
+  },
+  pte: {
+    session: "a free diagnostic test",
+    result:
+      "Your diagnostic test puts you at PTE 52, and the 6-week course should get you to 65. I'll send the batch timings shortly.",
+  },
+  sop: {
+    session: "a free profile review",
+    result: "I'll send the SOP questionnaire and the attestation checklist shortly.",
+  },
+};
+
+/** Destination wording for the chats, per study-visa service. */
+const DESTINATION: Record<string, { country: string; confirmation: string; filed: string }> = {
+  uk: {
+    country: "the UK",
+    confirmation: "request your CAS",
+    filed:
+      "Your UK Student visa file is submitted and biometrics are booked at the visa application centre in Lahore.",
+  },
+  canada: {
+    country: "Canada",
+    confirmation: "open your GIC and start the study permit file",
+    filed:
+      "Your study permit application is submitted and biometrics are booked at the visa application centre in Lahore.",
+  },
+  australia: {
+    country: "Australia",
+    confirmation: "request your CoE",
+    filed: "Your Subclass 500 application is lodged and your health check is booked for next week.",
+  },
+  usa: {
+    country: "the USA",
+    confirmation: "request your I-20",
+    filed:
+      "Your DS-160 is done, the SEVIS fee is paid and your F-1 interview is booked at the US Embassy in Islamabad.",
+  },
+  germany: {
+    country: "Germany",
+    confirmation: "open your blocked account",
+    filed: "Your national visa file is submitted at the German Embassy in Islamabad.",
+  },
+  ireland: {
+    country: "Ireland",
+    confirmation: "pay the deposit and start the visa file",
+    filed:
+      "Your Ireland study visa application is submitted and biometrics are booked at the visa application centre in Lahore.",
+  },
+  malaysia: {
+    country: "Malaysia",
+    confirmation: "start your EMGS visa approval",
+    filed: "Your EMGS application is submitted. Approval usually takes three to four weeks.",
+  },
+};
 
 export function buildDemoDataset(options: BuildOptions = {}): Tables {
   const now = options.now ?? new Date();
@@ -406,10 +553,10 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
   const ws = {
     id: newId(),
     name: CLINIC.name,
-    currency: "AED" as const,
-    vatRate: "5.00",
+    currency: "PKR" as const,
+    vatRate: CLINIC.vatRate,
     trn: CLINIC.trn,
-    timezone: "Asia/Dubai",
+    timezone: CLINIC.timezone,
     staleAfterDays: 3,
     addressLine: CLINIC.addressLine,
     emirate: CLINIC.emirate,
@@ -439,7 +586,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     t.users.push(u);
   }
   const user = (key: string) => must(users.get(key), `user ${key}`);
-  const repKeys = ["priya", "yousef", "maria"] as const;
+  const repKeys = ["hamza", "mahnoor", "usman"] as const;
   const firstName = (u: User) => u.name.replace(/^Dr\.\s+/, "").split(" ")[0] ?? u.name;
 
   // -- Pipeline --------------------------------------------------------------
@@ -534,15 +681,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
 
   // -- Helpers -----------------------------------------------------------------
   const usedPhones = new Set<string>();
-  const uaeMobile = () => {
-    for (;;) {
-      const phone = `+9715${rng.pick(["0", "2", "4", "5", "6", "8"])}${rng.digits(7)}`;
-      if (!usedPhones.has(phone)) {
-        usedPhones.add(phone);
-        return phone;
-      }
-    }
-  };
+  const uaeMobile = () => simulateUaeMobile(rng, usedPhones);
   const slug = (s: string) =>
     s
       .toLowerCase()
@@ -555,7 +694,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       `treatment ${key}`,
     );
   const enquiryFor = (key: string) =>
-    rng.pick(ENQUIRIES[key] ?? ["I'd like to know more about your treatments."]);
+    rng.pick(ENQUIRIES[key] ?? ["AoA, I'd like to know more about studying abroad."]);
 
   const addActivity = (
     type: ActivityType,
@@ -619,20 +758,20 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     assigneeId: string | null;
     companyName?: string | null;
   }): Lead => {
-    const tr = treatment(input.treatmentKey);
     const simSource = input.source === "manual" || input.source === "csv" ? null : input.source;
     const message = simSource
       ? simulateEnquiry(rng, simSource, input.treatmentKey)
       : enquiryFor(input.treatmentKey);
     const formFields: Record<string, string> =
-      input.source === "instagram" || input.source === "facebook" || input.source === "tiktok"
-        ? {
-            "Full name": input.name,
-            "Phone number": formatPhone(input.phone),
-            ...(input.email ? { Email: input.email } : {}),
-            "Treatment of interest": tr.short.charAt(0).toUpperCase() + tr.short.slice(1),
-            "Best time to call": rng.pick(["Morning", "Afternoon", "Evenings after 6 pm", "Weekends"]),
-          }
+      simSource === "instagram" || simSource === "facebook" || simSource === "tiktok"
+        ? simulateFormAnswers(rng, {
+            source: simSource,
+            name: input.name,
+            phoneE164: input.phone,
+            email: input.email,
+            treatmentKey: input.treatmentKey,
+            message,
+          })
         : {};
     const receivedMs = new Date(input.receivedAt).getTime();
     const lead: Lead = {
@@ -645,7 +784,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       name: input.name,
       phoneE164: input.phone,
       email: input.email,
-      whatsappUserId: input.source === "whatsapp" ? `AE.${rng.digits(16)}` : null,
+      whatsappUserId: input.source === "whatsapp" ? `PK.${rng.digits(16)}` : null,
       companyName: input.companyName ?? null,
       message,
       formFields,
@@ -672,8 +811,9 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     const company: Company = {
       ...row(created),
       name: c.name,
-      tradeLicenseNo: `${c.licensePrefix}-${rng.digits(6)}`,
-      trn: `100${rng.digits(12)}`,
+      // SECP registration number (7 digits) and NTN (7 digits and a check digit).
+      tradeLicenseNo: `${c.licensePrefix}${rng.digits(7 - c.licensePrefix.length)}`,
+      trn: `${rng.int(1, 9)}${rng.digits(7)}`,
       emirate: c.emirate,
       jurisdiction: c.jurisdiction,
       freeZoneName: c.freeZoneName,
@@ -723,7 +863,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       first: p.first,
       last: p.last,
       job: p.job ?? null,
-      email: `${slug(p.first)}.${slug(p.last)}@${rng.pick(["gmail.com", "outlook.com", "icloud.com", "yahoo.com"])}`,
+      email: `${slug(p.first)}.${slug(p.last)}@${rng.pick(["gmail.com", "gmail.com", "outlook.com", "yahoo.com"])}`,
       companyId: null,
       source: "manual",
       assigneeId: user(rng.pick(repKeys)).id,
@@ -823,7 +963,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
                   mimeType: "application/pdf",
                   fileName: `${line.body}.pdf`,
                   sizeBytes: rng.int(60_000, 140_000),
-                  caption: "Your treatment plan and quotation",
+                  caption: "Your SBC quotation",
                 },
               ]
             : [],
@@ -902,15 +1042,27 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     lostReason?: "price" | "competitor";
   }): ChatLine[] => {
     const { first, tr, repFirst, stageKey } = input;
+    const managerFirst = firstName(user("manager"));
+    const destination = DESTINATION[tr.key];
     const fromAd = input.source === "instagram" || input.source === "facebook" || input.source === "tiktok";
     const lines: ChatLine[] = fromAd
-      ? [firstTouch(first, tr.short, repFirst), { dir: "in", body: `Hi ${repFirst}. ${input.enquiry}` }]
+      ? [
+          firstTouch(first, tr.short, repFirst),
+          {
+            dir: "in",
+            body: `${rng.pick(["Walaikum Assalam", "W.salam", "Hi"])} ${repFirst}. ${input.enquiry}`,
+          },
+        ]
       : [{ dir: "in", body: input.enquiry }];
+    const prep = PREP_COPY[tr.key] ?? PREP_COPY["ielts"];
+    const session = destination ? "a free counselling session" : prep?.session;
     const invite: ChatLine = {
       dir: "out",
       body: fromAd
-        ? `Happy to help, ${first}. Our doctor can see you for a free consultation this week and answer everything in person. Shall I book one for you?`
-        : `Hi ${first}, this is ${repFirst} from ${CLINIC.shortName}. Thank you for asking about ${tr.short}. Would you like a free consultation with our doctor this week?`,
+        ? destination
+          ? `Happy to help, ${first}. The first counselling session is free: we go through your grades, budget and the right universities in ${destination.country}. Shall I book one for you?`
+          : `Happy to help, ${first}. We can do ${session} this week so you know exactly where you stand. Shall I book one for you?`
+        : `AoA ${first}, this is ${repFirst} from ${CLINIC.shortName}. Thank you for your ${tr.short} enquiry. Would you like ${session} this week?`,
     };
     if (stageKey === "enquiry") {
       if (!input.waiting) lines.push(invite);
@@ -925,24 +1077,71 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       { dir: "in", body: rng.pick(CONFIRMATIONS) },
       {
         dir: "out",
-        body: `Done, you're booked for ${slot.when} at our Dubai Marina clinic. Parking is free in Marina Plaza, level B2.`,
+        body: `Done, you're booked for ${slot.when} ${slot.where}. Please keep your transcripts, passport and any IELTS or PTE result handy.`,
+      },
+    );
+    // Counselling done: every deal past the first stage, lost ones included.
+    lines.push(
+      destination
+        ? {
+            dir: "out",
+            body: `Thank you for your time today, ${first}. ${managerFirst} has shortlisted ${rng.int(3, 5)} universities in ${destination.country} for you and I'll send the document checklist shortly.`,
+          }
+        : { dir: "out", body: `Thank you for coming in today, ${first}. ${prep?.result ?? ""}` },
+      { dir: "in", body: "JazakAllah! Can the fee be paid in two instalments?" },
+      {
+        dir: "out",
+        body: destination
+          ? "Yes: half when we open your file and half once your offer letter arrives."
+          : "Yes: half at admission and half in week four.",
       },
     );
     const depth = stageOrder.indexOf(stageKey);
-    if (depth >= 2 && stageKey !== "lost") {
+    const reached = (key: string) => stageKey !== "lost" && depth >= stageOrder.indexOf(key);
+    if (reached("documents")) {
+      lines.push(
+        {
+          dir: "in",
+          body: "Sent my transcripts, degree and passport scans. Bank statement next week InshaAllah.",
+        },
+        {
+          dir: "out",
+          body: "Received, thank you. Only the bank statement and your sponsor's affidavit are left.",
+        },
+      );
+    }
+    if (reached("applied") && destination) {
+      lines.push(
+        { dir: "in", body: "AoA, have the applications gone in?" },
+        {
+          dir: "out",
+          body: `Yes: your applications are submitted to 3 universities in ${destination.country}. Decisions usually take 2 to 4 weeks.`,
+        },
+      );
+    }
+    if (reached("offer") && destination) {
       lines.push(
         {
           dir: "out",
-          body: `Hi ${first}, thank you for coming in today. Dr. Hessa has prepared your ${tr.short} plan and I'll send it over shortly.`,
+          body: `Mubarak ho, ${first}! Your offer has arrived from your first-choice university.`,
         },
-        { dir: "in", body: "Thank you! Is there an instalment option?" },
-        { dir: "out", body: "Yes, 0% instalments over 6 or 12 months on most UAE bank credit cards." },
+        { dir: "in", body: "Alhamdulillah! What do I need to do now?" },
+        {
+          dir: "out",
+          body: `Next we ${destination.confirmation}. I'll send you the steps today.`,
+        },
       );
+    }
+    if (reached("visa_filed") && destination) {
+      lines.push({ dir: "out", body: destination.filed });
     }
     if (stageKey === "won") {
       lines.push(
-        { dir: "in", body: "I'd like to go ahead. Can we start next week?" },
-        { dir: "out", body: "Wonderful! Your first session is booked for Monday at 10 am. See you then." },
+        { dir: "in", body: "Visa approved! Alhamdulillah, thank you so much SBC team." },
+        {
+          dir: "out",
+          body: `Mubarak ho, ${first}! Your pre-departure briefing is on Saturday at 11 am. We'll go over tickets, accommodation and what to carry.`,
+        },
       );
     }
     if (stageKey === "lost") {
@@ -951,12 +1150,12 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
           dir: "in",
           body:
             input.lostReason === "competitor"
-              ? "Thanks, but I've decided to go with a clinic closer to home. They offered a package."
-              : "Thank you, but it's above my budget for now. Maybe later in the year.",
+              ? "Thanks, but I've decided to go with a consultant in my own city. They quoted a lower fee."
+              : "Thank you, but the total cost is too much for my family right now. Maybe next intake.",
         },
         {
           dir: "out",
-          body: "Understood, thank you for letting us know. If anything changes, we're always happy to help.",
+          body: "Understood, thank you for letting us know. If anything changes, we're always here to help.",
         },
       );
     }
@@ -981,7 +1180,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     const lastMs = nowMs - plan.days * DAY - rng.int(0, 50) * MIN;
     const pathKeys =
       plan.stage === "lost"
-        ? ["enquiry", "booked", "lost"]
+        ? ["enquiry", "counselled", "lost"]
         : stageOrder.slice(0, Math.max(1, depth + 1)).filter((k) => k !== "lost");
     // Converted leads stay inside the dashboard's 30-day window.
     const spanDays = Math.min(1.5 + pathKeys.length * rng.int(2, 4), plan.fromLead ? 27 - plan.days : 60);
@@ -989,7 +1188,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     const createdAt = iso(createdMs);
     const value = plan.valueAed
       ? toMoneyString(plan.valueAed)
-      : computeQuoteTotals(tr.lineItems, "5.00").subtotalAed;
+      : computeQuoteTotals(tr.lineItems, CLINIC.vatRate).subtotalAed;
     const patientFirst = contact.firstName;
     const title =
       plan.title ?? `${tr.short.charAt(0).toUpperCase()}${tr.short.slice(1)} — ${contactName(contact)}`;
@@ -1010,6 +1209,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
         status: "converted",
         assigneeId: assignee.id,
       });
+      if (plan.enquiry) pinEnquiry(lead, plan.treatment, plan.enquiry);
       lead.firstContactedAt = iso(new Date(receivedAt).getTime() + rng.int(3, 12) * MIN);
       leadsBySourceConverted[plan.source] = (leadsBySourceConverted[plan.source] ?? 0) + 1;
       contact.createdAt = createdAt;
@@ -1033,8 +1233,10 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       lostReason: plan.lostReason ?? null,
       lostNote:
         plan.lostReason === "competitor"
-          ? "Chose a clinic in Al Barsha that offered a package discount."
-          : null,
+          ? "Went with a consultant in Faisalabad, closer to home, who quoted a lower fee."
+          : plan.lostReason === "price"
+            ? "Family could not arrange the bank statement for this intake. May come back next year."
+            : null,
       closedAt: isClosed ? iso(lastMs) : null,
       lastActivityAt: iso(lastMs),
       deletedAt: null,
@@ -1046,10 +1248,17 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       lead.convertedContactId = contact.id;
       lead.convertedDealId = deal.id;
       lead.updatedAt = createdAt;
-      addActivity("system", createdAt, links, `Converted from ${plan.source} lead`, assignee.id, {
-        kind: "lead_converted",
-        source: plan.source,
-      });
+      addActivity(
+        "system",
+        createdAt,
+        links,
+        `Converted from ${SOURCE_LABEL[plan.source]} lead`,
+        assignee.id,
+        {
+          kind: "lead_converted",
+          source: plan.source,
+        },
+      );
     } else {
       addActivity("system", createdAt, links, "Deal created", assignee.id, { kind: "deal_created" });
     }
@@ -1084,18 +1293,24 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       }
     });
 
+    // Test-prep batches a college buys for its students read differently from employer sponsorships.
+    const prepBatch = Boolean(company && PREP_COPY[tr.key]);
     if (rng.chance(0.6)) {
-      addActivity("note", iso(createdMs + (lastMs - createdMs) * 0.4), links, rng.pick(NOTES), assignee.id);
+      const note = rng.pick(company ? (prepBatch ? COLLEGE_NOTES : CORPORATE_NOTES) : NOTES);
+      addActivity("note", iso(createdMs + (lastMs - createdMs) * 0.4), links, note, assignee.id);
     }
     if (depth >= 1 && rng.chance(0.7)) {
-      addActivity("call", iso(createdMs + (lastMs - createdMs) * 0.55), links, rng.pick(CALLS), assignee.id, {
+      const call = rng.pick(company ? (prepBatch ? COLLEGE_CALLS : CORPORATE_CALLS) : CALLS);
+      addActivity("call", iso(createdMs + (lastMs - createdMs) * 0.55), links, call, assignee.id, {
         durationMinutes: rng.int(2, 18),
       });
     }
 
-    // Conversations: WhatsApp with patients, email with corporate contacts.
+    // Conversations: WhatsApp with students, email with corporate contacts.
     if (company) {
-      const conv = addConversation({ channel: "email", contact, assigneeId: user("manager").id, createdAt });
+      const manager = user("manager");
+      const managerFirst = firstName(manager);
+      const conv = addConversation({ channel: "email", contact, assigneeId: manager.id, createdAt });
       const subject = title.replace(/^[^—]+— /, "");
       addMessages(
         conv,
@@ -1103,19 +1318,21 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
           {
             dir: "in",
             subject,
-            body: `Dear Omar,\n\nWe'd like a proposal for ${subject.toLowerCase()} at our offices. Could you share options and dates for next month?\n\nBest regards,\n${contactName(contact)}`,
+            body: `Dear ${managerFirst},\n\nWe would like ${CLINIC.shortName}'s proposal for the following: ${subject}. ${prepBatch ? "Could you share your fee, the batch timings and a start date?" : "Could you share your fee, the timeline and the intakes you would recommend?"}\n\nBest regards,\n${contactName(contact)}`,
           },
           {
             dir: "out",
             subject: `Re: ${subject}`,
-            body: `Dear ${patientFirst},\n\nThank you for thinking of ${CLINIC.shortName}. I've attached our corporate package and suggested dates. Happy to arrange a call this week.\n\nKind regards,\nOmar Farouk`,
+            body: `Dear ${patientFirst},\n\nThank you for thinking of ${CLINIC.shortName}. I've attached our ${prepBatch ? "proposal with the batch timings" : "corporate proposal with a suggested timeline"}. Happy to arrange a call this week.\n\nKind regards,\n${manager.name}`,
           },
           ...(plan.days < 3
             ? [
                 {
                   dir: "in" as const,
                   subject: `Re: ${subject}`,
-                  body: "Thanks Omar, the dates work. Can you confirm the price per head includes the report for each employee?",
+                  body: prepBatch
+                    ? `Thanks ${managerFirst}, the timings work for us. Can you confirm the fee includes the mock tests and study material for every student in the batch?`
+                    : `Thanks ${managerFirst}, the timeline works for us. Can you confirm the fee covers every nominee's admission and visa file, and that embassy fees are separate?`,
                 },
               ]
             : []),
@@ -1149,21 +1366,52 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     // Quotes.
     if (plan.quote) {
       quoteSeq += 1;
-      const totals = computeQuoteTotals(tr.lineItems, "5.00");
-      const quoteCreated = iso(lastMs - (plan.quote === "draft" ? 2 * HOUR : 20 * HOUR));
+      const totals = computeQuoteTotals(tr.lineItems, CLINIC.vatRate);
+      // Fees are agreed after the counselling session, so a quote goes out right after the fee answer in
+      // the chat ("Yes: half when we open your file…"), before the student starts sending documents.
+      const chat = conversationFor.get(contact.id);
+      const chatTimes = chat
+        ? t.messages
+            .filter((m) => m.conversationId === chat.id)
+            .map((m) => new Date(m.occurredAt).getTime())
+            .sort((a, b) => a - b)
+        : [];
+      const feeAnswer = chat
+        ? t.messages.find((m) => m.conversationId === chat.id && m.body?.startsWith("Yes: half"))
+        : undefined;
+      const feeMs = feeAnswer ? new Date(feeAnswer.occurredAt).getTime() : null;
+      const gapMs = feeMs === null ? 0 : (chatTimes.find((ms) => ms > feeMs) ?? lastMs) - feeMs;
+      const sentMs =
+        plan.quote === "draft"
+          ? null
+          : feeMs !== null && gapMs > 0
+            ? Math.round(feeMs + Math.min(3 * HOUR, gapMs / 2))
+            : plan.quote === "accepted"
+              ? createdMs + (lastMs - createdMs) * 0.5 + 2 * HOUR
+              : lastMs - 18 * HOUR;
+      const quoteCreatedMs =
+        sentMs === null
+          ? lastMs - 2 * HOUR
+          : feeMs !== null && gapMs > 0
+            ? Math.round(feeMs + Math.min(HOUR, gapMs / 4))
+            : sentMs - 2 * HOUR;
+      const quoteCreated = iso(quoteCreatedMs);
       const quote = {
         ...row(quoteCreated, iso(lastMs)),
         dealId: deal.id,
         number: formatQuoteNumber(quoteYear, quoteSeq),
         lineItems: tr.lineItems.map((li) => ({ id: newId(), ...li })),
         subtotalAed: totals.subtotalAed,
-        vatRate: "5.00",
+        vatRate: CLINIC.vatRate,
         vatAmountAed: totals.vatAmountAed,
         totalAed: totals.totalAed,
-        validUntil: new Date(new Date(quoteCreated).getTime() + 14 * DAY).toISOString().slice(0, 10),
-        notes: "Price includes all follow-up visits within 3 months. Valid for 14 days.",
+        validUntil: new Date(new Date(quoteCreated).getTime() + DEFAULT_QUOTE_VALIDITY_DAYS * DAY)
+          .toISOString()
+          .slice(0, 10),
+        notes:
+          "Embassy visa fees, university application fees, IHS and tuition deposits are paid by the student directly and are not included in this quotation.",
         status: plan.quote,
-        sentAt: plan.quote === "draft" ? null : iso(lastMs - 18 * HOUR),
+        sentAt: sentMs === null ? null : iso(sentMs),
         sentVia: plan.quote === "draft" ? null : ("whatsapp" as const),
         pdfUrl: null,
         createdByUserId: assignee.id,
@@ -1175,7 +1423,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
           "quote_sent",
           quote.sentAt,
           links,
-          `Quote ${quote.number} sent on WhatsApp — ${totals.totalAed} AED incl. VAT`,
+          `Quote ${quote.number} sent on WhatsApp — ${formatAed(totals.totalAed)} incl. sales tax`,
           assignee.id,
           {
             quoteId: quote.id,
@@ -1200,7 +1448,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
                 mimeType: "application/pdf",
                 fileName: `${quote.number}.pdf`,
                 sizeBytes: rng.int(60_000, 140_000),
-                caption: "Your treatment plan and quotation",
+                caption: "Your SBC quotation",
               },
             ],
             template: null,
@@ -1320,7 +1568,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
           "system",
           lead.updatedAt,
           { leadId: lead.id },
-          `Disqualified: ${reason?.replace(/_/g, " ")}`,
+          `Disqualified (${reason ? DISQUALIFY_LABEL[reason] : "no reason given"})`,
           assignee.id,
           {
             kind: "lead_status",
@@ -1332,18 +1580,23 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     }
   }
 
-  // A returning patient: new Instagram lead that matches an existing contact.
-  const returning = must(patientContacts[6], "returning patient");
+  // A returning student: did the IELTS placement test with us, now a new Instagram lead for the UK.
+  const returning = must(patientContacts[6], "returning student");
   const returningLead = makeLead({
     name: contactName(returning),
     phone: returning.primaryPhoneE164,
     email: returning.emails[0] ?? null,
     source: "instagram",
     receivedAt: ago(3 * HOUR),
-    treatmentKey: "botox",
+    treatmentKey: "uk",
     status: "new",
     assigneeId: returning.assigneeId,
   });
+  pinEnquiry(
+    returningLead,
+    "uk",
+    "AoA, I did the IELTS placement test with you. UK master's ke liye bhi guide karein? BS Electrical, final year",
+  );
   returningLead.matchedContactId = returning.id;
 
   // WhatsApp conversations for recent leads: some unanswered, some waiting on a template reply.
@@ -1367,7 +1620,7 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     if (lead.source === "whatsapp" || i % 3 === 0) {
       addMessages(
         conv,
-        [{ dir: "in", body: lead.message ?? "Hello, I'd like more information." }],
+        [{ dir: "in", body: lead.message ?? "AoA, I'd like more information about studying abroad." }],
         receivedMs,
         receivedMs,
         links,
@@ -1435,32 +1688,32 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
       t.deals.find((d) => d.title.includes(fragment)),
       `deal ${fragment}`,
     );
-  // 09:00 today in Asia/Dubai (UTC+4 all year).
-  const today9 = new Date(`${new Date(nowMs + 4 * HOUR).toISOString().slice(0, 10)}T05:00:00.000Z`);
+  // 09:00 today in Asia/Karachi (UTC+5 all year, no daylight saving).
+  const today9 = new Date(`${new Date(nowMs + 5 * HOUR).toISOString().slice(0, 10)}T04:00:00.000Z`);
   const manualTasks: Array<{ title: string; deal: Deal; dueMs: number }> = [
     {
-      title: "Send the Invisalign treatment plan",
-      deal: dealByTitle("Invisalign — Rania"),
+      title: "Send the Germany study visa quotation",
+      deal: dealByTitle("Germany study visa — Maryam"),
       dueMs: today9.getTime() + 8 * HOUR,
     },
     {
-      title: "Confirm implant consultation time",
-      deal: dealByTitle("Dental implants — Khalid"),
+      title: "Share the GIC and PAL document checklist",
+      deal: dealByTitle("Canada study permit — Muhammad Ahmed"),
       dueMs: today9.getTime() + DAY + 2 * HOUR,
     },
     {
-      title: "Follow up on the veneers quote",
-      deal: dealByTitle("Porcelain veneers — Shirin"),
+      title: "Follow up on the UK study visa quotation",
+      deal: dealByTitle("UK study visa — Kinza"),
       dueMs: today9.getTime() - DAY,
     },
     {
-      title: "Confirm screening dates with Gulf Horizon HR",
-      deal: dealByTitle("Gulf Horizon"),
+      title: "Confirm the nominees' documents with Indus Loom HR",
+      deal: dealByTitle("Indus Loom"),
       dueMs: today9.getTime() + 3 * DAY,
     },
     {
-      title: "Share corporate price list with Palm Crest",
-      deal: dealByTitle("Palm Crest"),
+      title: "Send offer letters and the visa checklist to Sportsline HR",
+      deal: dealByTitle("Sportsline"),
       dueMs: today9.getTime() + 4 * HOUR,
     },
   ];
@@ -1504,13 +1757,15 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
   for (const deal of t.deals.slice(0, 12)) {
     if (!deal.assigneeId || !rng.chance(0.6)) continue;
     const completedMs = nowMs - rng.int(1, 6) * DAY - rng.int(0, 8) * HOUR;
+    const studentTask = rng.pick([
+      "Send counselling session reminder",
+      "Share the document checklist",
+      "Call to confirm the session",
+    ]);
     const task = addTask(
       {
-        title: rng.pick([
-          "Send consultation reminder",
-          "Share aftercare instructions",
-          "Call to confirm booking",
-        ]),
+        // Colleges and employers get a proposal, not a counselling reminder.
+        title: deal.companyId ? "Send the proposal" : studentTask,
         dueAt: iso(completedMs + 2 * HOUR),
         assigneeId: deal.assigneeId,
         leadId: deal.leadId,
@@ -1617,8 +1872,8 @@ export function buildDemoDataset(options: BuildOptions = {}): Tables {
     ...row(workspaceCreated, ago(1 * HOUR)),
     strategy: "round_robin",
     eligibleUserIds: reps.map((r) => r.id),
-    // Maria was last, so the first simulated lead goes to Priya, as the demo panel's script says.
-    lastAssignedUserId: user("maria").id,
+    // Usman was last, so the first simulated lead goes to Hamza, as the demo panel's script says.
+    lastAssignedUserId: user("usman").id,
   });
 
   // Order deals inside each column by recency.

@@ -1,6 +1,6 @@
 {
   "title": "Leads",
-  "description": "Enquiries from your ads, WhatsApp and the front desk, assigned as they arrive.",
+  "description": "Student enquiries from your ads, WhatsApp and office walk-ins, assigned to a counsellor as they arrive.",
   "views": {
     "label": "Lead views",
     "new": "New",
@@ -28,7 +28,7 @@
     "status": "Status"
   },
   "row": {
-    "existing": "Existing patient",
+    "existing": "Existing student",
     "existingOf": "Matches {{name}}",
     "noMessage": "No message, form submitted"
   },
@@ -77,20 +77,20 @@
     },
     "all": {
       "title": "No leads yet",
-      "description": "Connect your ad accounts in Settings, or add a walk-in or phone enquiry by hand."
+      "description": "Connect your ad accounts in Settings, or add an office walk-in or phone enquiry by hand."
     }
   },
   "add": {
     "action": "Add lead",
     "title": "Add a lead",
-    "description": "For walk-ins, phone calls and referrals. It is assigned and gets a 15-minute reply task like any other lead.",
+    "description": "For office walk-ins, phone calls and college referrals. It is assigned and gets a 15-minute reply task like any other lead.",
     "name": "Name",
     "phone": "Mobile number",
     "email": "Email",
     "company": "Company",
     "optional": "(optional)",
     "message": "What are they interested in?",
-    "messagePlaceholder": "e.g. Asked about Invisalign prices and weekend appointments",
+    "messagePlaceholder": "e.g. BS graduate, IELTS 6.5, asking about UK January intake and fees",
     "assignee": "Assign to",
     "assignAuto": "Next in rotation",
     "submit": "Add lead",
@@ -145,7 +145,7 @@
     "newCompany": "New",
     "existingCompany": "Existing",
     "companyName": "Company name",
-    "emirate": "Emirate",
+    "emirate": "Province",
     "findCompany": "Find a company",
     "deal": "Deal",
     "dealTitle": "Deal title",
@@ -162,7 +162,7 @@
       "companyName": "Enter the company name, or set Company to None.",
       "company": "Choose the company, or set Company to None.",
       "title": "Give the deal a title.",
-      "value": "Enter the deal value in AED, e.g. 18500."
+      "value": "Enter the deal value in PKR, e.g. 150000."
     }
   },
   "detail": {
@@ -188,7 +188,7 @@
     "formAnswers": "Form answers",
     "timeline": "Timeline",
     "tasks": "Tasks",
-    "returning": "Returning patient:",
+    "returning": "Returning student:",
     "returningHint": "This person is already in your contacts. Converting links the new deal to them.",
     "converted": "Converted. The deal and contact carry this lead's history.",
     "disqualified": "Disqualified: {{reason}}",

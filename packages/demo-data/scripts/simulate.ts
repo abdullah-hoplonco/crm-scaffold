@@ -27,7 +27,7 @@ const unknown = simulateUnknownWhatsapp(rng, { usedPhones: used, now });
 console.log(`\nunknown number: ${unknown.person.name} ${unknown.phoneE164}: "${unknown.body}"`);
 
 for (const phase of ["enquiry", "booked", "consulted", "customer", "none"] as PatientPhase[]) {
-  console.log(`${phase.padEnd(9)} "${simulateFollowUp(rng, { phase, treatmentKey: "invisalign" })}"`);
+  console.log(`${phase.padEnd(9)} "${simulateFollowUp(rng, { phase, treatmentKey: "uk" })}"`);
 }
 
 const again = simulateLead(createRng(seed), { source: "instagram", usedPhones: new Set(), now });

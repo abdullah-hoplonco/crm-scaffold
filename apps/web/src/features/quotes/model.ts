@@ -74,15 +74,20 @@ export function daysFromToday(days: number): string {
   return addDaysToDate(todayInWorkspace(), days);
 }
 
-const MONOGRAM_SKIP = new Set(["al", "el", "and", "&", "the", "of", "llc", "fz", "fze", "ltd", "co"]);
+const MONOGRAM_SKIP = new Set(["al", "el", "and", "&", "the", "of", "pvt", "private", "ltd", "co", "smc"]);
 
-/** Two-letter mark for a business without a logo: "Noor Al Marsa Aesthetic & Dental Clinic" → "NM". */
+/**
+ * Mark for a business without a logo. A leading acronym is kept as is ("SBC Study Abroad Consultants"
+ * → "SBC"); otherwise the first two initials ("Crescent Grammar School" → "CG").
+ */
 export function monogram(name: string): string {
   const words = name
     .split(/\s+/)
     .map((w) => w.replace(/[^\p{L}\p{N}]/gu, ""))
     .filter((w) => w && !MONOGRAM_SKIP.has(w.toLowerCase()));
-  return ((words[0]?.[0] ?? "") + (words[1]?.[0] ?? "")).toUpperCase() || "Q";
+  const first = words[0] ?? "";
+  if (/^\p{Lu}{2,3}$/u.test(first)) return first;
+  return ((first[0] ?? "") + (words[1]?.[0] ?? "")).toUpperCase() || "Q";
 }
 
 /** The printed strings of a quotation, shared by the on-screen document and the PDF so they never drift. */

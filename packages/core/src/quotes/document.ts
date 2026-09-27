@@ -1,14 +1,14 @@
 import Big from "big.js";
 
-/** UAE TRNs have 15 digits and are printed in groups: 100-4583-9270-0003. Anything else is returned as is. */
+/** Pakistani NTNs have 8 digits (7 plus a check digit) and are printed 4213785-6. Anything else is returned as is. */
 export function formatTrn(trn: string | null | undefined): string {
   if (!trn) return "";
   const digits = trn.replace(/\D/g, "");
-  if (digits.length !== 15) return trn;
-  return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}-${digits.slice(11)}`;
+  if (digits.length !== 8) return trn;
+  return `${digits.slice(0, 7)}-${digits.slice(7)}`;
 }
 
-/** "19,425.00": an amount with thousands separators and fils, as printed on quotations. */
+/** "185,600.00": an amount with thousands separators and paisa, as printed on quotations. */
 export function formatAmount(value: string): string {
   const fixed = new Big(value).round(2, Big.roundHalfUp).toFixed(2);
   const [intPart = "0", dec = "00"] = fixed.split(".");
@@ -17,12 +17,12 @@ export function formatAmount(value: string): string {
   return `${negative ? "-" : ""}${digits.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.${dec}`;
 }
 
-/** "5.00" → "5", "2.50" → "2.5": a quantity or VAT rate without trailing zeros. */
+/** "16.00" → "16", "2.50" → "2.5": a quantity or sales tax rate without trailing zeros. */
 export function formatDecimal(value: string): string {
   return new Big(value).toString();
 }
 
-/** Calendar date (YYYY-MM-DD) of an instant in a timezone, e.g. the quote year in Asia/Dubai. */
+/** Calendar date (YYYY-MM-DD) of an instant in a timezone, e.g. the quote year in Asia/Karachi. */
 export function dateInTimezone(at: Date, timeZone: string): string {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone,
@@ -61,9 +61,10 @@ const ONES = [
   "nineteen",
 ];
 const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+/** The South Asian scale Pakistani quotations and cheques use: 1,85,600 is "one lakh eighty-five thousand". */
 const SCALES: Array<[number, string]> = [
-  [1_000_000_000, "billion"],
-  [1_000_000, "million"],
+  [10_000_000, "crore"],
+  [100_000, "lakh"],
   [1_000, "thousand"],
 ];
 
@@ -88,7 +89,8 @@ function integerWords(n: number): string {
   for (const [value, name] of SCALES) {
     const count = Math.floor(rest / value);
     if (count) {
-      parts.push(`${below1000(count)} ${name}`);
+      // Lakh and thousand counts stay below 100; a crore count can run past it, so it recurses.
+      parts.push(`${integerWords(count)} ${name}`);
       rest %= value;
     }
   }
@@ -97,18 +99,18 @@ function integerWords(n: number): string {
 }
 
 /**
- * The total written out in English, as UAE quotations and cheques print it:
- * "Nineteen thousand four hundred and twenty-five UAE dirhams and fifty fils only".
+ * The total written out in English, as Pakistani quotations and cheques print it:
+ * "Rupees one lakh eighty-five thousand six hundred only".
  */
 export function amountInWordsEn(value: string): string {
-  const [intPart = "0", filsPart = "00"] = new Big(value)
+  const [intPart = "0", paisaPart = "00"] = new Big(value)
     .abs()
     .round(2, Big.roundHalfUp)
     .toFixed(2)
     .split(".");
-  const dirhams = Number(intPart);
-  const fils = Number(filsPart);
-  let words = `${integerWords(dirhams)} UAE ${dirhams === 1 ? "dirham" : "dirhams"}`;
-  if (fils) words += ` and ${integerWords(fils)} fils`;
-  return `${words.charAt(0).toUpperCase()}${words.slice(1)} only`;
+  const rupees = Number(intPart);
+  const paisa = Number(paisaPart);
+  let words = `Rupees ${integerWords(rupees)}`;
+  if (paisa) words += ` and ${integerWords(paisa)} paisa`;
+  return `${words} only`;
 }

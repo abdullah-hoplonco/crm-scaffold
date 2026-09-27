@@ -16,11 +16,11 @@ export interface NormalizedPhone {
 
 /** Why a written number was rejected, phrased so the person can fix it. */
 export function invalidPhoneMessage(input: string): string {
-  return `"${input.trim()}" isn't a valid phone number. Use a UAE number like 050 123 4567, or add the country code for other countries.`;
+  return `"${input.trim()}" isn't a valid phone number. Use a Pakistani number like 0300 1234567, or add the country code for other countries.`;
 }
 
 /**
- * Normalise every phone of a contact to E.164 (numbers without a country code are UAE numbers).
+ * Normalise every phone of a contact to E.164 (numbers without a country code are Pakistani numbers).
  * Blank entries are dropped, and so are repeats of a number already in the list.
  */
 export function normalizeContactPhones(phones: PhoneDraft[]): Result<NormalizedPhone[]> {

@@ -71,10 +71,11 @@ function LoginPage() {
         </div>
         <div className="max-w-md">
           <p className="text-3xl leading-tight font-semibold text-sidebar-accent-foreground">
-            Every WhatsApp, Instagram and TikTok enquiry in one inbox. Every follow-up on time.
+            Every student enquiry from WhatsApp, Instagram and TikTok in one inbox. Every follow-up on time.
           </p>
           <p className="mt-4 text-sidebar-muted">
-            Built for sales teams in the UAE. Prices in AED, VAT and TRN on every quote.
+            Built for study-abroad and visa consultancies in Pakistan. Prices in PKR, sales tax and NTN on
+            every quotation.
           </p>
         </div>
         <p className="text-xs text-sidebar-muted">Hoplon &amp; Co</p>

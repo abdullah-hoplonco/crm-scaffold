@@ -2,8 +2,8 @@ import { computeQuoteTotals } from "@hco/core";
 import { TREATMENTS } from "@hco/demo-data/catalog";
 
 /**
- * The showcase workspace's price list. Phase A reads the demo clinic's catalogue; a real workspace
- * would load its own products and services here.
+ * The showcase workspace's price list. Phase A reads the demo consultancy's service fees; a real
+ * workspace would load its own products and services here.
  */
 export interface PriceListGroup {
   key: string;
@@ -23,8 +23,20 @@ export const PRICE_LIST: PriceListGroup[] = TREATMENTS.map((treatment) => ({
   subtotalAed: computeQuoteTotals(treatment.lineItems, "0").subtotalAed,
 }));
 
-/** The price list group a deal is about, judged by its title ("Invisalign — Rania Khoury"). */
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * The price list group a deal is about, judged by its title: the full service name first
+ * ("UK study visa — Ali Raza"), then the group key as a whole word ("Masters in UK — Ali Raza",
+ * "IELTS — Hina Tariq").
+ */
 export function suggestedGroup(dealTitle: string): PriceListGroup | null {
   const title = dealTitle.toLowerCase();
-  return PRICE_LIST.find((group) => title.includes(group.name.toLowerCase())) ?? null;
+  return (
+    PRICE_LIST.find((group) => title.includes(group.name.toLowerCase())) ??
+    PRICE_LIST.find((group) => new RegExp(`\\b${escapeRegExp(group.key.toLowerCase())}\\b`).test(title)) ??
+    null
+  );
 }

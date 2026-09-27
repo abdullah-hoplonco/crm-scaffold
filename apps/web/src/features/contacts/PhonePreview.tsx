@@ -7,10 +7,18 @@ export function isValidPhone(value: string): boolean {
 }
 
 /**
- * Live feedback under a phone input: how the number will be saved ("+971 50 123 4567") or, once the
+ * Live feedback under a phone input: how the number will be saved ("+92 300 1234567") or, once the
  * person has left the field, that it isn't a valid number.
  */
-export function PhonePreview({ id, value, showInvalid }: { id: string; value: string; showInvalid: boolean }) {
+export function PhonePreview({
+  id,
+  value,
+  showInvalid,
+}: {
+  id: string;
+  value: string;
+  showInvalid: boolean;
+}) {
   const { t } = useTranslation("contacts");
   const trimmed = value.trim();
   if (!trimmed) return null;

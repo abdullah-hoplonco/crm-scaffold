@@ -46,7 +46,7 @@ export function LineItemsEditor({
                   <Label htmlFor={id("description")} className="sr-only">
                     {t("builder.descriptionLabel", { index: index + 1 })}
                   </Label>
-                  {/* Grows with long treatment names instead of cutting them off on a phone. */}
+                  {/* Grows with long service names instead of cutting them off on a phone. */}
                   <Textarea
                     id={id("description")}
                     value={line.description}
@@ -114,7 +114,7 @@ export function LineItemsEditor({
                       !total && "text-muted-foreground",
                     )}
                   >
-                    {total ? `AED ${formatAmount(total)}` : "—"}
+                    {total ? `PKR ${formatAmount(total)}` : "—"}
                   </p>
                 </div>
                 {lineErrors?.qty || lineErrors?.unitPrice ? (

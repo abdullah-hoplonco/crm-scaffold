@@ -215,7 +215,7 @@ export function DealHeader({
             <InlineEdit
               value={deal.valueAed.replace(/\.00$/, "")}
               label={t("deal.value")}
-              prefix="AED"
+              prefix="PKR"
               parse={parseAedInput}
               invalidMessage={t("newDealDialog.valueInvalid")}
               onSave={(valueAed) => save({ valueAed }, t("deal.valueSaved"))}
@@ -260,9 +260,7 @@ export function DealHeader({
             </span>
           </Field>
           <Field label={t("deal.lastActivity")}>
-            <span
-              className={cn("flex h-8 items-center text-sm", card.isStale && "font-medium text-warning")}
-            >
+            <span className={cn("flex h-8 items-center text-sm", card.isStale && "font-medium text-warning")}>
               {t("deal.daysAgo", { count: daysSince(deal.lastActivityAt) })}
             </span>
           </Field>

@@ -77,14 +77,15 @@ export type ChannelConnectionType = z.infer<typeof ChannelConnectionType>;
 export const ConnectionStatus = z.enum(["connected", "disconnected", "pending", "error"]);
 export type ConnectionStatus = z.infer<typeof ConnectionStatus>;
 
+/** Province or territory of Pakistan. The identifier is kept from the UAE build; the values are Pakistani. */
 export const Emirate = z.enum([
-  "abu_dhabi",
-  "dubai",
-  "sharjah",
-  "ajman",
-  "umm_al_quwain",
-  "ras_al_khaimah",
-  "fujairah",
+  "punjab",
+  "sindh",
+  "khyber_pakhtunkhwa",
+  "balochistan",
+  "islamabad",
+  "gilgit_baltistan",
+  "azad_kashmir",
 ]);
 export type Emirate = z.infer<typeof Emirate>;
 

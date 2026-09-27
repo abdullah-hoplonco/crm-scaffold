@@ -3,13 +3,13 @@ import type { ComponentProps } from "react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-/** "18,500" or "1 250.50" → "18500" / "1250.50"; null when it isn't an amount. */
+/** "185,000", "Rs. 185,000" or "1 250.50" → "185000" / "1250.50"; null when it isn't an amount. */
 export function parseAedInput(raw: string): string | null {
-  const cleaned = raw.replace(/[\s,]/g, "").replace(/^AED/i, "");
+  const cleaned = raw.replace(/[\s,]/g, "").replace(/^(PKR|Rs\.?)/i, "");
   return MoneyAed.safeParse(cleaned).success && !cleaned.startsWith("-") ? cleaned : null;
 }
 
-/** Amount field with a fixed AED prefix. */
+/** Amount field with a fixed PKR prefix. */
 export function MoneyInput({
   className,
   ...props
@@ -20,7 +20,7 @@ export function MoneyInput({
         aria-hidden="true"
         className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
       >
-        AED
+        PKR
       </span>
       <Input type="text" inputMode="decimal" autoComplete="off" className="ps-12 tabular-nums" {...props} />
     </div>

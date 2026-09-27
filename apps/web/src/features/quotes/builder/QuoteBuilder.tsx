@@ -36,7 +36,7 @@ export interface QuoteBuilderValues {
   notes: string | null;
 }
 
-/** Line items, validity and notes with live 5% VAT totals and a live preview of the quotation. */
+/** Line items, validity and notes with live sales tax totals and a live preview of the quotation. */
 export function QuoteBuilder({
   context,
   initial,
@@ -216,7 +216,7 @@ export function QuoteBuilder({
       >
         <div className="min-w-0 flex-1">
           <p className="text-xs text-muted-foreground">{t("builder.total")}</p>
-          <p className="truncate font-semibold tabular-nums">AED {formatAmount(preview.totalAed)}</p>
+          <p className="truncate font-semibold tabular-nums">PKR {formatAmount(preview.totalAed)}</p>
         </div>
         <Button
           type="button"

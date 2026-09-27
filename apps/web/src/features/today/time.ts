@@ -29,7 +29,7 @@ export function partOfDay(now: Date): "morning" | "afternoon" | "evening" {
   return "evening";
 }
 
-/** "Priya" from "Priya Nair"; keeps an honorific: "Dr. Hessa" from "Dr. Hessa Al Suwaidi". */
+/** "Hamza" from "Hamza Malik"; keeps an honorific: "Dr. Sana" from "Dr. Sana Butt". */
 export function greetingName(fullName: string): string {
   const parts = fullName.trim().split(/\s+/);
   const [first = fullName, second] = parts;

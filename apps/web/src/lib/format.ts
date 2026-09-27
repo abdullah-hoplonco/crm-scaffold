@@ -5,7 +5,7 @@ import { differenceInCalendarDays, format, formatDistanceToNowStrict, isSameDay 
 export { formatAed, formatPhone };
 
 /** All dates are stored in UTC and shown in the workspace timezone. */
-export const WORKSPACE_TZ = "Asia/Dubai";
+export const WORKSPACE_TZ = "Asia/Karachi";
 
 export function inWorkspaceTz(iso: string | Date): TZDate {
   return new TZDate(typeof iso === "string" ? new Date(iso) : iso, WORKSPACE_TZ);

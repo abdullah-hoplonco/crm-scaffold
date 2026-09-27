@@ -30,7 +30,7 @@ function registerFonts() {
       { src: plex600, fontWeight: 600 },
     ],
   });
-  // Keep words whole: hyphenated treatment names read badly on a quotation.
+  // Keep words whole: hyphenated service names read badly on a quotation.
   Font.registerHyphenationCallback((word) => [word]);
   fontsRegistered = true;
 }

@@ -92,7 +92,7 @@ export function ConvertLeadDialog({
     event.preventDefault();
     setError(null);
     setDuplicate(false);
-    const amount = value.replace(/[,\s]/g, "").replace(/^AED/i, "");
+    const amount = value.replace(/[,\s]/g, "").replace(/^(PKR|Rs\.?)/i, "");
     if (contactMode === "new" && !firstName.trim()) return setError(t("convert.errors.firstName"));
     if (contactMode === "existing" && !contactId) return setError(t("convert.errors.contact"));
     if (companyMode === "new" && !companyName.trim()) return setError(t("convert.errors.companyName"));
@@ -173,7 +173,12 @@ export function ConvertLeadDialog({
                     />
                   </Field>
                   <Field id="cv-email" label={t("convert.email")}>
-                    <Input id="cv-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Input
+                      id="cv-email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </Field>
                 </div>
               ) : (
@@ -212,7 +217,11 @@ export function ConvertLeadDialog({
               {companyMode === "new" ? (
                 <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_11rem]">
                   <Field id="cv-company" label={t("convert.companyName")}>
-                    <Input id="cv-company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+                    <Input
+                      id="cv-company"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                    />
                   </Field>
                   <Field id="cv-emirate" label={t("convert.emirate")}>
                     <Select value={emirate} onValueChange={setEmirate}>
@@ -260,7 +269,7 @@ export function ConvertLeadDialog({
                 <Field id="cv-value" label={t("convert.value")}>
                   <div className="relative">
                     <span className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-                      AED
+                      PKR
                     </span>
                     <Input
                       id="cv-value"
@@ -287,13 +296,21 @@ export function ConvertLeadDialog({
                   </Select>
                 </Field>
                 <Field id="cv-close" label={t("convert.closeDate")} hint={t("add.optional")}>
-                  <Input id="cv-close" type="date" value={closeDate} onChange={(e) => setCloseDate(e.target.value)} />
+                  <Input
+                    id="cv-close"
+                    type="date"
+                    value={closeDate}
+                    onChange={(e) => setCloseDate(e.target.value)}
+                  />
                 </Field>
               </div>
             </Section>
 
             {error ? (
-              <div role="alert" className="flex flex-col items-start gap-2 rounded-md bg-danger-soft px-3 py-2 text-sm text-destructive">
+              <div
+                role="alert"
+                className="flex flex-col items-start gap-2 rounded-md bg-danger-soft px-3 py-2 text-sm text-destructive"
+              >
                 <p>{error}</p>
                 {duplicate && contactMode === "new" ? (
                   <Button
@@ -338,7 +355,17 @@ function Section({ title, hint, children }: { title: string; hint?: string; chil
   );
 }
 
-function Field({ id, label, hint, children }: { id: string; label: string; hint?: string; children: ReactNode }) {
+function Field({
+  id,
+  label,
+  hint,
+  children,
+}: {
+  id: string;
+  label: string;
+  hint?: string;
+  children: ReactNode;
+}) {
   return (
     <div className="grid gap-1.5">
       <Label htmlFor={id}>

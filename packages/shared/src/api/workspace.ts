@@ -9,7 +9,7 @@ export const WorkspaceUpdate = z.object({
   trn: z
     .string()
     .trim()
-    .regex(/^\d{15}$/, "A TRN has 15 digits")
+    .regex(/^\d{8}$/, "NTN is 7 digits and a check digit")
     .nullable()
     .optional(),
   vatRate: Decimal.optional(),
@@ -32,7 +32,7 @@ export const OnboardingInput = z.object({
   trn: z
     .string()
     .trim()
-    .regex(/^\d{15}$/, "A TRN has 15 digits")
+    .regex(/^\d{8}$/, "NTN is 7 digits and a check digit")
     .nullable(),
   emirate: Emirate.nullable(),
   ownerName: z.string().trim().min(1, "Enter your name"),
@@ -58,7 +58,7 @@ export const workspaceRoutes = {
   update: defineRoute({
     method: "PATCH",
     path: "/workspace",
-    summary: "Update workspace name, TRN, VAT and follow-up settings (owner)",
+    summary: "Update workspace name, NTN, sales tax and follow-up settings (owner)",
     body: WorkspaceUpdate,
     response: Workspace,
   }),

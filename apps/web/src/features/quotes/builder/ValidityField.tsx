@@ -9,7 +9,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { formatDate } from "@/lib/format";
 import { daysFromToday, todayInWorkspace } from "../model";
 
-const PRESETS = [7, 14, 30];
+const PRESETS = [7, 15, 30];
 
 /** YYYY-MM-DD as a local Date at noon, so the calendar shows the same day in any browser timezone. */
 function toLocalDate(value: string) {

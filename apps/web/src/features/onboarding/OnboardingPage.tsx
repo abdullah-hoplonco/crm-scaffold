@@ -30,7 +30,7 @@ export function OnboardingPage() {
   const [draft, setDraft] = useState<OnboardingDraft>(() => ({
     workspaceName: "",
     trn: "",
-    emirate: null,
+    emirate: "punjab",
     ownerName: "",
     ownerEmail: "",
     invites: [emptyInvite()],

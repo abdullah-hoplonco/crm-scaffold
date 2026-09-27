@@ -34,19 +34,19 @@
   "actions": {
     "instagram": {
       "label": "New Instagram lead",
-      "hint": "Lead ad form, usually aesthetics"
+      "hint": "Lead ad form, usually a UK or Canada enquiry"
     },
     "facebook": {
       "label": "New Facebook lead",
-      "hint": "Lead ad form, usually dental"
+      "hint": "Lead ad form with the service, preferred intake and best time to call"
     },
     "tiktok": {
       "label": "New TikTok lead",
-      "hint": "Instant form, often just \"price?\""
+      "hint": "Instant form, often just \"fees kitni hai?\""
     },
     "existingPatient": {
-      "label": "Inbound WhatsApp from an existing patient",
-      "hint": "A follow-up that fits where they are, like \"Can I move my consultation to Saturday morning?\""
+      "label": "Inbound WhatsApp from an existing student",
+      "hint": "A follow-up that fits where they are, like \"Which documents should I get attested first?\""
     },
     "unknownNumber": {
       "label": "Inbound WhatsApp from an unknown number",
@@ -54,14 +54,14 @@
     },
     "burst": {
       "label": "Burst: 10 leads",
-      "hint": "Instagram, TikTok, Facebook and WhatsApp mixed, like a busy Thursday evening."
+      "hint": "Instagram, TikTok, Facebook and WhatsApp mixed, like the evening an intake ad goes live."
     },
     "working": "Creating…"
   },
   "phone": {
     "label": "Route to this phone",
     "optional": "Optional",
-    "placeholder": "050 123 4567",
+    "placeholder": "0300 1234567",
     "hint": "New leads and unknown-number messages use this number instead of a random one. Use your own to rehearse the real-phone demo; in this showcase nothing is sent to it.",
     "clear": "Clear phone number"
   },
@@ -109,12 +109,12 @@
     "burst_other": "{{count}} leads created",
     "open": "Open",
     "reset": "Demo data reset",
-    "resetBody": "The clinic's story is back at its starting point."
+    "resetBody": "SBC's story is back at its starting point."
   },
   "reset": {
     "button": "Reset demo data",
     "title": "Reset demo data?",
-    "description": "Every lead, deal, message and setting goes back to the clinic's starting story, and changes made during the demo are lost. Open windows stay signed in.",
+    "description": "Every lead, deal, message and setting goes back to SBC's starting story, and changes made during the demo are lost. Open windows stay signed in.",
     "confirm": "Reset demo data",
     "working": "Resetting…"
   }

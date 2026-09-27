@@ -9,7 +9,7 @@ export const CompanyInput = z.object({
   trn: z
     .string()
     .trim()
-    .regex(/^\d{15}$/, "A TRN has 15 digits")
+    .regex(/^\d{8}$/, "NTN is 7 digits and a check digit")
     .nullable()
     .optional(),
   emirate: Emirate.nullable().optional(),
@@ -44,7 +44,7 @@ export const companyRoutes = {
   list: defineRoute({
     method: "GET",
     path: "/companies",
-    summary: "Search companies by name, TRN or trade licence",
+    summary: "Search companies by name, NTN or SECP registration no.",
     query: z.object({ q: z.string().optional(), emirate: Emirate.optional(), ...PageQuery }),
     response: Paginated(CompanyListItem),
   }),

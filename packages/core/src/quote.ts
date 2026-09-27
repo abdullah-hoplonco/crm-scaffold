@@ -13,7 +13,7 @@ export interface QuoteTotals {
   totalAed: string;
 }
 
-/** Line totals and VAT computed on the subtotal, rounded half-up to fils (2 decimals). */
+/** Line totals and sales tax computed on the subtotal, rounded half-up to paisa (2 decimals). */
 export function computeQuoteTotals(items: LineItemLike[], vatRatePercent: string): QuoteTotals {
   const lineTotals = items.map((item) =>
     new Big(item.qty).times(item.unitPriceAed).round(2, Big.roundHalfUp),

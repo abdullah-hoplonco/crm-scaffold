@@ -4,8 +4,9 @@ import { TREATMENTS, type Treatment } from "./catalog";
 import type { Rng } from "./rng";
 
 /**
- * The Simulator's content: realistic leads and WhatsApp messages for a Dubai clinic. Pure functions of
- * an Rng, so a seed always produces the same people; callers pass the phones already in use.
+ * The Simulator's content: realistic leads and WhatsApp messages for a Lahore study-abroad consultancy.
+ * Pure functions of an Rng, so a seed always produces the same people; callers pass the phones already
+ * in use.
  */
 
 export type SimulatorLeadSource = Exclude<LeadSource, "manual" | "csv">;
@@ -21,106 +22,118 @@ interface Community {
   last: readonly string[];
 }
 
-/** Dubai's mix of residents. Surnames are gender-neutral within each community. */
+/** Pakistan's mix of students and parents. Surnames are gender-neutral within each community. */
 const COMMUNITIES: readonly Community[] = [
   {
-    weight: 16,
-    female: ["Mahra", "Shamma", "Maitha", "Sheikha", "Moza", "Alia", "Meera", "Hind", "Reem", "Amna"],
-    male: ["Rashid", "Saeed", "Humaid", "Obaid", "Khalifa", "Majid", "Sultan"],
-    last: [
-      "Al Mazrouei",
-      "Al Hammadi",
-      "Al Muhairi",
-      "Al Kaabi",
-      "Al Remeithi",
-      "Al Marzooqi",
-      "Al Hosani",
-      "Al Mheiri",
-      "Al Ali",
-      "Al Shehhi",
+    weight: 42,
+    female: [
+      "Hira",
+      "Iqra",
+      "Areeba",
+      "Maham",
+      "Anum",
+      "Sidra",
+      "Aiman",
+      "Laiba",
+      "Rimsha",
+      "Zoya",
+      "Minahil",
+      "Esha",
+      "Momina",
+      "Fatima",
     ],
-  },
-  {
-    weight: 12,
-    female: ["Lara", "Yara", "Dima", "Nadine", "Joelle", "Hala", "Rasha", "Maya"],
-    male: ["Karim", "Tarek", "Rami", "Fadi", "Ziad"],
-    last: ["Saab", "Nasser", "Aoun", "Sleiman", "Hamdan", "Qassem", "Khalil", "Rizk"],
-  },
-  {
-    weight: 8,
-    female: ["Nourhan", "Heba", "Salma", "Mona", "Dina", "Menna"],
-    male: ["Mohamed", "Mostafa", "Amr", "Sherif"],
-    last: ["Abdelaziz", "El Masry", "Soliman", "Gamal", "Shawky", "Hegazy"],
+    male: [
+      "Ali",
+      "Ahmed",
+      "Hassan",
+      "Bilal",
+      "Saad",
+      "Umer",
+      "Talha",
+      "Haris",
+      "Zain",
+      "Abdullah",
+      "Shahzaib",
+      "Fahad",
+      "Danish",
+      "Waleed",
+      "Moiz",
+    ],
+    last: [
+      "Butt",
+      "Chaudhry",
+      "Cheema",
+      "Gondal",
+      "Warraich",
+      "Bajwa",
+      "Awan",
+      "Rana",
+      "Sheikh",
+      "Mughal",
+      "Arain",
+      "Virk",
+      "Tarar",
+      "Aslam",
+      "Nadeem",
+      "Javed",
+    ],
   },
   {
     weight: 18,
-    female: [
-      "Ananya",
-      "Deepika",
-      "Sneha",
-      "Kavya",
-      "Aditi",
-      "Pooja",
-      "Divya",
-      "Lakshmi",
-      "Riya",
-      "Shruti",
-      "Nandini",
-      "Swati",
-    ],
-    male: ["Rohit", "Arjun", "Nikhil", "Varun", "Karthik"],
-    last: ["Menon", "Iyer", "Kapoor", "Shah", "Reddy", "Mehta", "Joshi", "Kulkarni", "D'Souza", "Thomas"],
+    female: ["Mehwish", "Rida", "Hafsa", "Alishba", "Sehrish", "Areesha"],
+    male: ["Faraz", "Owais", "Shayan", "Arsalan", "Taha", "Rehan", "Hamid"],
+    last: ["Ansari", "Zaidi", "Rizvi", "Naqvi", "Jafri", "Hashmi", "Farooqui", "Siddiqi"],
   },
   {
-    weight: 8,
-    female: ["Ayesha", "Hira", "Zara", "Sana", "Fariha", "Mahnoor"],
-    male: ["Bilal", "Usman", "Hamza", "Faisal"],
-    last: ["Qureshi", "Chaudhry", "Malik", "Akhtar", "Hussain", "Raza"],
-  },
-  {
-    weight: 10,
-    female: ["Maricel", "Camille", "Angelica", "Kristine", "Bea", "Jasmine", "Patricia"],
-    male: ["Jerome", "Paolo", "Mark Anthony"],
-    last: ["Reyes", "Dela Cruz", "Bautista", "Mendoza", "Aquino", "Ramos", "Castillo"],
-  },
-  {
-    weight: 10,
-    female: ["Emma", "Charlotte", "Hannah", "Lucy", "Olivia", "Georgia", "Amelia"],
-    male: ["Tom", "Daniel", "James", "Ollie"],
-    last: ["Clarke", "Hughes", "Walker", "Fletcher", "Harris", "Murphy", "Bennett"],
-  },
-  {
-    weight: 7,
-    female: ["Anastasia", "Ekaterina", "Daria", "Alina", "Polina", "Ksenia"],
-    male: [],
-    last: ["Ivanova", "Sokolova", "Kuznetsova", "Morozova", "Orlova", "Lebedeva"],
-  },
-  {
-    weight: 5,
-    female: ["Parisa", "Niloufar", "Mahsa", "Yasaman"],
-    male: ["Arash", "Dariush"],
-    last: ["Rahimi", "Karimi", "Hosseini", "Moradi", "Farahani"],
+    weight: 12,
+    female: ["Palwasha", "Zarmina", "Laila", "Shandana", "Wagma"],
+    male: ["Asfandyar", "Wali", "Junaid", "Ibrahim", "Irfan"],
+    last: ["Khan", "Yousafzai", "Afridi", "Khattak", "Marwat", "Durrani", "Bangash"],
   },
   {
     weight: 6,
-    female: ["Amara", "Chioma", "Wanjiku", "Tolu", "Zawadi"],
-    male: ["Kwame", "Tunde"],
-    last: ["Okafor", "Mwangi", "Adeyemi", "Otieno", "Mensah"],
+    female: ["Sanam", "Nimra", "Marvi", "Sundus"],
+    male: ["Sarmad", "Imdad", "Ayaz"],
+    last: ["Memon", "Soomro", "Jatoi", "Abro", "Channa"],
+  },
+  {
+    weight: 7,
+    female: ["Saima", "Uzma", "Nadia", "Shazia"],
+    male: ["Adil", "Tanveer", "Shoaib"],
+    last: ["Kiani", "Raja", "Mir", "Dar", "Abbasi"],
+  },
+  {
+    weight: 4,
+    female: ["Sharon", "Rebecca", "Esther", "Sonia"],
+    male: ["Samuel", "Daniel", "Emmanuel"],
+    last: ["Masih", "Gill", "Bhatti", "Joseph"],
+  },
+  {
+    weight: 3,
+    female: ["Shireen", "Gulnar", "Zeba"],
+    male: ["Karim", "Aman", "Salman"],
+    last: ["Hunzai", "Baig", "Shigri"],
+  },
+  {
+    weight: 3,
+    female: ["Hani", "Sadia", "Gul Bano"],
+    male: ["Jalal", "Shahdad", "Baran"],
+    last: ["Baloch", "Rind", "Buledi"],
   },
 ];
 
-/** Share of enquiries from women, per treatment. */
+/** Share of enquiries from women, per service. */
 const FEMALE_SHARE: Record<string, number> = {
-  laser: 0.85,
-  botox: 0.75,
-  fillers: 0.95,
-  hydrafacial: 0.9,
-  profhilo: 0.85,
-  invisalign: 0.6,
-  implant: 0.45,
-  whitening: 0.55,
-  veneers: 0.55,
-  prp: 0.3,
+  uk: 0.45,
+  canada: 0.4,
+  australia: 0.4,
+  usa: 0.45,
+  germany: 0.3,
+  ireland: 0.45,
+  malaysia: 0.35,
+  ielts: 0.55,
+  pte: 0.45,
+  sop: 0.5,
 };
 
 function weightedPick<T extends { weight: number }>(rng: Rng, items: readonly T[]): T {
@@ -140,7 +153,7 @@ export interface SimulatedPerson {
 }
 
 export function simulatePerson(rng: Rng, treatmentKey?: string): SimulatedPerson {
-  const wantsFemale = rng.chance(FEMALE_SHARE[treatmentKey ?? ""] ?? 0.6);
+  const wantsFemale = rng.chance(FEMALE_SHARE[treatmentKey ?? ""] ?? 0.45);
   const candidates = COMMUNITIES.filter((c) => (wantsFemale ? c.female.length : c.male.length) > 0);
   const community = weightedPick(rng, candidates);
   const firstName = rng.pick(wantsFemale ? community.female : community.male);
@@ -148,10 +161,40 @@ export function simulatePerson(rng: Rng, treatmentKey?: string): SimulatedPerson
   return { firstName, lastName, name: `${firstName} ${lastName}` };
 }
 
-/** A UAE mobile (+971 50/52/54/55/56/58) that isn't in `used`. Adds it to `used` when it is a Set. */
+/** Pakistani mobile network prefixes (Jazz, Zong, Ufone, Telenor). */
+const MOBILE_PREFIXES = [
+  "300",
+  "301",
+  "302",
+  "303",
+  "305",
+  "306",
+  "308",
+  "310",
+  "311",
+  "312",
+  "313",
+  "315",
+  "321",
+  "322",
+  "331",
+  "333",
+  "334",
+  "336",
+  "340",
+  "341",
+  "345",
+  "346",
+  "347",
+] as const;
+
+/**
+ * A Pakistani mobile (+92 3XX XXXXXXX) that isn't in `used`. Adds it to `used` when it is a Set.
+ * The name is kept from the UAE build.
+ */
 export function simulateUaeMobile(rng: Rng, used: ReadonlySet<string>): string {
   for (;;) {
-    const phone = `+9715${rng.pick(["0", "2", "4", "5", "6", "8"])}${rng.digits(7)}`;
+    const phone = `+92${rng.pick(MOBILE_PREFIXES)}${rng.digits(7)}`;
     if (!used.has(phone)) {
       if (used instanceof Set) used.add(phone);
       return phone;
@@ -166,14 +209,7 @@ function emailFor(rng: Rng, person: SimulatedPerson): string {
       .replace(/[^a-z\s]/g, "")
       .trim()
       .replace(/\s+/g, "");
-  const domain = rng.pick([
-    "gmail.com",
-    "gmail.com",
-    "hotmail.com",
-    "outlook.com",
-    "icloud.com",
-    "yahoo.com",
-  ]);
+  const domain = rng.pick(["gmail.com", "gmail.com", "gmail.com", "hotmail.com", "outlook.com", "yahoo.com"]);
   const style = rng.int(0, 2);
   const local =
     style === 0
@@ -197,126 +233,148 @@ interface TreatmentCopy {
   whatsapp: readonly string[];
   /** Campaign names per ad platform. */
   campaign: string;
+  /** Intakes offered on the lead form; test prep has none. */
+  intakes: readonly string[];
 }
 
 const COPY: Record<string, TreatmentCopy> = {
-  laser: {
+  uk: {
     form: [
-      "Is the 30% off full body laser still on? I'd like to book a patch test",
-      "How many sessions do I need for underarms and full legs?",
-      "Do you have evening appointments for laser? I finish work at 6",
+      "Is the January intake still open? I want MSc Data Science, CGPA 3.2",
+      "Mera IELTS 6.5 hai (writing 6). Kya UK ke liye enough hai?",
+      "I had a UK visa refusal last year. Can you check my case before I reapply?",
+      "Which UK universities accept a 14-year bachelor's? I did BCom from Punjab University",
     ],
-    tiktok: ["price for full body?", "laser offer still valid?", "how much underarms"],
+    tiktok: ["fees kitni hai?", "bina IELTS UK ho sakta hai?", "visa guarantee hai?"],
     whatsapp: [
-      "Hi, saw your laser hair removal offer on Instagram. How much is full body?",
-      "Good evening, can I book laser after work? I finish at 6",
+      "AoA, saw your UK January intake ad on Instagram. Mujhe details chahiye, BS CS kiya hai",
+      "Hi, can my spouse come with me on a UK study visa? I have 3 years of job experience",
     ],
-    campaign: "Laser hair removal — 30% off full body",
+    campaign: "UK January intake — apply now",
+    intakes: ["January 2027", "September 2027"],
   },
-  hydrafacial: {
+  canada: {
     form: [
-      "HydraFacial for my wedding in 5 weeks, which package do you recommend?",
-      "Is HydraFacial okay for sensitive skin? I get redness easily",
+      "What is the total cost for Canada including GIC? FSc 78%",
+      "Can I apply for a Canadian diploma after a 3-year gap?",
     ],
-    tiktok: ["hydrafacial price", "do u have offer this month"],
+    tiktok: ["canada kitne ka hai", "gic kitna hai", "spouse bhi ja sakta?"],
     whatsapp: [
-      "Hi, how much is one HydraFacial session? Can I come this weekend?",
-      "Hello! Do you have a HydraFacial package for brides? My wedding is next month",
+      "Assalam o Alaikum, Canada study permit ke liye free counselling book karni hai",
+      "Hi, my Canada study permit was refused in March. Can you review my file?",
     ],
-    campaign: "Summer glow HydraFacial",
+    campaign: "Free counselling — Canada study permit",
+    intakes: ["January 2027", "May 2027", "September 2027"],
   },
-  invisalign: {
+  australia: {
     form: [
-      "I have crowding on my lower teeth. Can I get a free Invisalign scan this week?",
-      "What's the total price for Invisalign including retainers?",
+      "Pharm-D ke baad Australia mein master's ke options kya hain?",
+      "How much bank statement do I need for an Australia student visa?",
     ],
-    tiktok: ["invisalign cost?", "is the scan free"],
+    tiktok: ["australia fees?", "part time job milti hai?"],
     whatsapp: [
-      "Hello, my dentist said I need braces. Is Invisalign possible for adults?",
-      "Hi, I'd like the free 3D scan for Invisalign. Do you have Saturday slots?",
+      "AoA, Australia February intake ke liye abhi apply ho sakta hai?",
+      "Hi, I have PTE 58. Is that enough for a master's in Australia?",
     ],
-    campaign: "Free Invisalign 3D scan",
+    campaign: "Australia February intake",
+    intakes: ["February 2027", "July 2027"],
   },
-  implant: {
+  usa: {
     form: [
-      "Need a price for 2 implants on my lower molars. Do you accept Daman insurance?",
-      "Lost a front tooth last year. How long does an implant take start to finish?",
+      "I want an MS in the USA for Fall 2027. Is the GRE required?",
+      "Beta A-levels kar raha hai, US undergrad ke liye scholarships milti hain?",
     ],
-    tiktok: ["implant price per tooth"],
+    tiktok: ["usa visa kaise lagta hai", "f1 interview tips?"],
     whatsapp: [
-      "Hello, how much is one dental implant with the crown?",
-      "Hi, do you offer instalments for implants? I need 2 at the bottom",
+      "Hi, my F-1 visa was refused under 214(b). Can you prepare me for a second interview?",
+      "AoA, US universities ki application fee waiver ke baare mein info chahiye",
     ],
-    campaign: "Dental implants consultation",
+    campaign: "USA Fall 2027 — F-1 guidance",
+    intakes: ["Spring 2027", "Fall 2027"],
   },
-  botox: {
+  germany: {
     form: [
-      "First time Botox, can I get a consultation on Saturday morning?",
-      "Price for forehead and crow's feet? I want it to look natural",
+      "Germany mein tuition free hai? BS Mechanical, CGPA 2.9",
+      "How long does the APS certificate take right now?",
     ],
-    tiktok: ["botox price?", "how much for forehead", "is it safe"],
+    tiktok: ["germany free hai?", "blocked account kitna hai", "german language zaroori hai?"],
     whatsapp: [
-      "Hi, is Dr. Hessa available for Botox this week? Forehead lines only",
-      "Hello, how long does Botox last? Thinking of doing it before Eid",
+      "AoA, Germany ke liye blocked account aur APS mein help karte hain?",
+      "Hi, I want to apply for the summer semester in Germany. Is it too late?",
     ],
-    campaign: "Botox myths busted",
+    campaign: "Study in Germany tuition-free",
+    intakes: ["Summer semester 2027", "Winter semester 2027"],
   },
-  fillers: {
-    form: ["Lip filler 1 ml price? Natural look only", "Do you use Juvederm or Restylane for lips?"],
-    tiktok: ["lips price", "how much 1ml", "do you have offers"],
-    whatsapp: [
-      "Hi! How much is lip filler? I saw the before and after video",
-      "Hello, can I get lip filler and be back at work the next day?",
-    ],
-    campaign: "Lip filler before & after",
-  },
-  whitening: {
-    form: ["Teeth whitening before my wedding next month, how long does it last?"],
-    tiktok: ["whitening price"],
-    whatsapp: [
-      "Hello, how much is Zoom whitening? Is it one session?",
-      "Hi, I have a wedding in 3 weeks. Is whitening enough time?",
-    ],
-    campaign: "Wedding-ready smile",
-  },
-  veneers: {
+  ireland: {
     form: [
-      "Interested in veneers for my top 8 teeth. Can I see before and after photos?",
-      "What's the difference between composite and porcelain veneers in price?",
+      "Ireland mein 2 saal ka stay back milta hai? MSc Business Analytics ke liye",
+      "Which Irish universities accept a 16-year bachelor's with CGPA 2.8?",
     ],
-    tiktok: ["veneers price per tooth", "hollywood smile cost"],
+    tiktok: ["ireland ka kharcha?"],
     whatsapp: [
-      "Hi, my friend did her veneers with you last year. Can I book a smile consultation?",
-      "Hello, how much for a full smile makeover with veneers? Top and bottom",
+      "Hi, is Ireland easier than the UK for a study visa? I have IELTS 6.0",
+      "AoA, Ireland September intake ke liye documents kya chahiye?",
     ],
-    campaign: "Smile makeover stories",
+    campaign: "Study in Ireland — 2-year stay back",
+    intakes: ["January 2027", "September 2027"],
   },
-  prp: {
-    form: ["PRP for hair loss, how many sessions and what's the price?"],
-    tiktok: ["prp hair price"],
-    whatsapp: [
-      "Hello, I'm losing hair at the front. Does PRP work? How much for 4 sessions?",
-      "Hi, do you do PRP for hair on Fridays? I'm in JLT",
+  malaysia: {
+    form: [
+      "Is Malaysia a good option on a low budget? A-levels done, want BS CS",
+      "Can I apply to Malaysia without IELTS?",
     ],
-    campaign: "PRP hair restoration",
+    tiktok: ["malaysia sasta hai?", "ielts ke baghair?"],
+    whatsapp: [
+      "AoA, beti ke liye Malaysia mein BS ke options batayein. Budget 25 lakh total",
+      "Hi, how long does the EMGS approval take these days?",
+    ],
+    campaign: "Malaysia — study abroad on a budget",
+    intakes: ["January 2027", "March 2027", "September 2027"],
   },
-  profhilo: {
-    form: ["Profhilo for neck and face, what is the downtime?"],
-    tiktok: ["profhilo price"],
-    whatsapp: [
-      "Hi, how much is Profhilo? Is there any downtime? I have an event on Friday",
-      "Hello, is Profhilo good for the neck? What's the price for 2 sessions?",
+  ielts: {
+    form: [
+      "When does the next IELTS batch start? Weekend classes?",
+      "I need 7 in writing. Do you have a crash course?",
     ],
-    campaign: "Skin booster season",
+    tiktok: ["ielts fee?", "online classes hain?", "7 bands guarantee?"],
+    whatsapp: [
+      "AoA, IELTS ki evening class available hai? Office ke baad hi time milta hai",
+      "Hi, can I take a free IELTS mock test before joining?",
+    ],
+    campaign: "IELTS in 8 weeks — new batch",
+    intakes: [],
+  },
+  pte: {
+    form: [
+      "PTE ka course kitne weeks ka hai aur fee kya hai?",
+      "I need PTE 65 for Australia. How fast can I get there?",
+    ],
+    tiktok: ["pte ya ielts?", "pte fee"],
+    whatsapp: ["Hi, is PTE accepted for the UK? Which one is easier, PTE or IELTS?"],
+    campaign: "PTE Academic — fast results",
+    intakes: [],
+  },
+  sop: {
+    form: [
+      "Can you review my SOP for a UK master's? Deadline in 10 days",
+      "HEC aur IBCC attestation mein kitna time lagta hai?",
+    ],
+    tiktok: ["sop likh dete ho?"],
+    whatsapp: [
+      "AoA, MOFA attestation ke liye appointment mil rahi hai? Degree aur transcript dono",
+      "Hi, my SOP was rejected by two universities. Can you rewrite it?",
+    ],
+    campaign: "SOP that gets offers",
+    intakes: [],
   },
 };
 
 const LEAD_TREATMENT_WEIGHTS: Record<SimulatorLeadSource, Record<string, number>> = {
-  instagram: { laser: 5, hydrafacial: 4, fillers: 3, botox: 3, veneers: 3, profhilo: 2, invisalign: 2 },
-  facebook: { invisalign: 4, implant: 4, whitening: 2, veneers: 2, prp: 2, laser: 1 },
-  tiktok: { fillers: 5, botox: 4, laser: 3, hydrafacial: 2, veneers: 2, whitening: 1 },
-  whatsapp: { implant: 3, invisalign: 3, veneers: 2, whitening: 2, botox: 2, laser: 2, prp: 1 },
-  email: { implant: 2, invisalign: 2, veneers: 1, whitening: 1 },
+  instagram: { uk: 5, australia: 3, canada: 3, usa: 2, ireland: 2, germany: 2 },
+  facebook: { canada: 4, uk: 3, usa: 2, australia: 2, malaysia: 2, ielts: 1, sop: 1 },
+  tiktok: { germany: 5, uk: 3, canada: 3, ielts: 3, pte: 2, malaysia: 2 },
+  whatsapp: { uk: 3, canada: 3, australia: 2, usa: 2, ielts: 2, germany: 1, sop: 1 },
+  email: { uk: 2, usa: 2, canada: 1, sop: 1 },
 };
 
 function pickTreatment(rng: Rng, source: SimulatorLeadSource): Treatment {
@@ -375,24 +433,60 @@ export function pickMixedSource(rng: Rng): SimulatorLeadSource {
   return weightedPick(rng, MIXED_SOURCES).source;
 }
 
-/** A treatment people typically ask about on this source (Instagram skews aesthetic, Facebook dental). */
+/** A service people typically ask about on this source (Instagram skews UK, Facebook Canada, TikTok Germany). */
 export function simulateTreatmentKey(rng: Rng, source: SimulatorLeadSource): string {
   return pickTreatment(rng, source).key;
 }
 
-/** What someone writes about a treatment on this source: a form question, a TikTok one-liner or a WhatsApp opener. */
+/** What someone writes about a service on this source: a form question, a TikTok one-liner or a WhatsApp opener. */
 export function simulateEnquiry(rng: Rng, source: SimulatorLeadSource, treatmentKey: string): string {
-  const copy = COPY[treatmentKey] ?? (COPY["laser"] as TreatmentCopy);
+  const copy = COPY[treatmentKey] ?? (COPY["uk"] as TreatmentCopy);
   if (source === "tiktok") return rng.pick(copy.tiktok);
   if (source === "whatsapp") return rng.pick(copy.whatsapp);
   return rng.pick(copy.form);
 }
 
-/** Ad campaign name for a treatment, e.g. "Free Invisalign 3D scan (Facebook)"; null for non-ad sources. */
+/** Ad campaign name for a service, e.g. "Free counselling — Canada study permit (Facebook)"; null for non-ad sources. */
 export function campaignFor(source: SimulatorLeadSource, treatmentKey: string): string | null {
   const suffix = CAMPAIGN_SUFFIX[source];
   const copy = COPY[treatmentKey];
   return suffix && copy ? `${copy.campaign} ${suffix}` : null;
+}
+
+/**
+ * The answers on a lead form for a service: the service first (the CRM reads it as the lead's interest),
+ * then the intake (the one the message names, if it names one). TikTok instant forms are shorter.
+ */
+/** The intakes a lead form offers for a service (empty for test prep and paperwork). */
+export function intakesFor(treatmentKey: string): readonly string[] {
+  return COPY[treatmentKey]?.intakes ?? [];
+}
+
+export function simulateFormAnswers(
+  rng: Rng,
+  input: {
+    source: SimulatorLeadSource;
+    name: string;
+    phoneE164: string | null;
+    email: string | null;
+    treatmentKey: string;
+    message?: string | null;
+  },
+): Record<string, string> {
+  const treatment = TREATMENTS.find((t) => t.key === input.treatmentKey);
+  const intakes = COPY[input.treatmentKey]?.intakes ?? [];
+  const said = (input.message ?? "").toLowerCase();
+  const named = intakes.find((intake) => said.includes(intake.split(" ")[0]?.toLowerCase() ?? intake));
+  return {
+    "Full name": input.name,
+    "Phone number": formatPhone(input.phoneE164),
+    ...(input.email ? { Email: input.email } : {}),
+    "Service of interest": capitalise(treatment?.short ?? input.treatmentKey),
+    ...(intakes.length ? { "Preferred intake": named ?? rng.pick(intakes) } : {}),
+    ...(input.source === "tiktok"
+      ? {}
+      : { "Best time to call": rng.pick(["Morning", "Afternoon", "Evenings after 5 pm", "Saturday"]) }),
+  };
 }
 
 /**
@@ -406,7 +500,7 @@ export function simulateLead(
     usedPhones: ReadonlySet<string>;
     now: Date;
     phoneE164?: string | null;
-    /** Pin the treatment or person (the seed does); random otherwise. */
+    /** Pin the service or person (the seed does); random otherwise. */
     treatmentKey?: string;
     person?: SimulatedPerson;
   },
@@ -421,15 +515,14 @@ export function simulateLead(
   const message = simulateEnquiry(rng, source, treatment.key);
   const isForm = source === "instagram" || source === "facebook" || source === "tiktok";
   const formFields: Record<string, string> = isForm
-    ? {
-        "Full name": person.name,
-        "Phone number": formatPhone(phoneE164),
-        ...(email ? { Email: email } : {}),
-        "Treatment of interest": capitalise(treatment.short),
-        ...(source === "tiktok"
-          ? {}
-          : { "Best time to call": rng.pick(["Morning", "Afternoon", "Evenings after 6 pm", "Weekends"]) }),
-      }
+    ? simulateFormAnswers(rng, {
+        source,
+        name: person.name,
+        phoneE164,
+        email,
+        treatmentKey: treatment.key,
+        message,
+      })
     : {};
   const campaignName = campaignFor(source, treatment.key);
   const createdTime = now.toISOString();
@@ -457,7 +550,7 @@ export function simulateLead(
           form_id: rng.digits(15),
           platform: source === "instagram" ? "ig" : "fb",
           created_time: createdTime,
-          field_data: Object.entries(formFields).map(([name, value]) => ({ name, values: [value] })),
+          field_data: Object.entries(formFields).map(([name, values]) => ({ name, values: [values] })),
           simulated: true,
         }
     : { simulated: true, receivedAt: createdTime };
@@ -468,7 +561,7 @@ export function simulateLead(
     person,
     phoneE164,
     email,
-    whatsappUserId: source === "whatsapp" ? `AE.${rng.digits(16)}` : null,
+    whatsappUserId: source === "whatsapp" ? `PK.${rng.digits(16)}` : null,
     treatmentKey: treatment.key,
     message,
     formFields,
@@ -490,7 +583,7 @@ export interface SimulatedWhatsappMessage {
   treatmentKey: string;
 }
 
-/** A first WhatsApp message from someone the clinic has never spoken to. */
+/** A first WhatsApp message from someone the consultancy has never spoken to. */
 export function simulateUnknownWhatsapp(
   rng: Rng,
   options: { usedPhones: ReadonlySet<string>; now: Date; phoneE164?: string | null },
@@ -500,75 +593,105 @@ export function simulateUnknownWhatsapp(
     externalId: lead.externalId,
     person: lead.person,
     phoneE164: lead.phoneE164,
-    whatsappUserId: lead.whatsappUserId ?? `AE.${rng.digits(16)}`,
+    whatsappUserId: lead.whatsappUserId ?? `PK.${rng.digits(16)}`,
     body: lead.message,
     treatmentKey: lead.treatmentKey,
   };
 }
 
-/** Where a patient is with the clinic, which decides what they write about next. */
+/**
+ * Where a student is with SBC, which decides what they write about next: "booked" is counselling done,
+ * "consulted" is anywhere from documents to visa filed, "customer" is visa approved.
+ */
 export type PatientPhase = "enquiry" | "booked" | "consulted" | "customer" | "none";
 
-/** Dental treatments; everything else is aesthetic. Some follow-ups only make sense for one of them. */
-const DENTAL = new Set(["invisalign", "implant", "whitening", "veneers"]);
+/** Test prep and paperwork services; everything else is a study visa. Some follow-ups only fit one. */
+const PREP = new Set(["ielts", "pte", "sop"]);
 
-type FollowUp = string | { text: string; only: "dental" | "aesthetic" };
+type FollowUp = string | { text: string; only: "visa" | "prep" };
 
 const FOLLOW_UPS: Record<PatientPhase, readonly FollowUp[]> = {
   enquiry: [
-    "Hi again, any update on the price for {treatment}?",
-    "Do you have anything available this Saturday morning?",
-    "Is the consultation free or is there a charge?",
-    "Sorry I missed your call. Can you call me after 6 pm?",
+    "Hi again, any update on the {treatment} fee?",
+    "Kya Saturday ko counselling ho sakti hai? Weekdays mein classes hoti hain",
+    "Is the counselling session free or is there a charge?",
+    "Sorry I missed your call. Can you call me after 5 pm?",
+    { text: "Mera IELTS abhi nahi hua. Kya phir bhi apply ho sakta hai?", only: "visa" },
   ],
   booked: [
-    "Can I move my consultation to Saturday morning?",
-    "Is parking free at Marina Plaza?",
-    "Running 10 minutes late, stuck on Sheikh Zayed Road. Sorry!",
-    "Do I need to bring anything to the consultation?",
-    "Which floor is the clinic on?",
+    "Can I bring my father to the next session? He is my sponsor.",
+    "Which documents should I get attested first?",
+    { text: "Does the bank statement need to be in my name or my father's?", only: "visa" },
+    { text: "Can I switch to the evening batch? My office timing changed", only: "prep" },
+    "Running 15 minutes late, traffic on Main Boulevard. Sorry!",
+    "Office ki location share kar dein please",
   ],
   consulted: [
-    { text: "Sent you the photos of my teeth", only: "dental" },
-    { text: "Sent you a photo of the area I would like to treat", only: "aesthetic" },
-    "I spoke to my family. Can we do the 12-month instalment plan?",
-    "Can you send me the treatment plan again? I can't find it",
-    "If I start next week, when would the {treatment} be finished?",
-    "Does the price include the follow-up visits?",
+    { text: "Sent you my transcripts and passport scan", only: "visa" },
+    { text: "Sent you my mock test result: reading 6.0, writing 5.5", only: "prep" },
+    { text: "Any update from the university? My friends have got their offers already", only: "visa" },
+    "Can you send me the quotation again? I can't find it",
+    { text: "If we submit this week, will I still make the next intake?", only: "visa" },
+    "Does the fee include everything or are there extra charges?",
+    "Kya fee do instalments mein de sakte hain?",
   ],
   customer: [
-    "Thank you so much, I'm really happy with the result!",
-    { text: "Is it normal to have a little redness the day after?", only: "aesthetic" },
-    { text: "My teeth feel a bit sensitive since yesterday, is that normal?", only: "dental" },
-    "Can I book my next appointment for the same time next month?",
-    "My sister wants the same treatment. Can she get the same price?",
+    "JazakAllah SBC team, I'm really happy!",
+    { text: "When is the pre-departure briefing? I want my parents to come too", only: "visa" },
+    { text: "Can you help me find accommodation near campus?", only: "visa" },
+    { text: "Got my result: 7 overall! Thank you so much", only: "prep" },
+    "My cousin wants to apply for the same intake. Can she get the same fee?",
   ],
   none: [
-    "Hi, is the clinic open on Friday afternoon?",
-    "Do you have any offers this month?",
-    "Can I get an appointment this week?",
+    "AoA, is the office open on Saturday?",
+    "Any scholarship updates this month?",
+    "Can I book a counselling session this week?",
   ],
 };
 
-/** A realistic follow-up from an existing patient, e.g. "Can I move my consultation to Saturday morning?". */
+/** A realistic follow-up from an existing student, e.g. "Which documents should I get attested first?". */
 export function simulateFollowUp(
   rng: Rng,
   options: { phase: PatientPhase; treatmentKey?: string | null },
 ): string {
   const treatment = TREATMENTS.find((t) => t.key === options.treatmentKey);
-  const area = treatment ? (DENTAL.has(treatment.key) ? "dental" : "aesthetic") : null;
+  const area = treatment ? (PREP.has(treatment.key) ? "prep" : "visa") : null;
   const lines = FOLLOW_UPS[options.phase]
     .filter((line) => typeof line === "string" || line.only === area)
     .map((line) => (typeof line === "string" ? line : line.text))
     .filter((line) => treatment || !line.includes("{treatment}"));
-  return rng.pick(lines).replace("{treatment}", treatment?.short ?? "the treatment");
+  return rng.pick(lines).replace("{treatment}", treatment?.short ?? "the service");
 }
 
-/** Guess the treatment from free text such as a deal title ("Porcelain veneers — Shirin Tehrani"). */
+/** Words that name a service in free text, besides its own short name. */
+const SERVICE_WORDS: Record<string, RegExp> = {
+  uk: /\b(uk|u\.k\.?|united kingdom|britain|british|england|scotland|cas)\b/,
+  canada: /\b(canada|canadian|gic|sds)\b/,
+  australia: /\b(australia|australian|subclass 500|coe)\b/,
+  usa: /\b(usa|u\.s\.a?\.?|united states|america|american|f-?1|ds-?160|sevis|i-20)\b/,
+  germany: /\b(germany|german|aps|uni-assist|blocked account)\b/,
+  ireland: /\b(ireland|irish)\b/,
+  malaysia: /\b(malaysia|malaysian|emgs)\b/,
+  ielts: /\bielts\b/,
+  pte: /\bpte\b/,
+  sop: /\b(sop|statement of purpose|attestation|hec|ibcc|mofa)\b/,
+};
+
+/**
+ * Guess the service from free text such as a deal title ("UK study visa — Ali Raza") or a message
+ * ("Germany ke liye APS?"). The service named earliest in the text wins.
+ */
 export function treatmentFromText(text: string | null | undefined): Treatment | null {
   if (!text) return null;
   const hay = text.toLowerCase();
-  return TREATMENTS.find((t) => hay.includes(t.short.toLowerCase())) ?? null;
+  let best: { treatment: Treatment; at: number } | null = null;
+  for (const treatment of TREATMENTS) {
+    const byName = hay.indexOf(treatment.short.toLowerCase());
+    const byWord = SERVICE_WORDS[treatment.key]?.exec(hay)?.index ?? -1;
+    const at = [byName, byWord].filter((i) => i >= 0).reduce((min, i) => Math.min(min, i), Infinity);
+    if (at !== Infinity && (!best || at < best.at)) best = { treatment, at };
+  }
+  return best?.treatment ?? null;
 }
 
 /** Message id in the WhatsApp Cloud API style for a simulated inbound message. */

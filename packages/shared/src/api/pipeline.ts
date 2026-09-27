@@ -106,7 +106,7 @@ export const pipelineRoutes = {
   board: defineRoute({
     method: "GET",
     path: "/deals/board",
-    summary: "Kanban columns with deal cards and AED totals",
+    summary: "Kanban columns with deal cards and PKR totals",
     query: z.object({
       assigneeId: z.string().optional(),
       q: z.string().optional(),

@@ -153,7 +153,7 @@ function WorkspaceForm({ workspace }: { workspace: Workspace }) {
             onChange={(e) => set("trn", formatTrn(e.target.value))}
             disabled={disabled}
             inputMode="numeric"
-            placeholder="100-0000-0000-0003"
+            placeholder="4213785-6"
             className="font-medium tracking-wide tabular-nums"
             aria-invalid={errors.trn ? true : undefined}
             aria-describedby={errors.trn ? "ws-trn-error" : "ws-trn-count"}

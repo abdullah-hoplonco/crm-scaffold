@@ -29,7 +29,7 @@ const DISQUALIFY_LABEL: Record<NonNullable<Lead["disqualifyReason"]>, string> = 
   spam: "spam",
   wrong_number: "wrong number",
   not_interested: "not interested",
-  out_of_area: "out of area",
+  out_of_area: "not eligible",
   duplicate: "duplicate",
   other: "other reason",
 };
@@ -51,7 +51,7 @@ function phoneOrError(ctx: MockContext, raw: string | null | undefined): string 
   if (!e164) {
     throw ctx.error(
       "INVALID_PHONE",
-      "That phone number doesn't look right. Use a UAE mobile like 050 123 4567, or add the country code.",
+      "That phone number doesn't look right. Use a Pakistani mobile like 0300 1234567, or add the country code.",
     );
   }
   return e164;
@@ -185,7 +185,8 @@ export const leadHandlers: MockHandler[] = [
   handle(api.leads.create, (ctx, { body }) => {
     const phoneE164 = phoneOrError(ctx, body.phone);
     const email = body.email?.trim() || null;
-    if (email && !EMAIL.test(email)) throw ctx.error("VALIDATION", "Enter a valid email, e.g. name@example.com.");
+    if (email && !EMAIL.test(email))
+      throw ctx.error("VALIDATION", "Enter a valid email, e.g. name@example.com.");
     if (!phoneE164 && !email) {
       throw ctx.error("VALIDATION", "Add a phone number or an email so the team can reach this person.");
     }
@@ -301,7 +302,8 @@ export const leadHandlers: MockHandler[] = [
         }
       }
       const email = input.email?.trim() || null;
-      if (email && !EMAIL.test(email)) throw ctx.error("VALIDATION", "Enter a valid email, e.g. name@example.com.");
+      if (email && !EMAIL.test(email))
+        throw ctx.error("VALIDATION", "Enter a valid email, e.g. name@example.com.");
       contact = {
         id: newId(),
         workspaceId: ctx.workspace.id,
@@ -356,7 +358,8 @@ export const leadHandlers: MockHandler[] = [
 
     // -- Deal -------------------------------------------------------------------
     const pipeline = rows(ctx, "pipelines").find((p) => p.isDefault) ?? rows(ctx, "pipelines")[0];
-    if (!pipeline) throw ctx.error("NOT_FOUND", "This workspace has no pipeline yet. Set one up in Settings.");
+    if (!pipeline)
+      throw ctx.error("NOT_FOUND", "This workspace has no pipeline yet. Set one up in Settings.");
     const stages = rows(ctx, "stages")
       .filter((s) => s.pipelineId === pipeline.id)
       .sort((a, b) => a.position - b.position);
@@ -365,7 +368,10 @@ export const leadHandlers: MockHandler[] = [
       : stages.find((s) => s.type === "open");
     if (!stage) throw ctx.error("NOT_FOUND", "That stage doesn't exist any more. Pick another one.");
     if (stage.type !== "open") {
-      throw ctx.error("INVALID_TRANSITION", "A new deal starts in an open stage. Move it to won or lost later.");
+      throw ctx.error(
+        "INVALID_TRANSITION",
+        "A new deal starts in an open stage. Move it to won or lost later.",
+      );
     }
     const columnPositions = rows(ctx, "deals")
       .filter((d) => d.stageId === stage.id)

@@ -23,6 +23,7 @@ import {
   type Message,
   type Quote,
 } from "@hco/shared";
+import { CLINIC } from "@hco/demo-data";
 import type { LineItemInput, QuoteDetail } from "@hco/shared/api/quotes";
 import { formatDate } from "@/lib/format";
 import { handle, type MockContext, type MockHandler } from "../define";
@@ -30,7 +31,7 @@ import { assertVisible, findOr404, rows } from "../scope";
 import { addActivity, appendMessage, notify } from "../services";
 import { contactName, userName } from "../views";
 
-/** Quotes: drafts with 5% VAT, sending the PDF on WhatsApp or by email, and the customer's decision. */
+/** Quotes: drafts with sales tax, sending the PDF on WhatsApp or by email, and the customer's decision. */
 
 function visibleDeal(ctx: MockContext, dealId: string): Deal {
   const deal = findOr404(ctx, "deals", dealId, "deal");
@@ -102,7 +103,7 @@ function assertValidUntil(ctx: MockContext, validUntil: string) {
   }
 }
 
-/** Store line items and recompute totals with the quote's own VAT rate. */
+/** Store line items and recompute totals with the quote's own sales tax rate. */
 function applyLineItems(ctx: MockContext, quote: Quote, items: LineItemInput[]) {
   ctx.unwrap(validateLineItems(items));
   const totals = computeQuoteTotals(items, quote.vatRate);
@@ -244,7 +245,7 @@ export const quoteHandlers: MockHandler[] = [
       type: "system",
       dealId: deal.id,
       contactId: deal.contactId,
-      body: `Drafted quote ${quote.number} for ${formatAed(quote.totalAed)} incl. VAT`,
+      body: `Drafted quote ${quote.number} for ${formatAed(quote.totalAed)} incl. sales tax`,
       metadata: { kind: "quote_created", quoteId: quote.id, number: quote.number },
     });
     ctx.emit({ type: "quote.updated", id: quote.id });
@@ -280,7 +281,7 @@ export const quoteHandlers: MockHandler[] = [
           userId: deal.assigneeId,
           type: "quote_accepted",
           title: `${contactName(contact)} accepted quote ${quote.number}`,
-          body: `${formatAed(quote.totalAed)} incl. VAT · ${deal.title}`,
+          body: `${formatAed(quote.totalAed)} incl. sales tax · ${deal.title}`,
           href: `/quotes/${quote.id}`,
         });
       }
@@ -309,7 +310,13 @@ export const quoteHandlers: MockHandler[] = [
         direction: "out",
         kind: "document",
         body: quote.number,
-        media: [quotePdfMedia(quote, "Your treatment plan and quotation")],
+        // Same caption as the seeded quotes in the demo chats.
+        media: [
+          quotePdfMedia(
+            quote,
+            ctx.workspace.name === CLINIC.name ? `Your ${CLINIC.shortName} quotation` : "Your quotation",
+          ),
+        ],
         quoteId: quote.id,
       });
     } else {
@@ -328,8 +335,8 @@ export const quoteHandlers: MockHandler[] = [
         body: [
           `Dear ${contact.firstName},`,
           `Please find attached quotation ${quote.number} for ${deal.title}.`,
-          `Total: ${formatAed(quote.totalAed)} including ${formatDecimal(quote.vatRate)}% VAT\nValid until: ${formatDate(quote.validUntil)}`,
-          "Reply to this email with any questions, or to confirm and book your dates.",
+          `Total: ${formatAed(quote.totalAed)} including ${formatDecimal(quote.vatRate)}% sales tax\nValid until: ${formatDate(quote.validUntil)}`,
+          "Embassy visa fees, university application fees, IHS and tuition deposits are paid by you directly and are not included. Reply to this email with any questions, or to confirm so we can start your application.",
           `Kind regards,\n${ctx.user.name}\n${ctx.workspace.name}`,
         ].join("\n\n"),
         media: [quotePdfMedia(quote, null)],
@@ -346,7 +353,7 @@ export const quoteHandlers: MockHandler[] = [
       type: "quote_sent",
       dealId: deal.id,
       contactId: deal.contactId,
-      body: `Quote ${quote.number} sent ${SENT_VIA_LABEL[body.via]} — ${formatAed(quote.totalAed)} incl. VAT`,
+      body: `Quote ${quote.number} sent ${SENT_VIA_LABEL[body.via]} — ${formatAed(quote.totalAed)} incl. sales tax`,
       metadata: { quoteId: quote.id, number: quote.number, via: body.via, totalAed: quote.totalAed },
     });
     ctx.emit({ type: "quote.updated", id: quote.id });

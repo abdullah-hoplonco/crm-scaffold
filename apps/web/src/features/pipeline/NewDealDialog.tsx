@@ -210,7 +210,7 @@ function NewDealForm({
             id={ids.value}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="18,500"
+            placeholder="150,000"
             aria-invalid={Boolean(errors.value)}
             aria-describedby={errors.value ? `${ids.value}-error` : undefined}
           />

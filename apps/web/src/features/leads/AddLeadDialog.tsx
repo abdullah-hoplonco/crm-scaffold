@@ -16,7 +16,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { errorMessage } from "@/lib/api/errors";
 import { useApiMutation, useApiQuery } from "@/lib/api/hooks";
@@ -34,7 +41,13 @@ interface Draft {
   assignee: string;
 }
 
-export function AddLeadDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+export function AddLeadDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   const { t } = useTranslation("leads");
   const { user } = useSession();
   const navigate = useNavigate();
@@ -114,7 +127,7 @@ export function AddLeadDialog({ open, onOpenChange }: { open: boolean; onOpenCha
                 inputMode="tel"
                 value={draft.phone}
                 onChange={(e) => set("phone")(e.target.value)}
-                placeholder="050 123 4567"
+                placeholder="0300 1234567"
               />
             </div>
             <div className="grid gap-1.5">
@@ -129,7 +142,8 @@ export function AddLeadDialog({ open, onOpenChange }: { open: boolean; onOpenCha
           </div>
           <div className="grid gap-1.5">
             <Label htmlFor="lead-company">
-              {t("add.company")} <span className="font-normal text-muted-foreground">{t("add.optional")}</span>
+              {t("add.company")}{" "}
+              <span className="font-normal text-muted-foreground">{t("add.optional")}</span>
             </Label>
             <Input
               id="lead-company"

@@ -9,7 +9,10 @@ const HEADER_HINTS: Array<[Exclude<ImportField, "ignore">, RegExp]> = [
   ["phone", /(phone|mobile|whats ?app|\bcell\b|\btel\b|telephone|contact (no|number)|^number$|^msisdn$)/],
   ["companyName", /(company|organi[sz]ation|employer|business|\bfirm\b)/],
   ["jobTitle", /(job|title|position|designation|occupation|\brole\b)/],
-  ["fullName", /^((full|patient|customer|client|contact) ?name|name|patient|customer|client|contact)$/],
+  [
+    "fullName",
+    /^((full|patient|student|customer|client|contact) ?name|name|patient|student|customer|client|contact)$/,
+  ],
   ["notes", /(notes?|comments?|remarks?)$/],
 ];
 
@@ -21,7 +24,7 @@ function normaliseHeader(header: string): string {
     .trim();
 }
 
-/** Best guess for one spreadsheet column, e.g. "Mobile" → phone, "Patient name" → fullName. */
+/** Best guess for one spreadsheet column, e.g. "Mobile" → phone, "Student name" → fullName. */
 export function guessImportField(header: string): ImportField {
   const h = normaliseHeader(header);
   return HEADER_HINTS.find(([, pattern]) => pattern.test(h))?.[0] ?? "ignore";
@@ -69,7 +72,7 @@ export function sheetRowNumber(rowIndex: number): number {
 
 /**
  * Turn spreadsheet rows into contact drafts: apply the column mapping, split full names, normalise
- * phones (UAE by default) and flag problems. A row is a duplicate when its phone (or, without a
+ * phones (Pakistan by default) and flag problems. A row is a duplicate when its phone (or, without a
  * phone match, its email) belongs to an existing contact; the same phone twice in the file is an error
  * on the later row. Rows with nothing mapped in them are left out.
  */
@@ -97,7 +100,8 @@ export function buildImportDrafts(
       if (field === "ignore") continue;
       const value = (row[column] ?? "").trim();
       if (!value) continue;
-      values[field] = field === "notes" && values.notes ? `${values.notes}\n${value}` : (values[field] ?? value);
+      values[field] =
+        field === "notes" && values.notes ? `${values.notes}\n${value}` : (values[field] ?? value);
     }
     if (Object.keys(values).length === 0) return;
 
@@ -122,15 +126,14 @@ export function buildImportDrafts(
       (phoneE164 ? phoneSeenAt.get(phoneE164) : undefined) ??
       (!phoneE164 && email ? emailSeenAt.get(email) : undefined);
     if (earlierRow !== undefined) {
-      errors.push(
-        `Same ${phoneE164 ? "phone" : "email"} as row ${sheetRowNumber(earlierRow)} of this file.`,
-      );
+      errors.push(`Same ${phoneE164 ? "phone" : "email"} as row ${sheetRowNumber(earlierRow)} of this file.`);
     } else {
       if (phoneE164) phoneSeenAt.set(phoneE164, rowIndex);
       if (email && !emailSeenAt.has(email)) emailSeenAt.set(email, rowIndex);
     }
 
-    const duplicate = (phoneE164 ? byPhone.get(phoneE164) : undefined) ?? (email ? byEmail.get(email) : undefined);
+    const duplicate =
+      (phoneE164 ? byPhone.get(phoneE164) : undefined) ?? (email ? byEmail.get(email) : undefined);
 
     drafts.push({
       rowIndex,
@@ -152,7 +155,9 @@ export function buildImportDrafts(
 export type ImportDraftStatus = "new" | "duplicate" | "error";
 
 /** How a reviewed draft will be treated: errors are skipped, duplicates follow the skip/update choice. */
-export function importDraftStatus(draft: Pick<ImportDraft, "errors" | "duplicateOfContactId">): ImportDraftStatus {
+export function importDraftStatus(
+  draft: Pick<ImportDraft, "errors" | "duplicateOfContactId">,
+): ImportDraftStatus {
   if (draft.errors.length > 0) return "error";
   return draft.duplicateOfContactId ? "duplicate" : "new";
 }
