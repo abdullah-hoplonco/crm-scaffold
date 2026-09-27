@@ -28,7 +28,7 @@ export function lineFromItem(item: { description: string; qty: string; unitPrice
     key: newId(),
     description: item.description,
     qty: formatDecimal(item.qty),
-    // "4800" stays short; "285.5" reads as money only with both fils digits.
+    // "75000" stays short; "285.5" reads as money only with both paisa digits.
     unitPrice: toMoneyString(item.unitPriceAed).replace(/\.00$/, ""),
   };
 }
@@ -37,9 +37,9 @@ export function linesFromQuote(items: QuoteLineItem[]): EditableLine[] {
   return items.map((item) => ({ ...lineFromItem(item), id: item.id }));
 }
 
-/** Accept what people type: "4,800", "AED 4800", " 4800.5 ". */
+/** Accept what people type: "75,000", "PKR 75000", "Rs. 75,000", " 4800.5 ". */
 function cleanNumber(value: string): string {
-  return value.replace(/aed/gi, "").replace(/[,\s]/g, "");
+  return value.replace(/pkr|rs\.?/gi, "").replace(/[,\s]/g, "");
 }
 
 export function isBlank(line: EditableLine): boolean {
@@ -59,7 +59,7 @@ function parseLine(line: EditableLine): { item: LineItemInput | null; errors: Li
 }
 
 /**
- * Validate the builder's lines and price them with the core VAT rules. Invalid lines are left out of
+ * Validate the builder's lines and price them with the core sales tax rules. Invalid lines are left out of
  * the totals (and shown with errors once the user tries to save).
  */
 export function evaluateLines(lines: EditableLine[], vatRate: string) {

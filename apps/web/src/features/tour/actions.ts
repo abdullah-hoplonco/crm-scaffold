@@ -1,4 +1,6 @@
+import { DEFAULT_QUOTE_VALIDITY_DAYS } from "@hco/core/quotes/index";
 import { api } from "@hco/shared";
+import i18n from "@/i18n";
 import { callApi } from "@/lib/api/client";
 import { PRICE_LIST, suggestedGroup } from "@/features/quotes/builder/priceList";
 import type { TourAction, TourSubject } from "./types";
@@ -34,18 +36,22 @@ async function instagramLead(): Promise<TourActionResult> {
 }
 
 /**
- * Chapter 3: the patient messages the clinic on WhatsApp. Sending it from the lead's own number
+ * Chapter 3: the student messages SBC on WhatsApp. Sending it from the lead's own number
  * means it lands on the lead that is already on screen, and opens the 24-hour reply window.
  */
 async function leadWhatsapp(subject: TourSubject): Promise<TourActionResult> {
   let phone = subject.leadPhone;
-  if (!phone && subject.leadId) {
+  let service: string | undefined;
+  if (subject.leadId) {
     const detail = await callApi(api.leads.get, { params: { leadId: subject.leadId } });
-    phone = detail.lead.phoneE164;
+    phone ??= detail.lead.phoneE164;
+    service = detail.lead.formFields["Service of interest"];
   }
   if (!phone) return { subject: {} };
+  // The message follows up on the ad form, so the story holds: same person, same service.
+  const text = `AoA, I just filled your Instagram form about ${service ? `the ${service}` : "studying abroad"}. What is the total cost, and can you call me after 5 pm?`;
   const message = await callApi(api.demo.simulateMessage, {
-    body: { from: "unknown_number", phone },
+    body: { from: "unknown_number", phone, body: text },
   });
   return { subject: { conversationId: message.conversationId, leadId: message.leadId ?? subject.leadId } };
 }
@@ -74,7 +80,7 @@ async function ensureDeal(subject: TourSubject): Promise<TourActionResult> {
 }
 
 /**
- * Chapter 6: if the client skipped building the quote, build one from the clinic's price list so
+ * Chapter 6: if the client skipped building the quote, build one from SBC's fee list so
  * the rest of the chapter still has something real to show.
  */
 async function ensureQuote(subject: TourSubject): Promise<TourActionResult> {
@@ -90,7 +96,11 @@ async function ensureQuote(subject: TourSubject): Promise<TourActionResult> {
   if (!group) return { subject: { dealId } };
   const created = await callApi(api.quotes.create, {
     params: { dealId },
-    body: { lineItems: group.items, validUntil: inDays(14) },
+    body: {
+      lineItems: group.items,
+      validUntil: inDays(DEFAULT_QUOTE_VALIDITY_DAYS),
+      notes: i18n.t("quotes:builder.defaultNotes"),
+    },
   });
   return { subject: { dealId, quoteId: created.quote.id } };
 }

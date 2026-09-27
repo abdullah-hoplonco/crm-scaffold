@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { todayInWorkspace } from "./model";
 import { QuoteStatusPill } from "./QuoteStatusPill";
 
-/** Quotes as linked rows: number, status, when it was sent and the total incl. VAT. */
+/** Quotes as linked rows: number, status, when it was sent and the total incl. sales tax. */
 export function QuoteRows({ items, className }: { items: Quote[]; className?: string }) {
   const { t } = useTranslation("quotes");
   const today = todayInWorkspace();

@@ -3,7 +3,7 @@ import Big from "big.js";
 import { computeQuoteTotals } from "../quote";
 import { fail, ok, type Result } from "../result";
 
-export const DEFAULT_QUOTE_VALIDITY_DAYS = 14;
+export const DEFAULT_QUOTE_VALIDITY_DAYS = 15;
 
 export interface LineItemDraft {
   description: string;

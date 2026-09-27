@@ -67,7 +67,7 @@ function connectionShape(
   const workspaceName = ctx.workspace.name;
   switch (type) {
     case "whatsapp_cloud": {
-      const displayPhone = details.displayPhone ?? "+971 4 555 0100";
+      const displayPhone = details.displayPhone ?? "+92 42 3578 0100";
       const verifiedName = details.verifiedName ?? workspaceName;
       return {
         status: "connected",
@@ -123,14 +123,21 @@ function openStageProbability(index: number, count: number): number {
   return Math.min(90, Math.round((10 + (80 / count) * index) / 5) * 5);
 }
 
-/** The demo clinic's approved templates, reworded for another business. */
+/** The demo consultancy's approved templates, reworded for another business. */
 function templatesFor(workspaceName: string) {
+  // The full name first: the short name ("SBC") is part of it.
   const replacements: Array<[string, string]> = [
-    [CLINIC.shortName, workspaceName],
     [CLINIC.name, workspaceName],
-    ["at our Dubai Marina clinic", `with ${workspaceName}`],
-    ["or call us on 04 555 0142 to reschedule", "or tell us a better time"],
-    ["your patient coordinator", "your point of contact"],
+    [CLINIC.shortName, workspaceName],
+    ["counselling session", "appointment"],
+    ["at our Gulberg office, Lahore", `with ${workspaceName}`],
+    ["or call 042 3578 0142 to reschedule", "or tell us a better time"],
+    ["your student counsellor", "your point of contact"],
+    [
+      "your document checklist and university shortlist for {{2}} are ready",
+      "your proposal for {{2}} is ready",
+    ],
+    ["the details and next intake dates", "the details and next available dates"],
   ];
   const reword = (text: string) => replacements.reduce((acc, [from, to]) => acc.split(from).join(to), text);
   return WHATSAPP_TEMPLATES.map((tpl) => ({
@@ -138,13 +145,14 @@ function templatesFor(workspaceName: string) {
     category: tpl.category,
     body: reword(tpl.body),
     variableHints: tpl.variableHints.map((hint) =>
-      hint === "Patient first name" ? "First name" : hint === "Treatment" ? "Product or service" : hint,
+      hint === "Student first name" ? "First name" : hint === "Service" ? "Product or service" : hint,
     ),
   }));
 }
 
+/** The calendar year in Pakistan time, which quote numbers run on. */
 function dubaiYear(now: Date): number {
-  return Number(new Intl.DateTimeFormat("en", { timeZone: "Asia/Dubai", year: "numeric" }).format(now));
+  return Number(new Intl.DateTimeFormat("en", { timeZone: "Asia/Karachi", year: "numeric" }).format(now));
 }
 
 export const workspaceHandlers: MockHandler[] = [
@@ -152,10 +160,13 @@ export const workspaceHandlers: MockHandler[] = [
     requireOwner(ctx, "Only the owner can change workspace settings.");
     const ws = ctx.workspace;
     if (body.vatRate !== undefined && Number(body.vatRate) !== Number(ws.vatRate)) {
-      throw ctx.error("VALIDATION", "VAT stays at the UAE standard rate of 5%.");
+      throw ctx.error(
+        "VALIDATION",
+        `Sales tax stays at the provincial rate of ${Number(ws.vatRate)}% on services.`,
+      );
     }
     if (body.timezone !== undefined && body.timezone !== ws.timezone) {
-      throw ctx.error("VALIDATION", "Workspaces run on UAE time (Asia/Dubai).");
+      throw ctx.error("VALIDATION", "Workspaces run on Pakistan time (Asia/Karachi).");
     }
     if (body.name !== undefined) ws.name = body.name;
     if (body.trn !== undefined) ws.trn = body.trn || null;
@@ -327,10 +338,10 @@ export const workspaceHandlers: MockHandler[] = [
       const workspace: Workspace = {
         id: newId(),
         name: body.workspaceName,
-        currency: "AED",
-        vatRate: "5.00",
+        currency: "PKR",
+        vatRate: "16.00",
         trn: body.trn || null,
-        timezone: "Asia/Dubai",
+        timezone: "Asia/Karachi",
         staleAfterDays: 3,
         addressLine: null,
         emirate: body.emirate,

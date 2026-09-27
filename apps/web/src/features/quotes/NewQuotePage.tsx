@@ -83,7 +83,11 @@ function NewQuoteForDeal({ dealId }: { dealId: string }) {
           vatRate: workspace.vatRate,
           preparedByName: context.data.preparedByName,
         }}
-        initial={{ lines: [], validUntil: daysFromToday(DEFAULT_QUOTE_VALIDITY_DAYS), notes: "" }}
+        initial={{
+          lines: [],
+          validUntil: daysFromToday(DEFAULT_QUOTE_VALIDITY_DAYS),
+          notes: t("builder.defaultNotes"),
+        }}
         submitLabel={t("builder.saveDraft")}
         submitting={create.isPending}
         onSubmit={(values) => create.mutate({ params: { dealId }, body: values })}

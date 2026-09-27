@@ -31,7 +31,7 @@ export function DealCardView({
     card.stageType === "open" &&
     card.expectedCloseDate !== null &&
     card.expectedCloseDate < todayInWorkspace();
-  // Deal titles often already name the contact ("Invisalign — Rania Khoury"); don't say it twice.
+  // Deal titles often already name the contact ("UK study visa — Ali Raza"); don't say it twice.
   const contactInTitle = card.title.toLowerCase().includes(card.contactName.toLowerCase());
   const whoLine = card.companyName
     ? contactInTitle

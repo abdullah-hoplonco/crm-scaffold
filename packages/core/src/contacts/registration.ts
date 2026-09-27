@@ -1,43 +1,38 @@
 import type { Emirate } from "@hco/shared";
 
-/** Digits only, e.g. "100-4583-9270-0003" → "100458392700003". */
+/** Digits only, e.g. "4213785-6" → "42137856". The `trn` name is kept from the UAE build; the value is a Pakistani NTN. */
 export function trnDigits(input: string): string {
   return input.replace(/\D/g, "");
 }
 
+/** A Pakistani NTN: seven digits and a check digit. */
 export function isValidTrn(input: string): boolean {
-  return /^\d{15}$/.test(trnDigits(input));
+  return /^\d{8}$/.test(trnDigits(input));
 }
 
-/** A UAE TRN grouped the way tax certificates print it: 100-4583-9270-0003. Other input is returned as is. */
+/** An NTN grouped the way FBR prints it: 4213785-6. Other input is returned as is. */
 export function formatTrn(trn: string | null | undefined): string {
   if (!trn) return "";
   const digits = trnDigits(trn);
-  if (digits.length !== 15) return trn;
-  return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}-${digits.slice(11)}`;
+  if (digits.length !== 8) return trn;
+  return `${digits.slice(0, 7)}-${digits.slice(7)}`;
 }
 
-/** Common free zones per emirate, offered as suggestions (any name is accepted). */
+/** Special economic zones and export processing zones per province, offered as suggestions (any name is accepted). */
 export const UAE_FREE_ZONES: Record<Emirate, string[]> = {
-  dubai: [
-    "DMCC",
-    "JAFZA",
-    "DIFC",
-    "DAFZA",
-    "Dubai South",
-    "Dubai Silicon Oasis",
-    "Dubai Internet City",
-    "Dubai Media City",
-    "Dubai Healthcare City",
-    "Meydan Free Zone",
-    "IFZA",
+  punjab: [
+    "Quaid-e-Azam Business Park",
+    "Sundar Industrial Estate",
+    "Allama Iqbal Industrial City (M-3)",
+    "Sialkot Export Processing Zone",
+    "Vehari Industrial Estate",
   ],
-  abu_dhabi: ["ADGM", "KEZAD", "Masdar City Free Zone", "twofour54", "Abu Dhabi Airport Free Zone"],
-  sharjah: ["SAIF Zone", "Hamriyah Free Zone", "SHAMS", "SRTI Park"],
-  ajman: ["Ajman Free Zone", "Ajman Media City Free Zone"],
-  umm_al_quwain: ["UAQ Free Trade Zone"],
-  ras_al_khaimah: ["RAKEZ", "RAK Maritime City"],
-  fujairah: ["Fujairah Free Zone", "Creative City Fujairah"],
+  sindh: ["Karachi Export Processing Zone", "Dhabeji SEZ", "Bin Qasim Industrial Park"],
+  khyber_pakhtunkhwa: ["Rashakai SEZ", "Hattar SEZ", "Risalpur Export Processing Zone"],
+  balochistan: ["Gwadar Free Zone", "Bostan SEZ", "Hub Industrial Estate"],
+  islamabad: ["ICT Model Industrial Zone"],
+  gilgit_baltistan: ["Moqpondass SEZ"],
+  azad_kashmir: ["Bhimber SEZ", "Mirpur Industrial Estate"],
 };
 
 export interface RegistrationLike {

@@ -1,5 +1,5 @@
 /**
- * Calendar boundaries in a workspace timezone (e.g. Asia/Dubai) without a date library. Reports count
+ * Calendar boundaries in a workspace timezone (e.g. Asia/Karachi) without a date library. Reports count
  * "today" and "this month" the way the business sees them, not in UTC.
  */
 
@@ -37,7 +37,7 @@ function wallClock(at: Date, timeZone: string): WallClock {
   };
 }
 
-/** Offset of the timezone from UTC at an instant, in ms (Asia/Dubai: +4 h). */
+/** Offset of the timezone from UTC at an instant, in ms (Asia/Karachi: +5 h, no DST). */
 function offsetMs(at: Date, timeZone: string): number {
   const w = wallClock(at, timeZone);
   const asUtc = Date.UTC(w.year, w.month - 1, w.day, w.hour, w.minute, w.second);

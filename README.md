@@ -14,7 +14,7 @@ pnpm install
 pnpm dev            # http://localhost:5173
 ```
 
-Sign in by picking a demo user. The demo workspace is a fictional Dubai clinic, **Noor Al Marsa Aesthetic & Dental Clinic**. Data lives in your browser's localStorage and is shared by all tabs. Sign-in is per tab, so you can run the demo panel as the owner in one window and a rep in another.
+Sign in by picking a demo user. On this branch the demo workspace is **SBC Study Abroad Consultants**, a study-abroad and study-visa consultancy in Gulberg III, Lahore (PKR, 16% Punjab sales tax on services, NTN, Asia/Karachi). Data lives in your browser's localStorage and is shared by all tabs. Sign-in is per tab, so you can run the demo panel as the owner in one window and a rep in another.
 
 | Command                                                    | What it does                             |
 | ---------------------------------------------------------- | ---------------------------------------- |
@@ -30,6 +30,6 @@ Sign in by picking a demo user. The demo workspace is a fictional Dubai clinic, 
 | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `packages/shared`                              | Contracts: entities, REST API routes (zod), inbound and live events, adapter interfaces                          |
 | `packages/core`                                | Business rules as pure functions: lead/deal state machines, service window, stale deals, assignment, VAT, phones |
-| `packages/demo-data`                           | The clinic demo story and simulator generators                                                                   |
+| `packages/demo-data`                           | The SBC consultancy demo story and simulator generators                                                          |
 | `apps/web`                                     | React app. `src/mock` is the showcase backend implementing the same contract as the future API                   |
 | `apps/api`, `packages/db`, `packages/adapters` | Phase B/C (empty for now)                                                                                        |

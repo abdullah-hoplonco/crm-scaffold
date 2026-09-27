@@ -1,5 +1,5 @@
 import { Emirate, Role } from "@hco/shared";
-import { ArrowDown, ArrowUp, Briefcase, House, Lock, Plus, Stethoscope, Trash2, X } from "lucide-react";
+import { ArrowDown, ArrowUp, Briefcase, GraduationCap, House, Lock, Plus, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -59,7 +59,7 @@ export function BusinessStep({ draft, errors, onChange }: StepProps) {
           value={draft.trn}
           onChange={(e) => onChange({ trn: formatTrn(e.target.value) })}
           inputMode="numeric"
-          placeholder="100-0000-0000-0003"
+          placeholder="4213785-6"
           className="font-medium tracking-wide tabular-nums sm:max-w-64"
           {...describedBy("ob-trn", errors.trn, true)}
         />
@@ -252,7 +252,7 @@ export function TeamStep({ draft, errors, onChange }: StepProps) {
 // ---------------------------------------------------------------------------
 
 const PRESET_ICON: Record<PresetKey, typeof House> = {
-  clinic: Stethoscope,
+  clinic: GraduationCap,
   realEstate: House,
   b2b: Briefcase,
 };

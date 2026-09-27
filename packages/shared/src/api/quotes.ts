@@ -79,7 +79,7 @@ export const quoteRoutes = {
   create: defineRoute({
     method: "POST",
     path: "/deals/:dealId/quotes",
-    summary: "Create a draft quote; totals, 5% VAT and number are computed server-side",
+    summary: "Create a draft quote; totals, sales tax and number are computed server-side",
     params: z.object({ dealId: z.string() }),
     body: z.object({
       lineItems: z.array(LineItemInput).min(1, "Add at least one item"),

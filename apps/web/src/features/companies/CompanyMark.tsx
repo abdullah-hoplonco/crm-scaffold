@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
 
-const LEGAL_WORDS = /\b(llc|l\.l\.c|fz-?llc|fze|fzco|ltd|limited|group|trading|co|plc|inc)\b\.?/gi;
+const LEGAL_WORDS =
+  /\b(pvt|private|smc|llc|l\.l\.c|fz-?llc|fze|fzco|ltd|limited|group|trading|co|plc|inc)\b\.?/gi;
 
-/** "Gulf Horizon Logistics LLC" → "GH". Legal suffixes are skipped. */
+/** "Indus Loom Textiles (Pvt) Ltd" → "IL". Legal suffixes are skipped. */
 export function companyInitials(name: string): string {
   const words = name
     .replace(LEGAL_WORDS, " ")

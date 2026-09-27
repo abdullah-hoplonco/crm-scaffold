@@ -25,20 +25,22 @@ export interface TemplatePrefill {
   userFirstName: string;
 }
 
-/** Guess a variable from its hint, e.g. "Patient first name" or "Your name". Unknown hints start empty. */
+/** Guess a variable from its hint, e.g. "Student first name" or "Your name". Unknown hints start empty. */
 function prefillFor(hint: string, prefill: TemplatePrefill): string {
-  if (/your name|sender|agent|coordinator/i.test(hint)) return prefill.userFirstName;
+  if (/your name|sender|agent|coordinator|counsell?or/i.test(hint)) return prefill.userFirstName;
   if (/name/i.test(hint)) return prefill.firstName;
-  if (/treatment|interest|product|service/i.test(hint)) return softenInterest(prefill.interest);
+  if (/treatment|interest|product|service|destination|programme|course/i.test(hint)) {
+    return softenInterest(prefill.interest);
+  }
   return "";
 }
 
-/** "Laser hair removal" reads better mid-sentence as "laser hair removal"; single brand words stay as they are. */
+/**
+ * The interest as it goes into the template. Service names here start with a country or an acronym
+ * ("UK study visa", "IELTS preparation"), so they keep their capitals mid-sentence.
+ */
 function softenInterest(interest: string | null): string {
-  if (!interest) return "";
-  const words = interest.split(/\s+/);
-  if (words.length < 2 || words.slice(1).some((w) => /[A-Z]/.test(w))) return interest;
-  return interest.charAt(0).toLowerCase() + interest.slice(1);
+  return interest?.trim() ?? "";
 }
 
 function defaultsFor(template: WhatsAppTemplate, prefill: TemplatePrefill): string[] {
@@ -150,7 +152,10 @@ export function TemplateDialog({
                         <span className="flex items-center gap-1.5">
                           <span className="truncate text-sm font-medium">{tpl.name}</span>
                           {active ? (
-                            <CheckCircle2 aria-hidden="true" className="ms-auto size-4 shrink-0 text-primary" />
+                            <CheckCircle2
+                              aria-hidden="true"
+                              className="ms-auto size-4 shrink-0 text-primary"
+                            />
                           ) : null}
                         </span>
                         <span className="text-xs text-muted-foreground">

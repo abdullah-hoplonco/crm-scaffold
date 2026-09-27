@@ -84,8 +84,8 @@ function WhatsappFlow({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState(0);
   const [busy, setBusy] = useState<string | null>(null);
   const numbers = [
-    { phone: "+971 4 555 0142", meta: t("connect.whatsapp.numberVerified", { name: workspace.name }) },
-    { phone: "+971 50 555 0199", meta: t("connect.whatsapp.numberNew") },
+    { phone: "+92 300 0724580", meta: t("connect.whatsapp.numberVerified", { name: workspace.name }) },
+    { phone: "+92 321 4550199", meta: t("connect.whatsapp.numberNew") },
   ];
   const [phone, setPhone] = useState(numbers[0]?.phone ?? "");
   const [code, setCode] = useState("482915");

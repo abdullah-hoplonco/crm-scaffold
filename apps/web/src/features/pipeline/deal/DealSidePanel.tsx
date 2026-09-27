@@ -1,3 +1,4 @@
+import { formatTrn } from "@hco/core/contacts/registration";
 import type { DealDetail } from "@hco/shared/api/pipeline";
 import { Link } from "@tanstack/react-router";
 import { Building2, Mail, MessageCircle, Phone } from "lucide-react";
@@ -7,7 +8,7 @@ import { UserAvatar } from "@/components/app/UserAvatar";
 import { OpenChatButton } from "@/features/inbox/OpenChatButton";
 import { formatDate, formatPhone } from "@/lib/format";
 
-/** Who the deal is with: the contact's ways to reach them and the company's UAE registration. */
+/** Who the deal is with: the contact's ways to reach them and the company's registration (province, zone, NTN). */
 export function DealSidePanel({ detail }: { detail: DealDetail }) {
   const { t } = useTranslation("pipeline");
   const { contact, company, deal, lead } = detail;
@@ -138,12 +139,4 @@ function Row({ label, children }: { label: string; children: ReactNode }) {
       <dd className="min-w-0 truncate text-end sm:text-start">{children}</dd>
     </>
   );
-}
-
-/** 100458392700003 → 100-4583-9270-0003 */
-function formatTrn(trn: string): string {
-  const digits = trn.replace(/\D/g, "");
-  return digits.length === 15
-    ? `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}-${digits.slice(11)}`
-    : trn;
 }

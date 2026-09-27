@@ -8,7 +8,7 @@ export type TimelineItem = z.infer<typeof TimelineItem>;
 
 export const TaskListItem = Task.extend({
   assigneeName: z.string().nullable(),
-  /** e.g. "Fatima Al Mansoori · Laser hair removal package" */
+  /** e.g. "Ali Raza · UK study visa" */
   subjectLabel: z.string().nullable(),
   /** In-app path of the linked deal, lead or contact. */
   subjectHref: z.string().nullable(),

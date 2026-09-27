@@ -14,7 +14,7 @@ import { useApiMutation, useApiQuery } from "@/lib/api/hooks";
 import { formatPhone } from "@/lib/format";
 import { ChannelGlyph } from "./ChannelGlyph";
 
-/** "Invisalign — Layla Haddad" shown inside Layla's chat reads as just "Invisalign". */
+/** "UK study visa — Ali Raza" shown inside Ali's chat reads as just "UK study visa". */
 function dealLabel(title: string, personName: string) {
   const suffix = ` — ${personName}`;
   return title.endsWith(suffix) ? title.slice(0, -suffix.length) : title;

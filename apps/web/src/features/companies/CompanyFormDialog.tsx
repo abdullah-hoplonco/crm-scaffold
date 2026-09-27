@@ -26,19 +26,19 @@ import { useApiMutation } from "@/lib/api/hooks";
 
 const NO_EMIRATE = "__none__";
 const INDUSTRIES = [
-  "Construction",
+  "Banking",
   "Education",
-  "Events",
+  "Engineering",
   "Financial services",
   "Healthcare",
-  "Hospitality",
-  "Logistics",
+  "IT services",
   "Manufacturing",
-  "Marine services",
-  "Real estate",
-  "Retail",
-  "Technology",
-  "Trading",
+  "Pharmaceuticals",
+  "Schools and colleges",
+  "Sports goods",
+  "Telecom",
+  "Test preparation",
+  "Textiles",
 ];
 
 /** New company, or edit when `company` is given. The form starts fresh every time the dialog opens. */
@@ -199,7 +199,11 @@ function CompanyForm({
                 </SelectContent>
               </Select>
             </div>
-            <div className="grid content-start gap-1.5" role="group" aria-labelledby={`${formId}-jurisdiction`}>
+            <div
+              className="grid content-start gap-1.5"
+              role="group"
+              aria-labelledby={`${formId}-jurisdiction`}
+            >
               <span id={`${formId}-jurisdiction`} className="text-sm leading-none font-medium">
                 {t("companyForm.licensedIn")}
               </span>
@@ -230,7 +234,9 @@ function CompanyForm({
                 value={freeZoneName}
                 onChange={(e) => setFreeZoneName(e.target.value)}
                 list={`${formId}-zones`}
-                placeholder={zones[0] ? t("companyForm.freeZonePlaceholder", { example: zones[0] }) : undefined}
+                placeholder={
+                  zones[0] ? t("companyForm.freeZonePlaceholder", { example: zones[0] }) : undefined
+                }
                 className="bg-card"
                 autoComplete="off"
               />
@@ -263,7 +269,7 @@ function CompanyForm({
                   setTrnTouched(true);
                   if (isValidTrn(trn)) setTrn(formatTrn(trnDigits(trn)));
                 }}
-                placeholder="100-1234-5678-9003"
+                placeholder="4213785-6"
                 aria-invalid={showTrnError || undefined}
                 aria-describedby={`${formId}-trn-hint`}
                 className="bg-card tabular-nums"
@@ -288,14 +294,19 @@ function CompanyForm({
               id={`${formId}-website`}
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
-              placeholder="example.ae"
+              placeholder="example.com.pk"
               inputMode="url"
               autoComplete="off"
             />
           </div>
           <div className="grid content-start gap-1.5">
             <Label htmlFor={`${formId}-assignee`}>{t("companyForm.assignee")}</Label>
-            <AssigneeSelect id={`${formId}-assignee`} value={assigneeId} onChange={setAssigneeId} className="w-full" />
+            <AssigneeSelect
+              id={`${formId}-assignee`}
+              value={assigneeId}
+              onChange={setAssigneeId}
+              className="w-full"
+            />
           </div>
         </div>
         <div className="grid content-start gap-1.5">
@@ -336,7 +347,11 @@ function CompanyForm({
           {tc("actions.cancel")}
         </Button>
         <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? t("form.saving") : isEdit ? tc("actions.saveChanges") : t("companyForm.create")}
+          {mutation.isPending
+            ? t("form.saving")
+            : isEdit
+              ? tc("actions.saveChanges")
+              : t("companyForm.create")}
         </Button>
       </DialogFooter>
     </form>

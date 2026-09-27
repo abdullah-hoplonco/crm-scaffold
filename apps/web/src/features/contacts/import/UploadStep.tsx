@@ -3,7 +3,14 @@ import { useId, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CsvProblem, loadSampleSheet, parseCsvFile, SAMPLE_FILE_URL, type ParsedSheet } from "./csv";
+import {
+  CsvProblem,
+  loadSampleSheet,
+  parseCsvFile,
+  SAMPLE_FILE_NAME,
+  SAMPLE_FILE_URL,
+  type ParsedSheet,
+} from "./csv";
 
 export function UploadStep({ onParsed }: { onParsed: (sheet: ParsedSheet) => void }) {
   const { t } = useTranslation("contacts");
@@ -57,7 +64,7 @@ export function UploadStep({ onParsed }: { onParsed: (sheet: ParsedSheet) => voi
         </ul>
         <a
           href={SAMPLE_FILE_URL}
-          download
+          download={SAMPLE_FILE_NAME}
           className="w-fit text-primary underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
           {t("import.upload.downloadSample")}
@@ -89,7 +96,9 @@ function DropZone({ busy, onFile }: { busy: boolean; onFile: (file: File) => voi
       className={cn(
         "flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-6 py-10 text-center transition-colors sm:py-14",
         "has-[:focus-visible]:border-primary has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-ring/15",
-        dragging ? "border-primary bg-accent" : "border-input bg-muted/20 hover:border-primary/50 hover:bg-accent/40",
+        dragging
+          ? "border-primary bg-accent"
+          : "border-input bg-muted/20 hover:border-primary/50 hover:bg-accent/40",
       )}
     >
       <span className="mb-1 flex size-12 items-center justify-center rounded-full border bg-card text-primary shadow-xs">

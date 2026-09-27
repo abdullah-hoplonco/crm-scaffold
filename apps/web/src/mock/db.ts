@@ -14,8 +14,8 @@ export interface MockState {
   sessionUserId: string | null;
 }
 
-const DATA_KEY = "hco-crm:mock-db:v1";
-const REV_KEY = "hco-crm:mock-db:rev";
+const DATA_KEY = "hco-crm:mock-db:sbc-v1";
+const REV_KEY = "hco-crm:mock-db:sbc-rev";
 /** A returning visitor after this long gets the story shifted forward so "today" still looks like today. */
 const REANCHOR_AFTER_MS = 6 * 60 * 60 * 1000;
 

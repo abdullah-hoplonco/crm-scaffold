@@ -4,7 +4,7 @@ import { LeadSource, PhoneLabel } from "../enums";
 import { defineRoute, Ok, PageQuery, Paginated } from "./define";
 
 export const PhoneInput = z.object({
-  /** Any format; normalised to E.164 with UAE as the default region. */
+  /** Any format; normalised to E.164 with Pakistan as the default region. */
   number: z.string().trim().min(1, "Enter a phone number"),
   label: PhoneLabel.default("mobile"),
   isWhatsapp: z.boolean().default(true),

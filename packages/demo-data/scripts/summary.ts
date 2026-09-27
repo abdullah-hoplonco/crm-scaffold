@@ -40,12 +40,12 @@ for (const d of t.deals) {
   perStage[name] = (perStage[name] ?? 0) + 1;
 }
 console.log("\ndeals per stage", perStage);
-const dubaiMonth = new Date(now.getTime() + 4 * 3_600_000).toISOString().slice(0, 7);
+const karachiMonth = new Date(now.getTime() + 5 * 3_600_000).toISOString().slice(0, 7);
 const wonThisMonth = t.deals.filter(
   (d) =>
     wonStageIds.has(d.stageId) &&
     d.closedAt &&
-    new Date(new Date(d.closedAt).getTime() + 4 * 3_600_000).toISOString().slice(0, 7) === dubaiMonth,
+    new Date(new Date(d.closedAt).getTime() + 5 * 3_600_000).toISOString().slice(0, 7) === karachiMonth,
 );
 console.log("won this month", wonThisMonth.length);
 
@@ -76,8 +76,8 @@ console.log(
 );
 
 // -- Today per user (owner-views "today" rules) ---------------------------------------------------
-const dubaiDate = new Date(now.getTime() + 4 * 3_600_000).toISOString().slice(0, 10);
-const endOfToday = new Date(`${dubaiDate}T20:00:00.000Z`).toISOString(); // 24:00 in Dubai
+const karachiDate = new Date(now.getTime() + 5 * 3_600_000).toISOString().slice(0, 10);
+const endOfToday = new Date(`${karachiDate}T19:00:00.000Z`).toISOString(); // 24:00 in Pakistan (UTC+5)
 const ws = t.workspaces[0];
 for (const user of t.users) {
   const isRep = user.role === "rep";

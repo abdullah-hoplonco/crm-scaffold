@@ -49,7 +49,7 @@ function routedPhone(ctx: MockContext, phone: string | undefined): string | null
   if (!normalized) {
     throw ctx.error(
       "INVALID_PHONE",
-      "Enter a valid mobile number, for example 050 123 4567 or +971 50 123 4567.",
+      "Enter a valid mobile number, for example 0300 1234567 or +92 300 1234567.",
     );
   }
   return normalized;
@@ -79,7 +79,7 @@ function whatsappResult(
   };
 }
 
-/** Where a contact is with the clinic, from their most relevant deal. */
+/** Where a student is with SBC, from their most relevant deal. */
 function patientPhase(
   ctx: MockContext,
   contact: Contact,
@@ -216,14 +216,14 @@ export const demoHandlers: MockHandler[] = [
       contact = findOr404(ctx, "contacts", body.contactId, "contact");
     } else {
       const candidates = rows(ctx, "contacts").filter((c) => whatsappByContact.has(c.id));
-      // Prefer patients with a deal in progress: their follow-ups make the best story.
+      // Prefer students with an application in progress: their follow-ups make the best story.
       const inProgress = candidates.filter((c) => openDealsOfContact(ctx, c.id).length > 0);
       contact = pickRandom(inProgress.length ? inProgress : candidates);
     }
     if (!contact) {
       throw ctx.error(
         "NOT_FOUND",
-        "No patient has a WhatsApp conversation yet. Try a message from an unknown number instead.",
+        "No student has a WhatsApp conversation yet. Try a message from an unknown number instead.",
       );
     }
     const existing = whatsappByContact.get(contact.id);
@@ -260,7 +260,7 @@ export const demoHandlers: MockHandler[] = [
       notifyUserIds: tables.users.filter((u) => u.id !== actorId).map((u) => u.id),
       toast: {
         title: "Demo data was reset",
-        body: "The clinic's story is back at its starting point.",
+        body: "SBC's story is back at its starting point.",
         href: null,
       },
     });

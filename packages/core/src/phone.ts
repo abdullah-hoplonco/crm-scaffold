@@ -2,11 +2,11 @@ import { parsePhoneNumberFromString, type CountryCode } from "libphonenumber-js/
 
 /**
  * Normalise any written phone number to E.164. Numbers without a country code are read
- * as UAE numbers; numbers with one keep it. Returns null when the number is not valid.
+ * as Pakistani numbers; numbers with one keep it. Returns null when the number is not valid.
  */
 export function normalizePhone(
   input: string | null | undefined,
-  defaultRegion: CountryCode = "AE",
+  defaultRegion: CountryCode = "PK",
 ): string | null {
   if (!input) return null;
   const trimmed = input.trim();
@@ -17,7 +17,7 @@ export function normalizePhone(
   return parsed.number;
 }
 
-/** Human display, e.g. +971 50 123 4567. Falls back to the input. */
+/** Human display, e.g. +92 300 1234567. Falls back to the input. */
 export function formatPhone(e164: string | null | undefined): string {
   if (!e164) return "";
   const parsed = parsePhoneNumberFromString(e164);

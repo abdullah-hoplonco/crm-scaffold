@@ -38,7 +38,7 @@ export interface FunnelRow {
   reachedCount: number;
   /** reachedCount against the previous open stage, 0–100. Null for the first stage and for lost. */
   conversionPct: number | null;
-  /** AED value of the deals currently in the stage. */
+  /** PKR value of the deals currently in the stage. */
   valueAed: string;
 }
 
@@ -220,7 +220,7 @@ export function computePipelineValue(input: {
   };
 }
 
-/** Deals sitting in a won stage that closed at or after `since` (e.g. the start of the month in Dubai). */
+/** Deals sitting in a won stage that closed at or after `since` (e.g. the start of the month in Pakistan). */
 export function computeWonSince(input: {
   deals: Array<Pick<ReportDeal, "stageId" | "valueAed" | "closedAt">>;
   stages: ReportStage[];

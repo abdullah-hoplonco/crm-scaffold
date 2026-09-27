@@ -38,30 +38,30 @@
     "spam": "Spam",
     "wrong_number": "Wrong number",
     "not_interested": "Not interested",
-    "out_of_area": "Out of area",
+    "out_of_area": "Not eligible",
     "duplicate": "Duplicate",
     "other": "Other"
   },
   "lostReasons": {
     "price": "Price",
-    "competitor": "Went with a competitor",
+    "competitor": "Went with another consultant",
     "no_budget": "No budget",
     "no_response": "Stopped responding",
-    "timing": "Bad timing",
+    "timing": "Deferred to a later intake",
     "other": "Other"
   },
   "emirates": {
-    "abu_dhabi": "Abu Dhabi",
-    "dubai": "Dubai",
-    "sharjah": "Sharjah",
-    "ajman": "Ajman",
-    "umm_al_quwain": "Umm Al Quwain",
-    "ras_al_khaimah": "Ras Al Khaimah",
-    "fujairah": "Fujairah"
+    "punjab": "Punjab",
+    "sindh": "Sindh",
+    "khyber_pakhtunkhwa": "Khyber Pakhtunkhwa",
+    "balochistan": "Balochistan",
+    "islamabad": "Islamabad Capital Territory",
+    "gilgit_baltistan": "Gilgit-Baltistan",
+    "azad_kashmir": "Azad Jammu & Kashmir"
   },
   "jurisdiction": {
-    "mainland": "Mainland",
-    "free_zone": "Free zone"
+    "mainland": "Standard",
+    "free_zone": "SEZ / EPZ"
   },
   "messageStatus": {
     "queued": "Queued",
@@ -100,7 +100,7 @@
   },
   "login": {
     "title": "Sign in",
-    "subtitle": "Sales inbox and pipeline for your team",
+    "subtitle": "Student enquiries and applications for your counselling team",
     "email": "Email",
     "password": "Password",
     "submit": "Sign in",

@@ -3,12 +3,12 @@ import { differenceInCalendarDays, format } from "date-fns";
 import type { TFunction } from "i18next";
 import { inWorkspaceTz } from "@/lib/format";
 
-/** Calendar day in Dubai, used to group messages. */
+/** Calendar day in Pakistan (workspace timezone), used to group messages. */
 export function dubaiDayKey(iso: string): string {
   return format(inWorkspaceTz(iso), "yyyy-MM-dd");
 }
 
-/** "14:05" in Dubai time. */
+/** "14:05" in Pakistan time. */
 export function clockTime(iso: string): string {
   return format(inWorkspaceTz(iso), "HH:mm");
 }

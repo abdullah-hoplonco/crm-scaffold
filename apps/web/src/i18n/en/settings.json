@@ -32,30 +32,30 @@
     },
     "fields": {
       "name": "Business name",
-      "trn": "TRN",
-      "trnHelp": "Your 15-digit UAE Tax Registration Number.",
-      "trnCount_one": "{{count}} of 15 digits",
-      "trnCount_other": "{{count}} of 15 digits",
+      "trn": "NTN",
+      "trnHelp": "Your FBR National Tax Number: seven digits and a check digit.",
+      "trnCount_one": "{{count}} of 8 digits",
+      "trnCount_other": "{{count}} of 8 digits",
       "address": "Address",
-      "addressPlaceholder": "Building, street, area, city",
-      "emirate": "Emirate",
-      "emiratePlaceholder": "Choose an emirate"
+      "addressPlaceholder": "Floor, building, road, area, city",
+      "emirate": "Province",
+      "emiratePlaceholder": "Choose a province"
     },
     "errors": {
       "name": "Enter the business name.",
-      "trn": "A TRN has 15 digits. Check the number on your VAT certificate."
+      "trn": "NTN is 7 digits and a check digit. Check the number on your FBR registration certificate."
     },
     "tax": {
       "title": "Tax, currency and time",
-      "description": "Set for the UAE so totals and times are always right.",
-      "vat": "VAT rate",
-      "vatNote": "UAE standard rate",
+      "description": "Set for Pakistan so totals and times are always right.",
+      "vat": "Sales tax rate",
+      "vatNote": "Punjab sales tax on services",
       "currency": "Currency",
-      "currencyValue": "AED",
-      "currencyNote": "UAE dirham, used for every deal and quote",
+      "currencyValue": "PKR",
+      "currencyNote": "Pakistani rupee, used for every deal and quote",
       "timezone": "Timezone",
-      "timezoneNote": "Due dates, reminders and reports use Dubai time",
-      "locked": "Fixed for UAE workspaces"
+      "timezoneNote": "Due dates, reminders and reports use Pakistan time (PKT)",
+      "locked": "Fixed for Pakistan workspaces"
     },
     "followUp": {
       "title": "Follow-up",
@@ -116,9 +116,9 @@
       "title": "Invite a teammate",
       "description": "They get a link to sign in to this workspace.",
       "name": "Full name",
-      "namePlaceholder": "Sara Al Mansoori",
+      "namePlaceholder": "Sana Khalid",
       "email": "Work email",
-      "emailPlaceholder": "sara@yourbusiness.ae",
+      "emailPlaceholder": "sana@yourbusiness.pk",
       "role": "Role",
       "submit": "Create invite link",
       "submitting": "Creating link…",
@@ -254,15 +254,15 @@
       "stepForms": "Choose forms",
       "stepSubscribed": "Subscribed",
       "choosePage": "Which page runs your lead ads?",
-      "careersPage": "{{name}} Careers",
+      "careersPage": "{{name}} IELTS Academy",
       "linkedInstagram": "Instagram {{handle}} linked",
       "noInstagram": "No Instagram account linked",
       "chooseForms": "Leads from these forms on {{page}} will arrive in Leads.",
       "forms": {
-        "enquiry": "Enquiry form",
-        "consultation": "Book a consultation",
+        "enquiry": "Study abroad enquiry",
+        "consultation": "Book free counselling",
         "callback": "Request a callback",
-        "priceList": "Get the price list"
+        "priceList": "Check my eligibility"
       },
       "formsError": "Choose at least one form.",
       "subscribe": "Subscribe to leads",
@@ -281,8 +281,8 @@
       "stepRequest": "Request access",
       "stepPending": "Pending approval",
       "chooseAccount": "Which ad account collects your leads?",
-      "accountUae": "{{name}} (UAE)",
-      "accountKsa": "{{name}} (KSA)",
+      "accountUae": "{{name}} (Pakistan)",
+      "accountKsa": "{{name}} (Gulf)",
       "advertiserId": "Advertiser ID {{id}}",
       "reviewTitle": "TikTok approves lead access first",
       "reviewBody": "TikTok reviews every app that reads lead data. Once approved, leads from this account arrive in Leads automatically.",
@@ -367,12 +367,12 @@
     },
     "business": {
       "title": "Your business",
-      "description": "This name and TRN appear on your quotes.",
+      "description": "This name and NTN appear on your quotes.",
       "name": "Business name",
-      "namePlaceholder": "As it appears on your trade licence",
-      "trn": "TRN",
-      "trnHelp": "Your 15-digit UAE Tax Registration Number. Add it now or later.",
-      "emirate": "Emirate"
+      "namePlaceholder": "As registered with SECP",
+      "trn": "NTN",
+      "trnHelp": "Your FBR National Tax Number, like 4213785-6. Add it now or later.",
+      "emirate": "Province"
     },
     "owner": {
       "title": "About you",
@@ -380,7 +380,7 @@
       "name": "Your name",
       "namePlaceholder": "First and last name",
       "email": "Work email",
-      "emailPlaceholder": "name@business.ae",
+      "emailPlaceholder": "name@business.pk",
       "emailHelp": "Use the email you check every day. Lead alerts go here.",
       "roleNote": "You'll be the owner: you see every lead, deal and conversation, and you control settings, channels and the team."
     },
@@ -390,7 +390,7 @@
       "name": "Full name",
       "namePlaceholder": "Full name",
       "email": "Work email",
-      "emailPlaceholder": "name@business.ae",
+      "emailPlaceholder": "name@business.pk",
       "role": "Role",
       "rowLabel": "Teammate {{n}}",
       "remove": "Remove teammate {{n}}",
@@ -431,7 +431,7 @@
       "label": "Workspace preview",
       "hint": "Your workspace updates as you type.",
       "namePlaceholder": "Your business",
-      "detailsPlaceholder": "Emirate and TRN",
+      "detailsPlaceholder": "Province and NTN",
       "you": "You",
       "team": "Team",
       "people_one": "Just you",
@@ -442,12 +442,25 @@
     },
     "presets": {
       "clinic": {
-        "label": "Clinic / healthcare",
-        "stages": ["New enquiry", "Consultation booked", "Consultation done", "Treatment plan sent"]
+        "label": "Study abroad & visa consultancy",
+        "stages": [
+          "New enquiry",
+          "Counselling done",
+          "Documents collected",
+          "Applied to university",
+          "Offer received",
+          "Visa filed"
+        ]
       },
       "realEstate": {
         "label": "Real estate",
-        "stages": ["New enquiry", "Viewing booked", "Viewing done", "Offer made", "Contract signing"]
+        "stages": [
+          "New enquiry",
+          "Site visit booked",
+          "Site visit done",
+          "Token money received",
+          "Transfer in progress"
+        ]
       },
       "b2b": {
         "label": "General B2B",
@@ -456,9 +469,9 @@
     },
     "errors": {
       "workspaceName": "Enter your business name.",
-      "trn": "A TRN has 15 digits. Check the number on your VAT certificate.",
+      "trn": "NTN is 7 digits and a check digit, like 4213785-6.",
       "ownerName": "Enter your name.",
-      "email": "Enter a valid email, like name@business.ae.",
+      "email": "Enter a valid email, like name@business.pk.",
       "emailTwice": "This email is already used above. Each person needs their own.",
       "inviteName": "Enter their name.",
       "noStages": "Add at least one stage.",

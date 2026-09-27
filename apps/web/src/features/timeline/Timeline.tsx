@@ -25,7 +25,7 @@ const FILTERS: Record<Exclude<Filter, "all">, ReadonlySet<TimelineItem["type"]>>
 };
 
 /**
- * Everything that happened with a lead, contact or deal, newest first and grouped by day in Dubai
+ * Everything that happened with a lead, contact or deal, newest first and grouped by day in Pakistan
  * time. A deal's timeline includes its contact's and originating lead's entries (see the API).
  */
 export function Timeline({
